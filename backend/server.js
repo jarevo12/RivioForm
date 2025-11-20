@@ -77,8 +77,15 @@ const formLimiter = rateLimit({
 // Health check endpoint
 app.use('/api/health', healthRoutes);
 
-// Applicant routes (with form rate limiting)
-app.use('/api/applicants', formLimiter, applicantRoutes);
+// Applicant routes - form limiter only on POST
+const applicantRouter = require('express').Router();
+
+// Apply strict rate limiting only to POST (form submission)
+applicantRouter.post('/', formLimiter);
+
+// Mount applicant routes
+applicantRouter.use('/', applicantRoutes);
+app.use('/api/applicants', applicantRouter);
 
 // Root endpoint
 app.get('/', (req, res) => {

@@ -17,6 +17,7 @@ export default function ApplicationPage() {
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [submitted, setSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     // Retrieve email from sessionStorage
@@ -34,18 +35,29 @@ export default function ApplicationPage() {
     switch (name) {
       case 'firstName':
       case 'lastName':
-        return value.trim().length < 2 ? 'Must be at least 2 characters' : ''
+        if (value.trim().length < 2) return 'Must be at least 2 characters'
+        if (value.trim().length > 50) return 'Cannot exceed 50 characters'
+        const nameRegex = /^[a-zA-Z\s'-]+$/
+        return !nameRegex.test(value) ? 'Can only contain letters, spaces, hyphens, and apostrophes' : ''
       case 'email':
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        return !emailRegex.test(value) ? 'Please enter a valid email address' : ''
+        if (!emailRegex.test(value)) return 'Please enter a valid email address'
+        if (value.length > 100) return 'Email cannot exceed 100 characters'
+        return ''
       case 'organization':
-        return value.trim().length < 2 ? 'Organization name is required' : ''
+        if (value.trim().length < 2) return 'Organization name is required'
+        if (value.trim().length > 100) return 'Cannot exceed 100 characters'
+        return ''
       case 'position':
-        return value.trim().length < 2 ? 'Position is required' : ''
+        if (value.trim().length < 2) return 'Position is required'
+        if (value.trim().length > 100) return 'Cannot exceed 100 characters'
+        return ''
       case 'phone':
         if (value.trim() === '') return ''
         const phoneRegex = /^[\d\s\-\+\(\)]+$/
-        return !phoneRegex.test(value) ? 'Please enter a valid phone number' : ''
+        if (!phoneRegex.test(value)) return 'Please enter a valid phone number'
+        if (value.length > 20) return 'Cannot exceed 20 characters'
+        return ''
       default:
         return ''
     }
@@ -68,7 +80,7 @@ export default function ApplicationPage() {
     setErrors({ ...errors, [name]: error })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     const newErrors: Record<string, string> = {}
@@ -86,10 +98,48 @@ export default function ApplicationPage() {
       return
     }
 
-    console.log('Form submitted:', formData)
-    // Clear sessionStorage
-    sessionStorage.removeItem('applicantEmail')
-    setSubmitted(true)
+    setIsSubmitting(true)
+    try {
+      // Prepare data - send phone as undefined if empty
+      const submitData = {
+        ...formData,
+        phone: formData.phone.trim() || undefined,
+      }
+
+      // Submit to backend API
+      const response = await fetch('http://localhost:5000/api/applicants', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        if (response.status === 409) {
+          alert('An application with this email already exists.')
+        } else if (response.status === 400 && data.errors) {
+          // Show validation errors
+          const errorMessages = data.errors.map((err: any) => err.msg).join('\n')
+          alert(`Validation Error:\n${errorMessages}`)
+        } else {
+          alert(`Error: ${data.message || 'Failed to submit application'}`)
+        }
+        return
+      }
+
+      console.log('Form submitted successfully:', data)
+      // Clear sessionStorage
+      sessionStorage.removeItem('applicantEmail')
+      setSubmitted(true)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      alert('Failed to submit application. Please check your connection and try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isLoading) {
@@ -304,9 +354,20 @@ export default function ApplicationPage() {
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-lg transition duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-slate-800"
+                    disabled={isSubmitting}
+                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-lg transition duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-slate-800 flex items-center justify-center"
                   >
-                    Submit & Claim Your $50 Gift Card
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Submitting...
+                      </>
+                    ) : (
+                      'Submit & Claim Your $50 Gift Card'
+                    )}
                   </button>
 
                   <p className="text-sm text-slate-400 text-center mt-6">
