@@ -39,6 +39,19 @@ export default function AdminDashboard() {
   const [statusFilter, setStatusFilter] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const [currentTime, setCurrentTime] = useState<string>('')
+
+  useEffect(() => {
+    // Set initial time on client-side only to avoid hydration mismatch
+    setCurrentTime(new Date().toLocaleTimeString())
+
+    // Update time every second
+    const interval = setInterval(() => {
+      setCurrentTime(new Date().toLocaleTimeString())
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   useEffect(() => {
     fetchData()
@@ -128,7 +141,7 @@ export default function AdminDashboard() {
             </div>
             <div className="text-right">
               <p className="text-sm text-slate-400">Last updated</p>
-              <p className="text-white font-medium">{new Date().toLocaleTimeString()}</p>
+              <p className="text-white font-medium">{currentTime || '--:--:--'}</p>
             </div>
           </div>
         </div>
