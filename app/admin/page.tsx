@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Search, Users, Clock, CheckCircle, Mail, Calendar } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Search, Users, Clock, CheckCircle, Mail, Calendar, LogOut } from 'lucide-react'
 import { API_ENDPOINTS } from '../config/api'
 
 interface Applicant {
@@ -33,6 +34,7 @@ interface Stats {
 }
 
 export default function AdminDashboard() {
+  const router = useRouter()
   const [applicants, setApplicants] = useState<Applicant[]>([])
   const [stats, setStats] = useState<Stats | null>(null)
   const [loading, setLoading] = useState(true)
@@ -41,6 +43,22 @@ export default function AdminDashboard() {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [currentTime, setCurrentTime] = useState<string>('')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [adminUsername, setAdminUsername] = useState('')
+
+  // Authentication check
+  useEffect(() => {
+    const token = sessionStorage.getItem('adminToken')
+    const username = sessionStorage.getItem('adminUsername')
+
+    if (!token) {
+      router.push('/admin/login')
+      return
+    }
+
+    setIsAuthenticated(true)
+    setAdminUsername(username || 'Admin')
+  }, [router])
 
   useEffect(() => {
     // Set initial time on client-side only to avoid hydration mismatch
@@ -110,6 +128,12 @@ export default function AdminDashboard() {
     fetchData()
   }
 
+  const handleLogout = () => {
+    sessionStorage.removeItem('adminToken')
+    sessionStorage.removeItem('adminUsername')
+    router.push('/admin/login')
+  }
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString('en-US', {
       year: 'numeric',
@@ -130,6 +154,11 @@ export default function AdminDashboard() {
     return colors[status as keyof typeof colors] || colors.pending
   }
 
+  // Don't render until authentication is checked
+  if (!isAuthenticated) {
+    return null
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
@@ -140,9 +169,23 @@ export default function AdminDashboard() {
               <h1 className="text-3xl font-bold text-white">Rivio Admin Dashboard</h1>
               <p className="text-slate-400 mt-1">Manage applicants and track interviews</p>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-slate-400">Last updated</p>
-              <p className="text-white font-medium">{currentTime || '--:--:--'}</p>
+            <div className="flex items-center gap-6">
+              <div className="text-right">
+                <p className="text-sm text-slate-400">Logged in as</p>
+                <p className="text-white font-medium">{adminUsername}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm text-slate-400">Last updated</p>
+                <p className="text-white font-medium">{currentTime || '--:--:--'}</p>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition font-medium"
+                title="Logout"
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="hidden sm:inline">Logout</span>
+              </button>
             </div>
           </div>
         </div>

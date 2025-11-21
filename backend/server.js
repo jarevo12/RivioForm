@@ -17,6 +17,7 @@ const logger = require('./config/logger');
 const { connectDB } = require('./config/database');
 const applicantRoutes = require('./routes/applicant.routes');
 const healthRoutes = require('./routes/health.routes');
+const authRoutes = require('./routes/auth.routes');
 const errorHandler = require('./middleware/errorHandler');
 
 // Initialize Express app
@@ -76,6 +77,9 @@ const formLimiter = rateLimit({
 
 // Health check endpoint
 app.use('/api/health', healthRoutes);
+
+// Authentication routes
+app.use('/api/auth', authRoutes);
 
 // Applicant routes - form limiter only on POST
 const applicantRouter = require('express').Router();

@@ -28,6 +28,8 @@ Add these in Render dashboard under "Environment":
 - [ ] `MONGODB_URI` = (your MongoDB Atlas connection string)
 - [ ] `ALLOWED_ORIGINS` = (will update after frontend deployment)
 - [ ] `JWT_SECRET` = (generate with: `openssl rand -base64 32`)
+- [ ] `ADMIN_USERNAME` = `admin` (or your preferred username)
+- [ ] `ADMIN_PASSWORD` = (see ADMIN_AUTH_SETUP.md for instructions)
 
 ### 3. Deploy & Test
 - [ ] Click "Create Web Service"
@@ -93,8 +95,14 @@ Add this in Vercel project settings:
 - [ ] Fill out application form
 - [ ] Submit form
 - [ ] Check for success message
-- [ ] Visit admin dashboard: `https://your-app.vercel.app/admin`
-- [ ] Verify new application appears
+
+### Test Admin Authentication
+- [ ] Visit: `https://your-app.vercel.app/admin`
+- [ ] Should redirect to login page
+- [ ] Enter admin credentials (see ADMIN_AUTH_SETUP.md)
+- [ ] Verify successful login and redirect to dashboard
+- [ ] Verify submitted application appears in dashboard
+- [ ] Test logout button
 
 ### Check Browser Console
 - [ ] Open DevTools (F12)
