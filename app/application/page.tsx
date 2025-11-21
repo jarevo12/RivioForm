@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { API_ENDPOINTS } from '../config/api'
 
 export default function ApplicationPage() {
   const router = useRouter()
@@ -107,7 +108,7 @@ export default function ApplicationPage() {
       }
 
       // Submit to backend API
-      const response = await fetch('http://localhost:5000/api/applicants', {
+      const response = await fetch(API_ENDPOINTS.applicants, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

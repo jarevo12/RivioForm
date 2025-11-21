@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Search, Users, Clock, CheckCircle, Mail, Calendar } from 'lucide-react'
+import { API_ENDPOINTS } from '../config/api'
 
 interface Applicant {
   _id: string
@@ -74,8 +75,8 @@ export default function AdminDashboard() {
       }
 
       const [applicantsRes, statsRes] = await Promise.all([
-        fetch(`http://localhost:5000/api/applicants?${params}`),
-        fetch('http://localhost:5000/api/applicants/stats')
+        fetch(`${API_ENDPOINTS.applicants}?${params}`),
+        fetch(API_ENDPOINTS.applicantStats)
       ])
 
       if (applicantsRes.ok) {
