@@ -4,18 +4,6 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { API_ENDPOINTS } from '../config/api'
 
-// Define section types
-type SectionId =
-  | 'qualification'
-  | 'payment-terms'
-  | 'bad-debt-question'
-  | 'bad-debt-details'
-  | 'bad-debt-changes'
-  | 'current-practices'
-  | 'tci-questions'
-  | 'company-profile'
-  | 'email-capture'
-
 // Define types
 type SurveyData = {
   // Qualification
@@ -65,7 +53,7 @@ type SurveyData = {
 
 export default function SurveyPage() {
   const router = useRouter()
-  const [currentSectionId, setCurrentSectionId] = useState<SectionId>('qualification')
+  const [currentSection, setCurrentSection] = useState(0)
   const [screenedOut, setScreenedOut] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -111,7 +99,7 @@ export default function SurveyPage() {
   // Load saved progress from sessionStorage on mount
   useEffect(() => {
     const savedFormData = sessionStorage.getItem('surveyFormData')
-    const savedSection = sessionStorage.getItem('surveyCurrentSectionId')
+    const savedSection = sessionStorage.getItem('surveyCurrentSection')
 
     if (savedFormData) {
       try {
@@ -122,7 +110,11 @@ export default function SurveyPage() {
     }
 
     if (savedSection) {
-      setCurrentSectionId(savedSection as SectionId)
+      try {
+        setCurrentSection(parseInt(savedSection))
+      } catch (error) {
+        console.error('Error loading saved section:', error)
+      }
     }
   }, [])
 
@@ -130,66 +122,26 @@ export default function SurveyPage() {
   useEffect(() => {
     if (!submitted && !screenedOut) {
       sessionStorage.setItem('surveyFormData', JSON.stringify(formData))
-      sessionStorage.setItem('surveyCurrentSectionId', currentSectionId)
+      sessionStorage.setItem('surveyCurrentSection', currentSection.toString())
     }
-  }, [formData, currentSectionId, submitted, screenedOut])
+  }, [formData, currentSection, submitted, screenedOut])
 
-  // Helper functions to determine survey path
-  const hasBadDebt = () => {
-    return formData.q4_bad_debt_experience === 'yes-multiple' ||
-           formData.q4_bad_debt_experience === 'yes-once-or-twice'
-  }
+  // Calculate total sections based on responses
+  const getTotalSections = () => {
+    let sections = 6 // Base sections: Qual, Credit Mgmt, Current Practices, Risk Mitigation, Company Profile, Email
 
-  const madeChanges = () => {
-    return formData.q7_changed_approach === 'yes-significant' ||
-           formData.q7_changed_approach === 'yes-minor'
-  }
+    const hasBadDebt = formData.q4_bad_debt_experience === 'yes-multiple' ||
+                       formData.q4_bad_debt_experience === 'yes-once-or-twice'
+    if (hasBadDebt) sections++ // Add Bad Debt section
 
-  const usesTCI = () => {
-    return formData.q10_risk_mechanisms?.includes('trade-credit-insurance') || false
-  }
-
-  // Get ordered list of sections based on user's path
-  const getSectionOrder = (): SectionId[] => {
-    const sections: SectionId[] = [
-      'qualification',
-      'payment-terms',
-      'bad-debt-question',
-    ]
-
-    // Add bad debt sections if applicable
-    if (hasBadDebt()) {
-      sections.push('bad-debt-details')
-      if (madeChanges()) {
-        sections.push('bad-debt-changes')
-      }
-    }
-
-    sections.push('current-practices')
-
-    // Add TCI section if applicable
-    if (usesTCI()) {
-      sections.push('tci-questions')
-    }
-
-    sections.push('company-profile', 'email-capture')
+    const usesTCI = formData.q10_risk_mechanisms?.includes('trade-credit-insurance')
+    if (usesTCI) sections++ // Add TCI section
 
     return sections
   }
 
   const getCurrentProgress = () => {
-    const sections = getSectionOrder()
-    const currentIndex = sections.indexOf(currentSectionId)
-    return Math.round(((currentIndex + 1) / sections.length) * 100)
-  }
-
-  const getCurrentSectionNumber = () => {
-    const sections = getSectionOrder()
-    return sections.indexOf(currentSectionId) + 1
-  }
-
-  const getTotalSections = () => {
-    return getSectionOrder().length
+    return Math.round((currentSection / getTotalSections()) * 100)
   }
 
   const handleCheckboxChange = (field: keyof SurveyData, value: string, checked: boolean) => {
@@ -201,30 +153,68 @@ export default function SurveyPage() {
   }
 
   const handleNext = () => {
-    const sections = getSectionOrder()
-    const currentIndex = sections.indexOf(currentSectionId)
-
-    // Screen out logic
-    if (currentSectionId === 'qualification' && formData.q1_b2b_percentage === 'less-than-25') {
+    // Screen out logic for Q1
+    if (currentSection === 0 && formData.q1_b2b_percentage === 'less-than-25') {
+      // Clear saved data when screened out
       sessionStorage.removeItem('surveyFormData')
-      sessionStorage.removeItem('surveyCurrentSectionId')
+      sessionStorage.removeItem('surveyCurrentSection')
       setScreenedOut(true)
       return
     }
 
-    // Move to next section
-    if (currentIndex < sections.length - 1) {
-      setCurrentSectionId(sections[currentIndex + 1])
+    // Skip logic for Q4 (skip bad debt sections 3 and 4)
+    if (currentSection === 2) {
+      if (formData.q4_bad_debt_experience === 'no-never' ||
+          formData.q4_bad_debt_experience === 'prefer-not-say') {
+        setCurrentSection(5) // Skip sections 3 and 4, go to section 5
+        return
+      }
     }
+
+    // Skip logic for Q7 (skip Q7a if "no-same-approach")
+    if (currentSection === 3 && formData.q7_changed_approach === 'no-same-approach') {
+      setCurrentSection(5) // Skip section 4, go to section 5
+      return
+    }
+
+    // Skip logic for Q10 (skip TCI section if not selected)
+    if (currentSection === 5) {
+      const usesTCI = formData.q10_risk_mechanisms?.includes('trade-credit-insurance')
+      if (!usesTCI) {
+        // Skip TCI section, go to company profile
+        const hasBadDebt = formData.q4_bad_debt_experience === 'yes-multiple' ||
+                          formData.q4_bad_debt_experience === 'yes-once-or-twice'
+        setCurrentSection(hasBadDebt ? 7 : 6)
+        return
+      }
+    }
+
+    setCurrentSection(currentSection + 1)
   }
 
   const handleBack = () => {
-    const sections = getSectionOrder()
-    const currentIndex = sections.indexOf(currentSectionId)
+    // Handle back navigation with skip logic
+    if (currentSection === 5) {
+      // If going back from section 5, check if we should skip sections 3 and 4
+      const hasBadDebt = formData.q4_bad_debt_experience === 'yes-multiple' ||
+                         formData.q4_bad_debt_experience === 'yes-once-or-twice'
 
-    if (currentIndex > 0) {
-      setCurrentSectionId(sections[currentIndex - 1])
+      if (!hasBadDebt) {
+        // Skip back to section 2 (Q4)
+        setCurrentSection(2)
+        return
+      }
+
+      // If they have bad debt, check if Q7a should be shown
+      if (formData.q7_changed_approach === 'no-same-approach') {
+        // Skip section 4, go to section 3
+        setCurrentSection(3)
+        return
+      }
     }
+
+    // Default back navigation
+    setCurrentSection(Math.max(0, currentSection - 1))
   }
 
   const handleSubmit = async () => {
@@ -238,14 +228,18 @@ export default function SurveyPage() {
       // Clean data - remove empty strings and default values for conditional fields
       const cleanedData: any = { ...formData }
 
+      // Remove empty strings and 0 values for all fields
       Object.keys(cleanedData).forEach(key => {
         const value = cleanedData[key]
+        // Remove if empty string
         if (value === '') {
           delete cleanedData[key]
         }
+        // Remove if 0 (for rating fields that weren't answered)
         else if (typeof value === 'number' && value === 0) {
           delete cleanedData[key]
         }
+        // Remove if empty array
         else if (Array.isArray(value) && value.length === 0) {
           delete cleanedData[key]
         }
@@ -274,9 +268,10 @@ export default function SurveyPage() {
         return
       }
 
+      // Clear all survey data from sessionStorage on successful submission
       sessionStorage.removeItem('surveyStartTime')
       sessionStorage.removeItem('surveyFormData')
-      sessionStorage.removeItem('surveyCurrentSectionId')
+      sessionStorage.removeItem('surveyCurrentSection')
       setSubmitted(true)
     } catch (error) {
       console.error('Error submitting survey:', error)
@@ -357,8 +352,9 @@ export default function SurveyPage() {
   }
 
   const renderSection = () => {
-    switch (currentSectionId) {
-      case 'qualification':
+    switch (currentSection) {
+      // SECTION 0: Q1-Q2 Qualification
+      case 0:
         return (
           <div className="space-y-8">
             <div>
@@ -426,11 +422,12 @@ export default function SurveyPage() {
           </div>
         )
 
-      case 'payment-terms':
+      // SECTION 1: Q3-Q4 Credit Management
+      case 1:
         return (
           <div className="space-y-8">
             <div>
-              <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
+              <p className="text-sm text-slate-400 mb-6">Progress: Section 2 of {getTotalSections()}</p>
               <h2 className="text-2xl font-semibold text-white mb-2">
                 What credit payment terms do you typically offer?
               </h2>
@@ -459,10 +456,11 @@ export default function SurveyPage() {
           </div>
         )
 
-      case 'bad-debt-question':
+      // SECTION 2: Q4 Bad Debt Experience
+      case 2:
         return (
           <div>
-            <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
+            <p className="text-sm text-slate-400 mb-6">Progress: Section 3 of {getTotalSections()}</p>
             <h2 className="text-2xl font-semibold text-white mb-4">
               Have you ever experienced significant payment defaults or bad debt from customers?
             </h2>
@@ -489,11 +487,12 @@ export default function SurveyPage() {
           </div>
         )
 
-      case 'bad-debt-details':
+      // SECTION 3: Q5-Q7 Bad Debt Details (conditional)
+      case 3:
         return (
           <div className="space-y-8">
             <div>
-              <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
+              <p className="text-sm text-slate-400 mb-6">Progress: Section 4 of {getTotalSections()}</p>
               <h2 className="text-2xl font-semibold text-white mb-2">
                 Approximately how much has your company lost to bad debt over the past 5 years?
               </h2>
@@ -573,10 +572,11 @@ export default function SurveyPage() {
           </div>
         )
 
-      case 'bad-debt-changes':
+      // SECTION 4: Q7a Changes Made (conditional)
+      case 4:
         return (
           <div>
-            <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
+            <p className="text-sm text-slate-400 mb-6">Progress: Section 5 of {getTotalSections()}</p>
             <h2 className="text-2xl font-semibold text-white mb-2">
               What changes did you make?
             </h2>
@@ -615,11 +615,12 @@ export default function SurveyPage() {
           </div>
         )
 
-      case 'current-practices':
+      // SECTION 5: Q8-Q9 Current Practices & Q10 Risk Mechanisms
+      case 5:
         return (
           <div className="space-y-8">
             <div>
-              <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
+              <p className="text-sm text-slate-400 mb-6">Progress: Section {getTotalSections() - 3} of {getTotalSections()}</p>
               <h2 className="text-2xl font-semibold text-white mb-2">
                 How do you determine credit terms for new customers?
               </h2>
@@ -716,11 +717,12 @@ export default function SurveyPage() {
           </div>
         )
 
-      case 'tci-questions':
+      // SECTION 6: Q11-Q16 TCI Deep-dive (conditional)
+      case 6:
         return (
           <div className="space-y-8">
             <div>
-              <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
+              <p className="text-sm text-slate-400 mb-6">Progress: Section {getTotalSections() - 2} of {getTotalSections()}</p>
               <h2 className="text-2xl font-semibold text-white mb-4">
                 How long have you used trade credit insurance?
               </h2>
@@ -916,7 +918,13 @@ export default function SurveyPage() {
           </div>
         )
 
-      case 'company-profile':
+      // SECTION 7 (or 6): Q17-Q20 Company Profile
+      case 7:
+      case 6: // Can be either depending on TCI path
+        if (currentSection === 6 && formData.q10_risk_mechanisms?.includes('trade-credit-insurance')) {
+          // If we're at section 6 but use TCI, this shouldn't render
+          return null
+        }
         return (
           <div className="space-y-8">
             <div>
@@ -1003,7 +1011,9 @@ export default function SurveyPage() {
           </div>
         )
 
-      case 'email-capture':
+      // FINAL SECTION: Email Capture
+      case 8:
+      case 7: // Can be either depending on path
         return (
           <div className="space-y-8">
             <div className="text-center mb-8">
@@ -1150,40 +1160,58 @@ export default function SurveyPage() {
 
   // Check if current section can proceed
   const canProceed = () => {
-    switch (currentSectionId) {
-      case 'qualification':
+    switch (currentSection) {
+      case 0:
         return formData.q1_b2b_percentage && formData.q2_role
-      case 'payment-terms':
+      case 1:
         return formData.q3_payment_terms && formData.q3_payment_terms.length > 0
-      case 'bad-debt-question':
+      case 2:
         return formData.q4_bad_debt_experience
-      case 'bad-debt-details':
+      case 3:
         return formData.q5_bad_debt_amount && (formData.q6_bad_debt_impact ?? 0) > 0 && formData.q7_changed_approach
-      case 'bad-debt-changes':
+      case 4:
         return formData.q7a_changes_made && formData.q7a_changes_made.length > 0
-      case 'current-practices':
+      case 5:
         return (
           formData.q8_credit_assessment_methods && formData.q8_credit_assessment_methods.length > 0 &&
           formData.q9_ar_tracking_tools && formData.q9_ar_tracking_tools.length > 0 &&
           formData.q10_risk_mechanisms && formData.q10_risk_mechanisms.length > 0
         )
-      case 'tci-questions':
-        return (
-          formData.q11_tci_duration &&
-          formData.q12_tci_coverage &&
-          formData.q13_tci_provider &&
-          formData.q14_tci_interaction_frequency &&
-          (formData.q15_tci_satisfaction ?? 0) > 0 &&
-          formData.q16_tci_challenges && formData.q16_tci_challenges.length > 0
-        )
-      case 'company-profile':
+      case 6:
+        // If TCI section
+        if (formData.q10_risk_mechanisms?.includes('trade-credit-insurance')) {
+          return (
+            formData.q11_tci_duration &&
+            formData.q12_tci_coverage &&
+            formData.q13_tci_provider &&
+            formData.q14_tci_interaction_frequency &&
+            (formData.q15_tci_satisfaction ?? 0) > 0 &&
+            formData.q16_tci_challenges && formData.q16_tci_challenges.length > 0
+          )
+        }
+        // Otherwise company profile
         return (
           formData.q17_annual_revenue &&
           formData.q18_primary_industry &&
           formData.q19_company_headquarters &&
           formData.q20_international_sales_percentage
         )
-      case 'email-capture':
+      case 7:
+        // Company profile or email capture
+        const usesTCI = formData.q10_risk_mechanisms?.includes('trade-credit-insurance')
+        if (usesTCI) {
+          return (
+            formData.q17_annual_revenue &&
+            formData.q18_primary_industry &&
+            formData.q19_company_headquarters &&
+            formData.q20_international_sales_percentage
+          )
+        } else {
+          // Email capture - optional
+          return true
+        }
+      case 8:
+        // Email capture - if they want anything, email is required
         if (formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) {
           return formData.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
         }
@@ -1193,9 +1221,15 @@ export default function SurveyPage() {
     }
   }
 
+  // Determine if this is the last section
   const isLastSection = () => {
-    const sections = getSectionOrder()
-    return currentSectionId === sections[sections.length - 1]
+    const usesTCI = formData.q10_risk_mechanisms?.includes('trade-credit-insurance')
+    const hasBadDebt = formData.q4_bad_debt_experience === 'yes-multiple' ||
+                       formData.q4_bad_debt_experience === 'yes-once-or-twice'
+
+    if (usesTCI && hasBadDebt) return currentSection === 8
+    if (usesTCI || hasBadDebt) return currentSection === 7
+    return currentSection === 6
   }
 
   return (
@@ -1213,9 +1247,6 @@ export default function SurveyPage() {
               style={{ width: `${getCurrentProgress()}%` }}
             />
           </div>
-          <p className="text-xs text-slate-500 mt-2">
-            Section {getCurrentSectionNumber()} of {getTotalSections()}
-          </p>
         </div>
       </div>
 
@@ -1227,7 +1258,7 @@ export default function SurveyPage() {
 
             {/* Navigation Buttons */}
             <div className="flex gap-4 mt-8 pt-8 border-t border-slate-700">
-              {getCurrentSectionNumber() > 1 && (
+              {currentSection > 0 && (
                 <button
                   onClick={handleBack}
                   className="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200"
