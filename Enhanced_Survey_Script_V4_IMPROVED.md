@@ -5,6 +5,16 @@
 
 ---
 
+### 📝 Implementation Updates (Enhanced Version)
+
+**Changes from original V4 specification:**
+1. **Q3 (Payment Terms)**: Changed to single-select; split "Net 90 or longer" into "Net 90" and "More than Net 90"; removed "Varies significantly by customer"
+2. **Q13 (TCI Provider)**: Changed to multi-select (checkboxes) - respondents can select multiple providers
+3. **Q18 (Primary Industry)**: Changed to dropdown/radio selection with 12 predefined industries + "Other" option
+4. **Q19 (Company Headquarters)**: Changed to dropdown/radio selection with 16 predefined countries + "Other" option
+
+---
+
 ## SECTION 1: INTRODUCTION (VALUE-FOCUSED)
 
 ### Welcome Screen
@@ -54,13 +64,12 @@ Most B2B companies face payment defaults that cost billions in bad debt annually
 **Progress: Section 2 of 6**
 
 ### Q3: What credit payment terms do you typically offer?
-*Select all that apply*
 
+- [ ] Net 15 or shorter
 - [ ] Net 30
 - [ ] Net 60
-- [ ] Net 90 or longer
-- [ ] Net 15 or shorter
-- [ ] Varies significantly by customer
+- [ ] Net 90
+- [ ] More than Net 90
 - [ ] Mostly cash/payment on delivery
 
 ---
@@ -188,7 +197,9 @@ Most B2B companies face payment defaults that cost billions in bad debt annually
 ---
 
 ### Q13: Who is your TCI provider?
-- [ ] Allianz Trade (incl.Euler Hermes)
+*Please select all that apply*
+
+- [ ] Allianz Trade (incl. Euler Hermes)
 - [ ] Atradius
 - [ ] Coface
 - [ ] AIG
@@ -245,23 +256,40 @@ Very dissatisfied → Very satisfied
 ---
 
 ### Q18: What is your company's primary industry?
-*[Searchable dropdown with common industries at top]*
 
-Priority order:
-- Manufacturing
-- Wholesale/Distribution
-- Professional Services
-- Technology/Software
-- Construction
-- Transportation/Logistics
-- Healthcare
-- Food & Beverage
-- Other: _______
+- [ ] Manufacturing
+- [ ] Wholesale/Distribution
+- [ ] Technology/Software
+- [ ] Construction
+- [ ] Healthcare
+- [ ] Professional Services
+- [ ] Transportation/Logistics
+- [ ] Retail
+- [ ] Food & Beverage
+- [ ] Chemicals
+- [ ] Textiles/Apparel
+- [ ] Other: _______
 
 ---
 
 ### Q19: Where is your company headquartered?
-*[Searchable dropdown - show user's country first based on IP]*
+
+- [ ] United States
+- [ ] Canada
+- [ ] United Kingdom
+- [ ] Germany
+- [ ] France
+- [ ] Netherlands
+- [ ] Belgium
+- [ ] Spain
+- [ ] Italy
+- [ ] Switzerland
+- [ ] Australia
+- [ ] China
+- [ ] India
+- [ ] Japan
+- [ ] Singapore
+- [ ] Other: _______
 
 ---
 
@@ -622,7 +650,8 @@ Track these to measure effectiveness:
 - [ ] Build all 20 questions
 - [ ] Set up 4 branching paths
 - [ ] Add progress indicators
-- [ ] Configure searchable dropdowns (Q18-19)
+- [ ] Configure radio buttons for Q3 (single select), Q18-19 (dropdown style)
+- [ ] Configure checkboxes for Q13 (multiple select)
 - [ ] Test on desktop, mobile, tablet
 - [ ] Time completion with 5 people
 

@@ -68,14 +68,12 @@ exports.validateSurveyResponse = [
     .trim()
     .isLength({ max: 100 }).withMessage('Role description cannot exceed 100 characters'),
 
-  // Q3 - Payment terms (array)
+  // Q3 - Payment terms (single selection)
   body('q3_payment_terms')
     .if(body('q1_b2b_percentage').not().equals('less-than-25'))
-    .isArray({ min: 1 }).withMessage('At least one payment term must be selected')
-    .custom((value) => {
-      const validTerms = ['net-30', 'net-60', 'net-90-or-longer', 'net-15-or-shorter', 'varies-by-customer', 'cash-payment-on-delivery'];
-      return value.every(term => validTerms.includes(term));
-    }).withMessage('Invalid payment terms'),
+    .notEmpty().withMessage('Payment term is required')
+    .isIn(['net-15-or-shorter', 'net-30', 'net-60', 'net-90', 'more-than-net-90', 'cash-payment-on-delivery'])
+    .withMessage('Invalid payment term'),
 
   // Q4 - Bad debt experience
   body('q4_bad_debt_experience')
@@ -111,6 +109,15 @@ exports.validateSurveyResponse = [
       return value.every(mechanism => validMechanisms.includes(mechanism));
     }).withMessage('Invalid risk mechanisms'),
 
+  // Q13 - TCI provider (array, conditional)
+  body('q13_tci_provider')
+    .optional({ nullable: true, checkFalsy: true })
+    .isArray({ min: 1 }).withMessage('At least one TCI provider must be selected')
+    .custom((value) => {
+      const validProviders = ['allianz-trade', 'atradius', 'coface', 'aig', 'zurich', 'other', 'prefer-not-say'];
+      return value.every(provider => validProviders.includes(provider));
+    }).withMessage('Invalid TCI provider'),
+
   // Q17 - Annual revenue
   body('q17_annual_revenue')
     .if(body('q1_b2b_percentage').not().equals('less-than-25'))
@@ -121,15 +128,25 @@ exports.validateSurveyResponse = [
   // Q18 - Primary industry
   body('q18_primary_industry')
     .if(body('q1_b2b_percentage').not().equals('less-than-25'))
-    .trim()
     .notEmpty().withMessage('Primary industry is required')
+    .isIn(['manufacturing', 'wholesale-distribution', 'technology-software', 'construction', 'healthcare', 'professional-services', 'transportation-logistics', 'retail', 'food-beverage', 'chemicals', 'textiles-apparel', 'other'])
+    .withMessage('Invalid industry value'),
+
+  body('q18_primary_industry_other')
+    .optional({ nullable: true, checkFalsy: true })
+    .trim()
     .isLength({ max: 100 }).withMessage('Industry cannot exceed 100 characters'),
 
   // Q19 - Company headquarters
   body('q19_company_headquarters')
     .if(body('q1_b2b_percentage').not().equals('less-than-25'))
-    .trim()
     .notEmpty().withMessage('Company headquarters is required')
+    .isIn(['united-states', 'canada', 'united-kingdom', 'germany', 'france', 'netherlands', 'belgium', 'spain', 'italy', 'switzerland', 'australia', 'china', 'india', 'japan', 'singapore', 'other'])
+    .withMessage('Invalid country value'),
+
+  body('q19_company_headquarters_other')
+    .optional({ nullable: true, checkFalsy: true })
+    .trim()
     .isLength({ max: 100 }).withMessage('Country cannot exceed 100 characters'),
 
   // Q20 - International sales percentage

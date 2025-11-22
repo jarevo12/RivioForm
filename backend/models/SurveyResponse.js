@@ -39,15 +39,15 @@ const surveyResponseSchema = new mongoose.Schema(
 
     // ========== CREDIT MANAGEMENT (Q3-Q4) ==========
     q3_payment_terms: {
-      type: [String],
+      type: String,
       required: function() { return !this.screenedOut; },
-      // Multi-select array
+      // Single selection
       enum: [
+        'net-15-or-shorter',
         'net-30',
         'net-60',
-        'net-90-or-longer',
-        'net-15-or-shorter',
-        'varies-by-customer',
+        'net-90',
+        'more-than-net-90',
         'cash-payment-on-delivery'
       ],
     },
@@ -178,7 +178,7 @@ const surveyResponseSchema = new mongoose.Schema(
       maxlength: [200, 'Coverage description cannot exceed 200 characters'],
     },
     q13_tci_provider: {
-      type: String,
+      type: [String],
       enum: [
         'allianz-trade',
         'atradius',
@@ -189,6 +189,7 @@ const surveyResponseSchema = new mongoose.Schema(
         'prefer-not-say'
       ],
       // Only filled if usesTCI is true
+      // Multi-select array
     },
     q13_tci_provider_other: {
       type: String,
@@ -249,12 +250,50 @@ const surveyResponseSchema = new mongoose.Schema(
     q18_primary_industry: {
       type: String,
       required: function() { return !this.screenedOut; },
+      enum: [
+        'manufacturing',
+        'wholesale-distribution',
+        'technology-software',
+        'construction',
+        'healthcare',
+        'professional-services',
+        'transportation-logistics',
+        'retail',
+        'food-beverage',
+        'chemicals',
+        'textiles-apparel',
+        'other'
+      ],
+    },
+    q18_primary_industry_other: {
+      type: String,
       trim: true,
       maxlength: [100, 'Industry cannot exceed 100 characters'],
     },
     q19_company_headquarters: {
       type: String,
       required: function() { return !this.screenedOut; },
+      enum: [
+        'united-states',
+        'canada',
+        'united-kingdom',
+        'germany',
+        'france',
+        'netherlands',
+        'belgium',
+        'spain',
+        'italy',
+        'switzerland',
+        'australia',
+        'china',
+        'india',
+        'japan',
+        'singapore',
+        'other'
+      ],
+    },
+    q19_company_headquarters_other: {
+      type: String,
       trim: true,
       maxlength: [100, 'Country cannot exceed 100 characters'],
     },

@@ -23,7 +23,7 @@ type SurveyData = {
   q2_role: string
   q2_role_other: string
   // Credit Management
-  q3_payment_terms: string[]
+  q3_payment_terms: string
   q4_bad_debt_experience: string
   // Bad Debt (conditional)
   q5_bad_debt_amount: string
@@ -41,7 +41,7 @@ type SurveyData = {
   q11_tci_duration: string
   q12_tci_coverage: string
   q12_tci_coverage_other: string
-  q13_tci_provider: string
+  q13_tci_provider: string[]
   q13_tci_provider_other: string
   q14_tci_interaction_frequency: string
   q15_tci_satisfaction: number
@@ -50,7 +50,9 @@ type SurveyData = {
   // Company Profile
   q17_annual_revenue: string
   q18_primary_industry: string
+  q18_primary_industry_other: string
   q19_company_headquarters: string
+  q19_company_headquarters_other: string
   q20_international_sales_percentage: string
   // Email capture
   email: string
@@ -74,7 +76,7 @@ export default function SurveyPage() {
     q1_b2b_percentage: '',
     q2_role: '',
     q2_role_other: '',
-    q3_payment_terms: [],
+    q3_payment_terms: '',
     q4_bad_debt_experience: '',
     q5_bad_debt_amount: '',
     q6_bad_debt_impact: 0,
@@ -88,7 +90,7 @@ export default function SurveyPage() {
     q11_tci_duration: '',
     q12_tci_coverage: '',
     q12_tci_coverage_other: '',
-    q13_tci_provider: '',
+    q13_tci_provider: [],
     q13_tci_provider_other: '',
     q14_tci_interaction_frequency: '',
     q15_tci_satisfaction: 0,
@@ -96,7 +98,9 @@ export default function SurveyPage() {
     q16_tci_challenges_other: '',
     q17_annual_revenue: '',
     q18_primary_industry: '',
+    q18_primary_industry_other: '',
     q19_company_headquarters: '',
+    q19_company_headquarters_other: '',
     q20_international_sales_percentage: '',
     email: '',
     contactName: '',
@@ -431,25 +435,26 @@ export default function SurveyPage() {
           <div className="space-y-8">
             <div>
               <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
-              <h2 className="text-2xl font-semibold text-white mb-2">
+              <h2 className="text-2xl font-semibold text-white mb-4">
                 What credit payment terms do you typically offer?
               </h2>
-              <p className="text-sm text-slate-400 mb-4">Select all that apply</p>
               <div className="space-y-3">
                 {[
+                  { value: 'net-15-or-shorter', label: 'Net 15 or shorter' },
                   { value: 'net-30', label: 'Net 30' },
                   { value: 'net-60', label: 'Net 60' },
-                  { value: 'net-90-or-longer', label: 'Net 90 or longer' },
-                  { value: 'net-15-or-shorter', label: 'Net 15 or shorter' },
-                  { value: 'varies-by-customer', label: 'Varies significantly by customer' },
+                  { value: 'net-90', label: 'Net 90' },
+                  { value: 'more-than-net-90', label: 'More than Net 90' },
                   { value: 'cash-payment-on-delivery', label: 'Mostly cash/payment on delivery' },
                 ].map((option) => (
                   <label key={option.value} className="flex items-center p-4 bg-slate-900 rounded-lg cursor-pointer hover:bg-slate-800 transition">
                     <input
-                      type="checkbox"
-                      checked={formData.q3_payment_terms?.includes(option.value)}
-                      onChange={(e) => handleCheckboxChange('q3_payment_terms', option.value, e.target.checked)}
-                      className="w-5 h-5 text-blue-600 rounded"
+                      type="radio"
+                      name="q3"
+                      value={option.value}
+                      checked={formData.q3_payment_terms === option.value}
+                      onChange={(e) => setFormData({ ...formData, q3_payment_terms: e.target.value })}
+                      className="w-5 h-5 text-blue-600"
                     />
                     <span className="ml-3 text-white">{option.label}</span>
                   </label>
@@ -783,9 +788,10 @@ export default function SurveyPage() {
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold text-white mb-4">
+              <h2 className="text-2xl font-semibold text-white mb-2">
                 Who is your TCI provider?
               </h2>
+              <p className="text-sm text-slate-400 mb-4">Please select all that apply</p>
               <div className="space-y-3">
                 {[
                   { value: 'allianz-trade', label: 'Allianz Trade (incl. Euler Hermes)' },
@@ -798,18 +804,16 @@ export default function SurveyPage() {
                 ].map((option) => (
                   <label key={option.value} className="flex items-center p-4 bg-slate-900 rounded-lg cursor-pointer hover:bg-slate-800 transition">
                     <input
-                      type="radio"
-                      name="q13"
-                      value={option.value}
-                      checked={formData.q13_tci_provider === option.value}
-                      onChange={(e) => setFormData({ ...formData, q13_tci_provider: e.target.value })}
-                      className="w-5 h-5 text-blue-600"
+                      type="checkbox"
+                      checked={formData.q13_tci_provider?.includes(option.value)}
+                      onChange={(e) => handleCheckboxChange('q13_tci_provider', option.value, e.target.checked)}
+                      className="w-5 h-5 text-blue-600 rounded"
                     />
                     <span className="ml-3 text-white">{option.label}</span>
                   </label>
                 ))}
               </div>
-              {formData.q13_tci_provider === 'other' && (
+              {formData.q13_tci_provider?.includes('other') && (
                 <input
                   type="text"
                   placeholder="Please specify provider"
@@ -952,26 +956,90 @@ export default function SurveyPage() {
               <h2 className="text-2xl font-semibold text-white mb-4">
                 What is your company's primary industry?
               </h2>
-              <input
-                type="text"
-                placeholder="e.g., Manufacturing, Wholesale/Distribution, Technology..."
-                value={formData.q18_primary_industry}
-                onChange={(e) => setFormData({ ...formData, q18_primary_industry: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
+              <div className="space-y-3">
+                {[
+                  { value: 'manufacturing', label: 'Manufacturing' },
+                  { value: 'wholesale-distribution', label: 'Wholesale/Distribution' },
+                  { value: 'technology-software', label: 'Technology/Software' },
+                  { value: 'construction', label: 'Construction' },
+                  { value: 'healthcare', label: 'Healthcare' },
+                  { value: 'professional-services', label: 'Professional Services' },
+                  { value: 'transportation-logistics', label: 'Transportation/Logistics' },
+                  { value: 'retail', label: 'Retail' },
+                  { value: 'food-beverage', label: 'Food & Beverage' },
+                  { value: 'chemicals', label: 'Chemicals' },
+                  { value: 'textiles-apparel', label: 'Textiles/Apparel' },
+                  { value: 'other', label: 'Other' },
+                ].map((option) => (
+                  <label key={option.value} className="flex items-center p-4 bg-slate-900 rounded-lg cursor-pointer hover:bg-slate-800 transition">
+                    <input
+                      type="radio"
+                      name="q18"
+                      value={option.value}
+                      checked={formData.q18_primary_industry === option.value}
+                      onChange={(e) => setFormData({ ...formData, q18_primary_industry: e.target.value })}
+                      className="w-5 h-5 text-blue-600"
+                    />
+                    <span className="ml-3 text-white">{option.label}</span>
+                  </label>
+                ))}
+              </div>
+              {formData.q18_primary_industry === 'other' && (
+                <input
+                  type="text"
+                  placeholder="Please specify your industry"
+                  value={formData.q18_primary_industry_other || ''}
+                  onChange={(e) => setFormData({ ...formData, q18_primary_industry_other: e.target.value })}
+                  className="mt-3 w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              )}
             </div>
 
             <div>
               <h2 className="text-2xl font-semibold text-white mb-4">
                 Where is your company headquartered?
               </h2>
-              <input
-                type="text"
-                placeholder="Country"
-                value={formData.q19_company_headquarters}
-                onChange={(e) => setFormData({ ...formData, q19_company_headquarters: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
+              <div className="space-y-3">
+                {[
+                  { value: 'united-states', label: 'United States' },
+                  { value: 'canada', label: 'Canada' },
+                  { value: 'united-kingdom', label: 'United Kingdom' },
+                  { value: 'germany', label: 'Germany' },
+                  { value: 'france', label: 'France' },
+                  { value: 'netherlands', label: 'Netherlands' },
+                  { value: 'belgium', label: 'Belgium' },
+                  { value: 'spain', label: 'Spain' },
+                  { value: 'italy', label: 'Italy' },
+                  { value: 'switzerland', label: 'Switzerland' },
+                  { value: 'australia', label: 'Australia' },
+                  { value: 'china', label: 'China' },
+                  { value: 'india', label: 'India' },
+                  { value: 'japan', label: 'Japan' },
+                  { value: 'singapore', label: 'Singapore' },
+                  { value: 'other', label: 'Other' },
+                ].map((option) => (
+                  <label key={option.value} className="flex items-center p-4 bg-slate-900 rounded-lg cursor-pointer hover:bg-slate-800 transition">
+                    <input
+                      type="radio"
+                      name="q19"
+                      value={option.value}
+                      checked={formData.q19_company_headquarters === option.value}
+                      onChange={(e) => setFormData({ ...formData, q19_company_headquarters: e.target.value })}
+                      className="w-5 h-5 text-blue-600"
+                    />
+                    <span className="ml-3 text-white">{option.label}</span>
+                  </label>
+                ))}
+              </div>
+              {formData.q19_company_headquarters === 'other' && (
+                <input
+                  type="text"
+                  placeholder="Please specify your country"
+                  value={formData.q19_company_headquarters_other || ''}
+                  onChange={(e) => setFormData({ ...formData, q19_company_headquarters_other: e.target.value })}
+                  className="mt-3 w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              )}
             </div>
 
             <div>
@@ -1154,7 +1222,7 @@ export default function SurveyPage() {
       case 'qualification':
         return formData.q1_b2b_percentage && formData.q2_role
       case 'payment-terms':
-        return formData.q3_payment_terms && formData.q3_payment_terms.length > 0
+        return formData.q3_payment_terms && formData.q3_payment_terms !== ''
       case 'bad-debt-question':
         return formData.q4_bad_debt_experience
       case 'bad-debt-details':
@@ -1171,7 +1239,7 @@ export default function SurveyPage() {
         return (
           formData.q11_tci_duration &&
           formData.q12_tci_coverage &&
-          formData.q13_tci_provider &&
+          formData.q13_tci_provider && formData.q13_tci_provider.length > 0 &&
           formData.q14_tci_interaction_frequency &&
           (formData.q15_tci_satisfaction ?? 0) > 0 &&
           formData.q16_tci_challenges && formData.q16_tci_challenges.length > 0
