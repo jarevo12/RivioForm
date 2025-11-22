@@ -16,6 +16,7 @@ const morgan = require('morgan');
 const logger = require('./config/logger');
 const { connectDB } = require('./config/database');
 const applicantRoutes = require('./routes/applicant.routes');
+const surveyRoutes = require('./routes/survey.routes');
 const healthRoutes = require('./routes/health.routes');
 const authRoutes = require('./routes/auth.routes');
 const errorHandler = require('./middleware/errorHandler');
@@ -91,6 +92,12 @@ applicantRouter.post('/', formLimiter);
 applicantRouter.use('/', applicantRoutes);
 app.use('/api/applicants', applicantRouter);
 
+// Survey routes - form limiter on POST
+const surveyRouter = require('express').Router();
+surveyRouter.post('/', formLimiter);
+surveyRouter.use('/', surveyRoutes);
+app.use('/api/survey', surveyRouter);
+
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
@@ -100,6 +107,7 @@ app.get('/', (req, res) => {
     endpoints: {
       health: '/api/health',
       applicants: '/api/applicants',
+      survey: '/api/survey',
       docs: '/api/docs'
     }
   });

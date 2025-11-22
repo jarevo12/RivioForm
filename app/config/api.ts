@@ -6,5 +6,6 @@ export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000
 export const API_ENDPOINTS = {
   applicants: `${API_URL}/api/applicants`,
   applicantStats: `${API_URL}/api/applicants/stats`,
+  survey: `${API_URL}/api/survey`,
   health: `${API_URL}/api/health`,
 };
