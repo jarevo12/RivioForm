@@ -225,13 +225,33 @@ export default function SurveyPage() {
         ? Math.floor((Date.now() - parseInt(startTime)) / 1000)
         : undefined
 
+      // Clean data - remove empty strings and default values for conditional fields
+      const cleanedData: any = { ...formData }
+
+      // Remove empty strings and 0 values for all fields
+      Object.keys(cleanedData).forEach(key => {
+        const value = cleanedData[key]
+        // Remove if empty string
+        if (value === '') {
+          delete cleanedData[key]
+        }
+        // Remove if 0 (for rating fields that weren't answered)
+        else if (typeof value === 'number' && value === 0) {
+          delete cleanedData[key]
+        }
+        // Remove if empty array
+        else if (Array.isArray(value) && value.length === 0) {
+          delete cleanedData[key]
+        }
+      })
+
       const response = await fetch(API_ENDPOINTS.survey, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
+          ...cleanedData,
           completionTime,
         }),
       })
