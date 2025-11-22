@@ -1,8 +1,145 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { API_ENDPOINTS } from '../config/api'
+
+// Searchable Select Component
+type SearchableSelectProps = {
+  value: string
+  onChange: (value: string) => void
+  options: { value: string; label: string }[]
+  placeholder?: string
+  className?: string
+}
+
+function SearchableSelect({ value, onChange, options, placeholder, className }: SearchableSelectProps) {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+  const [highlightedIndex, setHighlightedIndex] = useState(0)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Filter options based on search term
+  const filteredOptions = options.filter(option =>
+    option.label.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  // Get display value
+  const displayValue = options.find(opt => opt.value === value)?.label || ''
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+        setSearchTerm('')
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  // Handle keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!isOpen) {
+      if (e.key === 'ArrowDown' || e.key === 'Enter') {
+        setIsOpen(true)
+        e.preventDefault()
+      }
+      return
+    }
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault()
+        setHighlightedIndex(prev =>
+          prev < filteredOptions.length - 1 ? prev + 1 : prev
+        )
+        break
+      case 'ArrowUp':
+        e.preventDefault()
+        setHighlightedIndex(prev => prev > 0 ? prev - 1 : prev)
+        break
+      case 'Enter':
+        e.preventDefault()
+        if (filteredOptions[highlightedIndex]) {
+          handleSelect(filteredOptions[highlightedIndex].value)
+        }
+        break
+      case 'Escape':
+        setIsOpen(false)
+        setSearchTerm('')
+        break
+    }
+  }
+
+  const handleSelect = (selectedValue: string) => {
+    onChange(selectedValue)
+    setIsOpen(false)
+    setSearchTerm('')
+    setHighlightedIndex(0)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value)
+    setIsOpen(true)
+    setHighlightedIndex(0)
+  }
+
+  const handleInputFocus = () => {
+    setIsOpen(true)
+  }
+
+  // Scroll highlighted option into view
+  useEffect(() => {
+    if (isOpen && highlightedIndex >= 0) {
+      const optionElement = document.getElementById(`option-${highlightedIndex}`)
+      optionElement?.scrollIntoView({ block: 'nearest' })
+    }
+  }, [highlightedIndex, isOpen])
+
+  return (
+    <div ref={wrapperRef} className={`relative ${className || ''}`}>
+      <input
+        ref={inputRef}
+        type="text"
+        value={isOpen ? searchTerm : displayValue}
+        onChange={handleInputChange}
+        onFocus={handleInputFocus}
+        onKeyDown={handleKeyDown}
+        placeholder={placeholder || 'Type to search...'}
+        className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        autoComplete="off"
+      />
+
+      {isOpen && (
+        <div className="absolute z-10 w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg shadow-xl max-h-60 overflow-y-auto">
+          {filteredOptions.length > 0 ? (
+            filteredOptions.map((option, index) => (
+              <div
+                key={option.value}
+                id={`option-${index}`}
+                onClick={() => handleSelect(option.value)}
+                className={`px-4 py-3 cursor-pointer transition ${
+                  index === highlightedIndex
+                    ? 'bg-blue-600 text-white'
+                    : value === option.value
+                    ? 'bg-slate-800 text-white'
+                    : 'text-slate-300 hover:bg-slate-800'
+                }`}
+              >
+                {option.label}
+              </div>
+            ))
+          ) : (
+            <div className="px-4 py-3 text-slate-500">No matches found</div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
 
 // Define section types
 type SectionId =
@@ -956,8 +1093,10 @@ export default function SurveyPage() {
               <h2 className="text-2xl font-semibold text-white mb-4">
                 What is your company's primary industry?
               </h2>
-              <div className="space-y-3">
-                {[
+              <SearchableSelect
+                value={formData.q18_primary_industry || ''}
+                onChange={(value) => setFormData({ ...formData, q18_primary_industry: value })}
+                options={[
                   { value: 'manufacturing', label: 'Manufacturing' },
                   { value: 'wholesale-distribution', label: 'Wholesale/Distribution' },
                   { value: 'technology-software', label: 'Technology/Software' },
@@ -970,20 +1109,9 @@ export default function SurveyPage() {
                   { value: 'chemicals', label: 'Chemicals' },
                   { value: 'textiles-apparel', label: 'Textiles/Apparel' },
                   { value: 'other', label: 'Other' },
-                ].map((option) => (
-                  <label key={option.value} className="flex items-center p-4 bg-slate-900 rounded-lg cursor-pointer hover:bg-slate-800 transition">
-                    <input
-                      type="radio"
-                      name="q18"
-                      value={option.value}
-                      checked={formData.q18_primary_industry === option.value}
-                      onChange={(e) => setFormData({ ...formData, q18_primary_industry: e.target.value })}
-                      className="w-5 h-5 text-blue-600"
-                    />
-                    <span className="ml-3 text-white">{option.label}</span>
-                  </label>
-                ))}
-              </div>
+                ]}
+                placeholder="Type to search industries..."
+              />
               {formData.q18_primary_industry === 'other' && (
                 <input
                   type="text"
@@ -999,8 +1127,10 @@ export default function SurveyPage() {
               <h2 className="text-2xl font-semibold text-white mb-4">
                 Where is your company headquartered?
               </h2>
-              <div className="space-y-3">
-                {[
+              <SearchableSelect
+                value={formData.q19_company_headquarters || ''}
+                onChange={(value) => setFormData({ ...formData, q19_company_headquarters: value })}
+                options={[
                   { value: 'united-states', label: 'United States' },
                   { value: 'canada', label: 'Canada' },
                   { value: 'united-kingdom', label: 'United Kingdom' },
@@ -1017,20 +1147,9 @@ export default function SurveyPage() {
                   { value: 'japan', label: 'Japan' },
                   { value: 'singapore', label: 'Singapore' },
                   { value: 'other', label: 'Other' },
-                ].map((option) => (
-                  <label key={option.value} className="flex items-center p-4 bg-slate-900 rounded-lg cursor-pointer hover:bg-slate-800 transition">
-                    <input
-                      type="radio"
-                      name="q19"
-                      value={option.value}
-                      checked={formData.q19_company_headquarters === option.value}
-                      onChange={(e) => setFormData({ ...formData, q19_company_headquarters: e.target.value })}
-                      className="w-5 h-5 text-blue-600"
-                    />
-                    <span className="ml-3 text-white">{option.label}</span>
-                  </label>
-                ))}
-              </div>
+                ]}
+                placeholder="Type to search countries..."
+              />
               {formData.q19_company_headquarters === 'other' && (
                 <input
                   type="text"
