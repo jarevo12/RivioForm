@@ -356,6 +356,8 @@ export default function SurveyPage() {
     // Move to next section
     if (currentIndex < sections.length - 1) {
       setCurrentSectionId(sections[currentIndex + 1])
+      // Scroll to top of page smoothly
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
@@ -365,6 +367,8 @@ export default function SurveyPage() {
 
     if (currentIndex > 0) {
       setCurrentSectionId(sections[currentIndex - 1])
+      // Scroll to top of page smoothly
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
@@ -567,17 +571,17 @@ export default function SurveyPage() {
                   { value: '51-75', label: '51-75%' },
                   { value: '76-100', label: '76-100%' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
-                    <input
-                      type="radio"
-                      name="q1"
-                      value={option.value}
-                      checked={formData.q1_b2b_percentage === option.value}
-                      onChange={(e) => setFormData({ ...formData, q1_b2b_percentage: e.target.value })}
-                      className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
-                    />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
-                  </label>
+                  <div
+                    key={option.value}
+                    onClick={() => setFormData({ ...formData, q1_b2b_percentage: option.value })}
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q1_b2b_percentage === option.value
+                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
+                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  </div>
                 ))}
               </div>
             </div>
@@ -594,17 +598,17 @@ export default function SurveyPage() {
                   { value: 'coo', label: 'COO (involved in credit decisions)' },
                   { value: 'other', label: 'Other role' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
-                    <input
-                      type="radio"
-                      name="q2"
-                      value={option.value}
-                      checked={formData.q2_role === option.value}
-                      onChange={(e) => setFormData({ ...formData, q2_role: e.target.value })}
-                      className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
-                    />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
-                  </label>
+                  <div
+                    key={option.value}
+                    onClick={() => setFormData({ ...formData, q2_role: option.value })}
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q2_role === option.value
+                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
+                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  </div>
                 ))}
               </div>
               {formData.q2_role === 'other' && (
@@ -636,17 +640,17 @@ export default function SurveyPage() {
                   { value: 'more-than-net-90', label: 'More than Net 90' },
                   { value: 'cash-payment-on-delivery', label: 'Mostly cash/payment on delivery' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
-                    <input
-                      type="radio"
-                      name="q3"
-                      value={option.value}
-                      checked={formData.q3_payment_terms === option.value}
-                      onChange={(e) => setFormData({ ...formData, q3_payment_terms: e.target.value })}
-                      className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
-                    />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
-                  </label>
+                  <div
+                    key={option.value}
+                    onClick={() => setFormData({ ...formData, q3_payment_terms: option.value })}
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q3_payment_terms === option.value
+                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
+                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  </div>
                 ))}
               </div>
             </div>
@@ -656,8 +660,7 @@ export default function SurveyPage() {
       case 'bad-debt-question':
         return (
           <div>
-            <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
-            <h2 className="text-2xl font-semibold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
               Have you ever experienced significant payment defaults or bad debt from customers?
             </h2>
             <div className="space-y-3">
@@ -667,17 +670,17 @@ export default function SurveyPage() {
                 { value: 'no-never', label: 'No, never' },
                 { value: 'prefer-not-say', label: 'Prefer not to say' },
               ].map((option) => (
-                <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
-                  <input
-                    type="radio"
-                    name="q4"
-                    value={option.value}
-                    checked={formData.q4_bad_debt_experience === option.value}
-                    onChange={(e) => setFormData({ ...formData, q4_bad_debt_experience: e.target.value })}
-                    className="w-5 h-5 text-blue-600"
-                  />
-                  <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
-                </label>
+                <div
+                  key={option.value}
+                  onClick={() => setFormData({ ...formData, q4_bad_debt_experience: option.value })}
+                  className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    formData.q4_bad_debt_experience === option.value
+                      ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                      : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                  }`}
+                >
+                  <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                </div>
               ))}
             </div>
           </div>
@@ -702,17 +705,17 @@ export default function SurveyPage() {
                   { value: 'over-5m', label: 'Over $5 million' },
                   { value: 'prefer-not-say', label: 'Prefer not to say' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
-                    <input
-                      type="radio"
-                      name="q5"
-                      value={option.value}
-                      checked={formData.q5_bad_debt_amount === option.value}
-                      onChange={(e) => setFormData({ ...formData, q5_bad_debt_amount: e.target.value })}
-                      className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
-                    />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
-                  </label>
+                  <div
+                    key={option.value}
+                    onClick={() => setFormData({ ...formData, q5_bad_debt_amount: option.value })}
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q5_bad_debt_amount === option.value
+                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
+                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  </div>
                 ))}
               </div>
             </div>
@@ -722,12 +725,12 @@ export default function SurveyPage() {
                 How significantly did bad debt impact your business?
               </h2>
               <p className="text-lg text-[#2D6A4F] mb-6">1 = Minor inconvenience → 5 = Severe impact (threatened viability)</p>
-              <div className="flex justify-between gap-2">
+              <div className="flex justify-between gap-1 sm:gap-2">
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <button
                     key={rating}
                     onClick={() => setFormData({ ...formData, q6_bad_debt_impact: rating })}
-                    className={`flex-1 py-4 px-6 rounded-xl font-semibold transition-all duration-200 ${
+                    className={`flex-1 py-3 sm:py-4 px-2 sm:px-6 rounded-xl font-semibold text-base sm:text-lg transition-all duration-200 ${
                       formData.q6_bad_debt_impact === rating
                         ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg scale-105'
                         : 'bg-white/40 backdrop-blur-sm text-[#1F4D3D] hover:bg-white/60 border-2 border-white/30 hover:border-white/50 shadow-sm'
@@ -749,17 +752,17 @@ export default function SurveyPage() {
                   { value: 'yes-minor', label: 'Yes, made minor adjustments' },
                   { value: 'no-same-approach', label: 'No, kept the same approach' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
-                    <input
-                      type="radio"
-                      name="q7"
-                      value={option.value}
-                      checked={formData.q7_changed_approach === option.value}
-                      onChange={(e) => setFormData({ ...formData, q7_changed_approach: e.target.value })}
-                      className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
-                    />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
-                  </label>
+                  <div
+                    key={option.value}
+                    onClick={() => setFormData({ ...formData, q7_changed_approach: option.value })}
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q7_changed_approach === option.value
+                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
+                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  </div>
                 ))}
               </div>
             </div>
@@ -922,17 +925,17 @@ export default function SurveyPage() {
                   { value: '3-5-years', label: '3-5 years' },
                   { value: 'over-5-years', label: 'Over 5 years' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
-                    <input
-                      type="radio"
-                      name="q11"
-                      value={option.value}
-                      checked={formData.q11_tci_duration === option.value}
-                      onChange={(e) => setFormData({ ...formData, q11_tci_duration: e.target.value })}
-                      className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
-                    />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
-                  </label>
+                  <div
+                    key={option.value}
+                    onClick={() => setFormData({ ...formData, q11_tci_duration: option.value })}
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q11_tci_duration === option.value
+                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
+                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  </div>
                 ))}
               </div>
             </div>
@@ -949,17 +952,17 @@ export default function SurveyPage() {
                   { value: 'specific-segments', label: 'Specific segments (e.g., international only)' },
                   { value: 'other', label: 'Other' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
-                    <input
-                      type="radio"
-                      name="q12"
-                      value={option.value}
-                      checked={formData.q12_tci_coverage === option.value}
-                      onChange={(e) => setFormData({ ...formData, q12_tci_coverage: e.target.value })}
-                      className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
-                    />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
-                  </label>
+                  <div
+                    key={option.value}
+                    onClick={() => setFormData({ ...formData, q12_tci_coverage: option.value })}
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q12_tci_coverage === option.value
+                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
+                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  </div>
                 ))}
               </div>
               {formData.q12_tci_coverage === 'other' && (
@@ -1025,17 +1028,17 @@ export default function SurveyPage() {
                   { value: 'only-when-issues', label: 'Only when issues arise' },
                   { value: 'rarely-annual-only', label: 'Rarely (annual renewal only)' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
-                    <input
-                      type="radio"
-                      name="q14"
-                      value={option.value}
-                      checked={formData.q14_tci_interaction_frequency === option.value}
-                      onChange={(e) => setFormData({ ...formData, q14_tci_interaction_frequency: e.target.value })}
-                      className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
-                    />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
-                  </label>
+                  <div
+                    key={option.value}
+                    onClick={() => setFormData({ ...formData, q14_tci_interaction_frequency: option.value })}
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q14_tci_interaction_frequency === option.value
+                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
+                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  </div>
                 ))}
               </div>
             </div>
@@ -1045,12 +1048,12 @@ export default function SurveyPage() {
                 How satisfied are you with your TCI provider overall?
               </h2>
               <p className="text-lg text-[#2D6A4F] mb-6">Very dissatisfied → Very satisfied</p>
-              <div className="flex justify-between gap-2">
+              <div className="flex justify-between gap-1 sm:gap-2">
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <button
                     key={rating}
                     onClick={() => setFormData({ ...formData, q15_tci_satisfaction: rating })}
-                    className={`flex-1 py-4 px-6 rounded-xl font-semibold transition-all duration-200 ${
+                    className={`flex-1 py-3 sm:py-4 px-2 sm:px-6 rounded-xl font-semibold text-base sm:text-lg transition-all duration-200 ${
                       formData.q15_tci_satisfaction === rating
                         ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg scale-105'
                         : 'bg-white/40 backdrop-blur-sm text-[#1F4D3D] hover:bg-white/60 border-2 border-white/30 hover:border-white/50 shadow-sm'
@@ -1123,17 +1126,17 @@ export default function SurveyPage() {
                   { value: 'over-500m', label: 'Over $500 million' },
                   { value: 'prefer-not-say', label: 'Prefer not to say' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
-                    <input
-                      type="radio"
-                      name="q17"
-                      value={option.value}
-                      checked={formData.q17_annual_revenue === option.value}
-                      onChange={(e) => setFormData({ ...formData, q17_annual_revenue: e.target.value })}
-                      className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
-                    />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
-                  </label>
+                  <div
+                    key={option.value}
+                    onClick={() => setFormData({ ...formData, q17_annual_revenue: option.value })}
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q17_annual_revenue === option.value
+                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
+                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  </div>
                 ))}
               </div>
             </div>
@@ -1222,17 +1225,17 @@ export default function SurveyPage() {
                   { value: '50-75', label: '50-75%' },
                   { value: '75-100', label: '75-100%' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
-                    <input
-                      type="radio"
-                      name="q20"
-                      value={option.value}
-                      checked={formData.q20_international_sales_percentage === option.value}
-                      onChange={(e) => setFormData({ ...formData, q20_international_sales_percentage: e.target.value })}
-                      className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
-                    />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
-                  </label>
+                  <div
+                    key={option.value}
+                    onClick={() => setFormData({ ...formData, q20_international_sales_percentage: option.value })}
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q20_international_sales_percentage === option.value
+                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
+                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  </div>
                 ))}
               </div>
             </div>
