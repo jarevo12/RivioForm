@@ -725,23 +725,29 @@ export default function SurveyPage() {
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-8 leading-tight">
                 How significantly did bad debt impact your business?
               </h2>
-              <p className="text-lg text-[#2D6A4F] mb-6">1 = Minor inconvenience → 5 = Severe impact (threatened viability)</p>
-              <div className="flex justify-between gap-1 sm:gap-2">
+              <div className="flex justify-between items-end gap-2 sm:gap-4 mb-4">
                 {[1, 2, 3, 4, 5].map((rating) => (
-                  <button
-                    key={rating}
-                    onClick={() => setFormData({ ...formData, q6_bad_debt_impact: rating })}
-                    className={`flex-1 py-3 sm:py-4 px-2 sm:px-6 rounded-xl font-semibold text-base sm:text-lg transition-all duration-200 ${
-                      formData.q6_bad_debt_impact === rating
-                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg scale-105'
-                        : 'bg-white/40 backdrop-blur-sm text-[#1F4D3D] hover:bg-white/60 border-2 border-white/30 hover:border-white/50 shadow-sm'
-                    }`}
-                  >
-                    {rating}
-                  </button>
+                  <div key={rating} className="flex flex-col items-center flex-1">
+                    <button
+                      onClick={() => setFormData({ ...formData, q6_bad_debt_impact: rating })}
+                      className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full font-bold text-lg sm:text-xl transition-all duration-200 ${
+                        formData.q6_bad_debt_impact === rating
+                          ? 'bg-emerald-600 text-white shadow-lg scale-110 ring-4 ring-emerald-300'
+                          : 'bg-white/60 backdrop-blur-sm text-[#1F4D3D] hover:bg-white/80 border-2 border-white/50 hover:border-emerald-400 shadow-sm'
+                      }`}
+                    >
+                      {rating}
+                    </button>
+                    {rating === 1 && (
+                      <p className="text-xs sm:text-sm text-[#2D6A4F] mt-3 text-center font-medium">Minor inconvenience</p>
+                    )}
+                    {rating === 5 && (
+                      <p className="text-xs sm:text-sm text-[#2D6A4F] mt-3 text-center font-medium">Severe impact</p>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
@@ -1054,23 +1060,31 @@ export default function SurveyPage() {
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-8 leading-tight">
                 How satisfied are you with your TCI provider overall?
               </h2>
-              <p className="text-lg text-[#2D6A4F] mb-6">Very dissatisfied → Very satisfied</p>
-              <div className="flex justify-between gap-1 sm:gap-2">
+              <div className="flex justify-center gap-2 sm:gap-4 mb-4">
                 {[1, 2, 3, 4, 5].map((rating) => (
-                  <button
-                    key={rating}
-                    onClick={() => setFormData({ ...formData, q15_tci_satisfaction: rating })}
-                    className={`flex-1 py-3 sm:py-4 px-2 sm:px-6 rounded-xl font-semibold text-base sm:text-lg transition-all duration-200 ${
-                      formData.q15_tci_satisfaction === rating
-                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg scale-105'
-                        : 'bg-white/40 backdrop-blur-sm text-[#1F4D3D] hover:bg-white/60 border-2 border-white/30 hover:border-white/50 shadow-sm'
-                    }`}
-                  >
-                    {rating}
-                  </button>
+                  <div key={rating} className="flex flex-col items-center">
+                    <button
+                      onClick={() => setFormData({ ...formData, q15_tci_satisfaction: rating })}
+                      className={`w-12 h-12 sm:w-16 sm:h-16 transition-all duration-200 ${
+                        formData.q15_tci_satisfaction === rating
+                          ? 'scale-110'
+                          : 'opacity-60 hover:opacity-100 hover:scale-105'
+                      }`}
+                    >
+                      <svg viewBox="0 0 24 24" className="w-full h-full">
+                        <path
+                          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                          fill={formData.q15_tci_satisfaction === rating ? '#059669' : 'none'}
+                          stroke={formData.q15_tci_satisfaction === rating ? '#059669' : '#2D6A4F'}
+                          strokeWidth="1.5"
+                        />
+                      </svg>
+                    </button>
+                    <p className="text-sm sm:text-base text-[#2D6A4F] mt-2 font-medium">{rating}</p>
+                  </div>
                 ))}
               </div>
             </div>
