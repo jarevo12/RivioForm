@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import Image from 'next/image'
 
 export default function SurveyWelcome() {
   const router = useRouter()
@@ -144,6 +145,52 @@ export default function SurveyWelcome() {
                 <p className="text-emerald-100">
                   Free 15-min session to discuss your challenges
                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Who's Behind This Section */}
+        <section className="container mx-auto px-6 pb-16">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-white text-center mb-10">Who's Behind This</h2>
+            <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              {/* Javier Serrano Card */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105">
+                <div className="flex items-center gap-4">
+                  <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-emerald-400">
+                    <Image
+                      src="/javier_serrano.jpg"
+                      alt="Javier Serrano"
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-1">Javier Serrano</h3>
+                    <p className="text-emerald-200 text-sm">MIT Sloan '27</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sergio Sanchez Card */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105">
+                <div className="flex items-center gap-4">
+                  <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-emerald-400">
+                    <Image
+                      src="/sergio_sanchez.jpg"
+                      alt="Sergio Sanchez"
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-1">Sergio Sanchez</h3>
+                    <p className="text-emerald-200 text-sm">MIT Sloan '27</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
