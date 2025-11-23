@@ -435,6 +435,30 @@ export default function SurveyPage() {
     }
   }
 
+  // Add Enter key listener for navigation
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      // Only trigger if Enter is pressed and we can proceed
+      if (event.key === 'Enter' && canProceed() && !isSubmitting) {
+        // Prevent if user is typing in an input field
+        const target = event.target as HTMLElement
+        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+          return
+        }
+
+        // If on last section, submit; otherwise go to next
+        if (isLastSection()) {
+          handleSubmit()
+        } else {
+          handleNext()
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [currentSectionId, formData, isSubmitting])
+
   // Render screened out message
   if (screenedOut) {
     return (

@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function SurveyWelcome() {
   const router = useRouter()
@@ -10,6 +11,18 @@ export default function SurveyWelcome() {
     sessionStorage.setItem('surveyStartTime', Date.now().toString())
     router.push('/application')
   }
+
+  // Add Enter key listener
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        handleStart()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1F4D3D] via-[#2D6A4F] to-[#1F4D3D] relative overflow-hidden">
