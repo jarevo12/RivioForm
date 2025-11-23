@@ -1246,16 +1246,6 @@ export default function SurveyPage() {
                   </label>
                 ))}
               </div>
-              <div className="flex items-center justify-between mt-3">
-                <p className="text-sm text-[#2D6A4F] font-medium">
-                  {formData.q16_tci_challenges?.length || 0}/3 selected
-                </p>
-                {(formData.q16_tci_challenges?.length || 0) < 3 && (
-                  <p className="text-sm text-amber-700 bg-amber-50 px-3 py-1 rounded-full">
-                    Please select {3 - (formData.q16_tci_challenges?.length || 0)} more
-                  </p>
-                )}
-              </div>
               {formData.q16_tci_challenges?.includes('other') && (
                 <input
                   type="text"
