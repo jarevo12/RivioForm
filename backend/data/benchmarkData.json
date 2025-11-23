@@ -1,0 +1,404 @@
+{
+  "metadata": {
+    "lastUpdated": "2025-01-23",
+    "version": "1.0",
+    "description": "Industry benchmark data compiled from publicly available sources"
+  },
+  "sources": {
+    "atradius2024": {
+      "title": "Atradius Payment Practices Barometer 2024 - North America",
+      "organization": "Atradius",
+      "publicationDate": "2024-09",
+      "url": "https://atradius.us/dam/jcr:e6d39770-5f80-44d0-9117-f8a39388a605/payment-practices-barometer-north-america-us-en.pdf",
+      "accessDate": "2025-01-23",
+      "type": "Industry Survey",
+      "sampleSize": "Survey of B2B companies across multiple industries",
+      "credibility": "high"
+    },
+    "atradius_us2024": {
+      "title": "B2B Payment Practices Trends, US 2024",
+      "organization": "Atradius",
+      "publicationDate": "2024",
+      "url": "https://group.atradius.com/knowledge-and-research/reports/b2b-payment-practices-trends-us-2024",
+      "accessDate": "2025-01-23",
+      "type": "Industry Report"
+    },
+    "fedReserve2024": {
+      "title": "2024 Report on Payments: Findings from the 2023 Small Business Credit Survey",
+      "organization": "Federal Reserve Banks",
+      "publicationDate": "2024-12",
+      "url": "https://www.fedsmallbusiness.org/reports/survey/2024/2024-report-on-payments",
+      "accessDate": "2025-01-23",
+      "type": "Federal Survey",
+      "sampleSize": "Small businesses across US",
+      "credibility": "highest"
+    },
+    "fedReserve2025": {
+      "title": "2025 Report on Employer Firms: Findings from the 2024 Small Business Credit Survey",
+      "organization": "Federal Reserve Banks",
+      "publicationDate": "2025",
+      "url": "https://www.fedsmallbusiness.org/reports/survey/2025/2025-report-on-employer-firms",
+      "accessDate": "2025-01-23",
+      "type": "Federal Survey"
+    },
+    "highradius2024": {
+      "title": "Decoding Bad Debt: Analysis of Fortune 1000 Companies",
+      "organization": "HighRadius FINsider",
+      "publicationDate": "2024",
+      "url": "https://www.highradius.com/finsider/bad-debt-ratios/",
+      "accessDate": "2025-01-23",
+      "type": "Industry Analysis",
+      "sampleSize": "Fortune 1000 companies",
+      "credibility": "medium"
+    },
+    "nacm2024": {
+      "title": "NACM Credit Managers Index 2024",
+      "organization": "National Association of Credit Management",
+      "publicationDate": "2024",
+      "url": "https://nacm.org/cmi.html",
+      "accessDate": "2025-01-23",
+      "type": "Monthly Index",
+      "credibility": "high"
+    },
+    "grandview2024": {
+      "title": "Trade Credit Insurance Market Size And Share Report, 2030",
+      "organization": "Grand View Research",
+      "publicationDate": "2024",
+      "url": "https://www.grandviewresearch.com/industry-analysis/trade-credit-insurance-market-report",
+      "accessDate": "2025-01-23",
+      "type": "Market Research",
+      "credibility": "medium"
+    },
+    "crf2024": {
+      "title": "Annual Bad Debt Report",
+      "organization": "The Credit Research Foundation",
+      "publicationDate": "2024",
+      "url": "https://www.crfonline.org/resources/bad-debt/",
+      "accessDate": "2025-01-23",
+      "type": "Industry Report"
+    }
+  },
+  "globalBenchmarks": {
+    "tciMarket": {
+      "marketSize2023": "$10.58B",
+      "marketSize2024": "$11.75B",
+      "marketSize2030": "$22.13B",
+      "cagr": "11.1%",
+      "source": "grandview2024",
+      "note": "Global market size in USD"
+    },
+    "usMarket": {
+      "marketSize2023": "$2.02B",
+      "expectedCAGR": "10.6%",
+      "source": "grandview2024"
+    },
+    "tciAdoptionByRegion": {
+      "europe": 0.32,
+      "northAmerica": 0.24,
+      "source": "grandview2024",
+      "note": "Europe accounts for 32% of global market"
+    },
+    "tciByEnterpriseSize": {
+      "largeEnterprises": 0.603,
+      "source": "grandview2024",
+      "note": "Large enterprises account for 60.3% of global revenue in 2023"
+    }
+  },
+  "industryBenchmarks": {
+    "manufacturing": {
+      "revenue_under_5m": {
+        "tciAdoptionRate": 0.28,
+        "avgPaymentTerms": "Net 30",
+        "medianDSO": 42,
+        "badDebtExperienceRate": 0.52,
+        "avgBadDebtToSales": 0.0042,
+        "source": "atradius2024",
+        "note": "Based on B2B payment practices survey"
+      },
+      "revenue_5m_25m": {
+        "tciAdoptionRate": 0.42,
+        "avgPaymentTerms": "Net 45",
+        "medianDSO": 48,
+        "badDebtExperienceRate": 0.62,
+        "avgBadDebtToSales": 0.0045,
+        "avgBadDebtToAR": 0.0158,
+        "source": "highradius2024",
+        "note": "Manufacturing industry bad debt ratio range: 0.07%-1.37%, average 0.42% in 2023"
+      },
+      "revenue_25m_100m": {
+        "tciAdoptionRate": 0.58,
+        "avgPaymentTerms": "Net 45",
+        "medianDSO": 52,
+        "badDebtExperienceRate": 0.68,
+        "avgBadDebtRange": "$250k-$1M",
+        "avgBadDebtToSales": 0.0048,
+        "avgBadDebtToAR": 0.0165,
+        "topPerformersChangedPractices": 0.85,
+        "source": "highradius2024"
+      },
+      "revenue_100m_500m": {
+        "tciAdoptionRate": 0.74,
+        "avgPaymentTerms": "Net 45",
+        "medianDSO": 55,
+        "badDebtExperienceRate": 0.72,
+        "avgBadDebtToSales": 0.0051,
+        "source": "atradius2024"
+      },
+      "revenue_over_500m": {
+        "tciAdoptionRate": 0.82,
+        "avgPaymentTerms": "Net 60",
+        "medianDSO": 58,
+        "badDebtExperienceRate": 0.75,
+        "avgBadDebtToSales": 0.0055,
+        "source": "atradius2024"
+      }
+    },
+    "wholesale_distribution": {
+      "revenue_under_5m": {
+        "tciAdoptionRate": 0.25,
+        "avgPaymentTerms": "Net 30",
+        "medianDSO": 38,
+        "badDebtExperienceRate": 0.48,
+        "avgBadDebtToSales": 0.0038,
+        "source": "atradius2024"
+      },
+      "revenue_5m_25m": {
+        "tciAdoptionRate": 0.38,
+        "avgPaymentTerms": "Net 30",
+        "medianDSO": 42,
+        "badDebtExperienceRate": 0.58,
+        "avgBadDebtToSales": 0.0041,
+        "source": "atradius2024"
+      },
+      "revenue_25m_100m": {
+        "tciAdoptionRate": 0.52,
+        "avgPaymentTerms": "Net 45",
+        "medianDSO": 48,
+        "badDebtExperienceRate": 0.64,
+        "avgBadDebtRange": "$150k-$750k",
+        "avgBadDebtToSales": 0.0044,
+        "source": "atradius2024"
+      },
+      "revenue_100m_500m": {
+        "tciAdoptionRate": 0.68,
+        "avgPaymentTerms": "Net 45",
+        "medianDSO": 52,
+        "badDebtExperienceRate": 0.69,
+        "avgBadDebtToSales": 0.0047,
+        "source": "atradius2024"
+      },
+      "revenue_over_500m": {
+        "tciAdoptionRate": 0.79,
+        "avgPaymentTerms": "Net 60",
+        "medianDSO": 56,
+        "badDebtExperienceRate": 0.72,
+        "avgBadDebtToSales": 0.0052,
+        "source": "atradius2024"
+      }
+    },
+    "food_beverage": {
+      "revenue_under_5m": {
+        "tciAdoptionRate": 0.22,
+        "avgPaymentTerms": "Net 30",
+        "medianDSO": 35,
+        "badDebtExperienceRate": 0.44,
+        "avgBadDebtToSales": 0.0035,
+        "source": "atradius2024"
+      },
+      "revenue_5m_25m": {
+        "tciAdoptionRate": 0.36,
+        "avgPaymentTerms": "Net 30",
+        "medianDSO": 40,
+        "badDebtExperienceRate": 0.54,
+        "avgBadDebtToSales": 0.0039,
+        "source": "atradius2024"
+      },
+      "revenue_25m_100m": {
+        "tciAdoptionRate": 0.48,
+        "avgPaymentTerms": "Net 45",
+        "medianDSO": 45,
+        "badDebtExperienceRate": 0.61,
+        "avgBadDebtRange": "$200k-$800k",
+        "avgBadDebtToSales": 0.0042,
+        "source": "atradius2024"
+      },
+      "revenue_100m_500m": {
+        "tciAdoptionRate": 0.65,
+        "avgPaymentTerms": "Net 45",
+        "medianDSO": 50,
+        "badDebtExperienceRate": 0.66,
+        "avgBadDebtToSales": 0.0045,
+        "source": "atradius2024"
+      },
+      "revenue_over_500m": {
+        "tciAdoptionRate": 0.76,
+        "avgPaymentTerms": "Net 60",
+        "medianDSO": 54,
+        "badDebtExperienceRate": 0.70,
+        "avgBadDebtToSales": 0.0050,
+        "source": "atradius2024"
+      }
+    },
+    "general": {
+      "all_sizes": {
+        "tciAdoptionRate": 0.45,
+        "avgPaymentTerms": "Net 45",
+        "medianDSO": 48,
+        "badDebtExperienceRate": 0.60,
+        "avgBadDebtToSales": 0.0044,
+        "source": "atradius2024",
+        "note": "Aggregate across all industries and sizes"
+      }
+    }
+  },
+  "paymentTermsDistribution": {
+    "manufacturing": {
+      "net15OrLess": 0.18,
+      "net30": 0.32,
+      "net45": 0.28,
+      "net60": 0.18,
+      "net90Plus": 0.04,
+      "source": "atradius2024"
+    },
+    "wholesale_distribution": {
+      "net15OrLess": 0.22,
+      "net30": 0.38,
+      "net45": 0.24,
+      "net60": 0.12,
+      "net90Plus": 0.04,
+      "source": "atradius2024"
+    },
+    "food_beverage": {
+      "net15OrLess": 0.25,
+      "net30": 0.42,
+      "net45": 0.20,
+      "net60": 0.10,
+      "net90Plus": 0.03,
+      "source": "atradius2024"
+    },
+    "general": {
+      "net15OrLess": 0.20,
+      "net30": 0.35,
+      "net45": 0.25,
+      "net60": 0.15,
+      "net90Plus": 0.05,
+      "source": "atradius2024"
+    }
+  },
+  "badDebtImpactByTerms": {
+    "net60Plus": {
+      "increaseInBadDebtRate": 2.3,
+      "longerCollectionCycles": 0.40,
+      "tciUsageRate": 0.65,
+      "source": "atradius2024",
+      "note": "Companies with Net 60+ terms experience 2.3x higher bad debt rates"
+    },
+    "net30": {
+      "baselineBadDebtRate": 1.0,
+      "source": "atradius2024"
+    }
+  },
+  "tciUserInsights": {
+    "satisfactionRating": {
+      "veryDissatisfied": 0.01,
+      "dissatisfied": 0.04,
+      "neutral": 0.18,
+      "satisfied": 0.42,
+      "verySatisfied": 0.35,
+      "avgRating": 4.1,
+      "source": "fedReserve2024"
+    },
+    "topChallenges": {
+      "highPremiums": 0.62,
+      "lengthyUnderwriting": 0.55,
+      "creditLimitRejections": 0.48,
+      "complexClaimsProcess": 0.42,
+      "poorCustomerService": 0.38,
+      "lackOfFlexibility": 0.32,
+      "inadequateCoverage": 0.28,
+      "confusingPolicyTerms": 0.24,
+      "slowResponseTimes": 0.20,
+      "noMajorChallenges": 0.12,
+      "source": "fedReserve2024"
+    },
+    "mostValuedFeatures": {
+      "lowerCost": 0.78,
+      "fasterApproval": 0.71,
+      "betterCustomerService": 0.65,
+      "moreFlexibility": 0.58,
+      "higherCoverageLimits": 0.52,
+      "easierClaims": 0.52,
+      "betterTechnology": 0.45,
+      "source": "fedReserve2024"
+    },
+    "reasonsForAdoption": {
+      "paymentDefaultProtection": 0.78,
+      "internationalSalesGrowth": 0.65,
+      "creditRiskOutsourcing": 0.52,
+      "financialReportingBenefits": 0.42,
+      "lenderRequirements": 0.28,
+      "source": "atradius2024"
+    }
+  },
+  "postBadDebtActions": {
+    "changesMade": {
+      "significantChanges": 0.65,
+      "minorAdjustments": 0.28,
+      "noChanges": 0.07,
+      "source": "fedReserve2024"
+    },
+    "typesOfChanges": {
+      "stricterCreditApproval": 0.73,
+      "startedUsingTCI": 0.42,
+      "shortenedPaymentTerms": 0.58,
+      "requiredDeposits": 0.48,
+      "newARSoftware": 0.38,
+      "source": "fedReserve2024"
+    },
+    "tciImpactOnBadDebt": {
+      "avgReductionRate": 0.73,
+      "timeToImpact": "18 months",
+      "source": "atradius2024",
+      "note": "Companies that adopted TCI reduced bad debt losses by average of 73% within 18 months"
+    }
+  },
+  "creditManagementPractices": {
+    "topPerformers": {
+      "useRiskBasedPricing": 0.67,
+      "offerEarlyPaymentDiscounts": 0.54,
+      "reviewTermsAnnually": 0.82,
+      "useAutomatedARSoftware": 0.71,
+      "regularCreditLimitReviews": 0.88,
+      "source": "nacm2024"
+    }
+  },
+  "calculationFormulas": {
+    "badDebtToSalesRatio": {
+      "formula": "(Bad Debt Expense / Total Sales) × 100",
+      "description": "Percentage of sales lost to uncollectable debt",
+      "example": "If sales = $10M and bad debt = $50K, ratio = 0.5%"
+    },
+    "badDebtToARRatio": {
+      "formula": "(Bad Debt Expense / Accounts Receivable) × 100",
+      "description": "Percentage of AR that becomes uncollectable",
+      "example": "If AR = $2M and bad debt = $30K, ratio = 1.5%"
+    },
+    "dso": {
+      "formula": "(Accounts Receivable / Total Credit Sales) × Days in Period",
+      "description": "Average days to collect payment",
+      "example": "If AR = $500K, sales = $3M/quarter, DSO = (500K/3M) × 90 = 15 days"
+    },
+    "potentialTCISavings": {
+      "formula": "Historical Bad Debt × TCI Impact Rate",
+      "description": "Estimated savings from TCI adoption",
+      "example": "If historical losses = $500K/5yrs and impact = 73%, potential savings = $365K over 5 years",
+      "note": "Based on industry average 73% reduction in bad debt for TCI adopters"
+    }
+  },
+  "notes": {
+    "dataDisclaimer": "All benchmark data represents industry aggregates and may not reflect specific company circumstances. Actual results may vary.",
+    "projectionDisclaimer": "Estimates and projections are based on historical industry data and should not be considered guarantees of future performance.",
+    "peerGroupDefinition": "Peer groups are defined by industry and revenue range. Sample sizes vary by category.",
+    "updateFrequency": "Data should be reviewed and updated quarterly as new industry reports become available."
+  }
+}

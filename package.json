@@ -9,8 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/register": "^7.28.3",
     "lucide-react": "^0.553.0",
     "next": "^16.0.1",
+    "puppeteer": "^24.31.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "recharts": "^3.4.1"

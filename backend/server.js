@@ -19,6 +19,7 @@ const applicantRoutes = require('./routes/applicant.routes');
 const surveyRoutes = require('./routes/survey.routes');
 const healthRoutes = require('./routes/health.routes');
 const authRoutes = require('./routes/auth.routes');
+const benchmarkReportRoutes = require('./routes/benchmark-report.routes');
 const errorHandler = require('./middleware/errorHandler');
 
 // Initialize Express app
@@ -98,6 +99,9 @@ surveyRouter.post('/', formLimiter);
 surveyRouter.use('/', surveyRoutes);
 app.use('/api/survey', surveyRouter);
 
+// Benchmark report routes
+app.use('/api/reports/benchmark', benchmarkReportRoutes);
+
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
@@ -108,6 +112,7 @@ app.get('/', (req, res) => {
       health: '/api/health',
       applicants: '/api/applicants',
       survey: '/api/survey',
+      reports: '/api/reports/benchmark',
       docs: '/api/docs'
     }
   });
