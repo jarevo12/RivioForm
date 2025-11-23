@@ -908,7 +908,7 @@ export default function SurveyPage() {
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 How do you determine credit terms for new customers?
               </h2>
-              <p className="text-lg text-[#2D6A4F] mb-6">Select your top 3 methods</p>
+              <p className="text-lg text-[#2D6A4F] mb-6">Select all that apply</p>
               <div className="space-y-3">
                 {[
                   { value: 'credit-bureau-reports', label: 'Credit bureau reports (Dun & Bradstreet, Experian, etc.)' },
@@ -931,22 +931,11 @@ export default function SurveyPage() {
                       type="checkbox"
                       checked={formData.q8_credit_assessment_methods?.includes(option.value)}
                       onChange={(e) => handleCheckboxChange('q8_credit_assessment_methods', option.value, e.target.checked)}
-                      disabled={!formData.q8_credit_assessment_methods?.includes(option.value) && (formData.q8_credit_assessment_methods?.length || 0) >= 3}
                       className="w-6 h-6 text-white accent-white rounded focus:ring-emerald-300 focus:ring-2"
                     />
                     <span className={`ml-4 text-lg font-medium ${formData.q8_credit_assessment_methods?.includes(option.value) ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </label>
                 ))}
-              </div>
-              <div className="flex items-center justify-between mt-3">
-                <p className="text-sm text-[#2D6A4F] font-medium">
-                  {formData.q8_credit_assessment_methods?.length || 0}/3 selected
-                </p>
-                {(formData.q8_credit_assessment_methods?.length || 0) < 3 && (
-                  <p className="text-sm text-amber-700 bg-amber-50 px-3 py-1 rounded-full">
-                    Please select {3 - (formData.q8_credit_assessment_methods?.length || 0)} more
-                  </p>
-                )}
               </div>
             </div>
 
