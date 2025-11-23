@@ -776,11 +776,10 @@ export default function SurveyPage() {
       case 'bad-debt-changes':
         return (
           <div>
-            <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
-            <h2 className="text-2xl font-semibold text-white mb-2">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
               What changes did you make?
             </h2>
-            <p className="text-sm text-slate-400 mb-4">Select all that apply</p>
+            <p className="text-lg text-[#2D6A4F] mb-6">Select all that apply</p>
             <div className="space-y-3">
               {[
                 { value: 'stricter-credit-approval', label: 'Stricter credit approval processes' },
@@ -792,14 +791,21 @@ export default function SurveyPage() {
                 { value: 'deposits-advance-payments', label: 'Required deposits/advance payments' },
                 { value: 'other', label: 'Other' },
               ].map((option) => (
-                <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                <label
+                  key={option.value}
+                  className={`flex items-center p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    formData.q7a_changes_made?.includes(option.value)
+                      ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                      : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                  }`}
+                >
                   <input
                     type="checkbox"
                     checked={formData.q7a_changes_made?.includes(option.value)}
                     onChange={(e) => handleCheckboxChange('q7a_changes_made', option.value, e.target.checked)}
-                    className="w-5 h-5 text-blue-600 rounded"
+                    className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
                   />
-                  <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                  <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                 </label>
               ))}
             </div>
@@ -809,7 +815,7 @@ export default function SurveyPage() {
                 placeholder="Please specify other changes"
                 value={formData.q7a_changes_other}
                 onChange={(e) => setFormData({ ...formData, q7a_changes_other: e.target.value })}
-                className="mt-3 w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="mt-3 w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
               />
             )}
           </div>
@@ -1451,8 +1457,8 @@ export default function SurveyPage() {
         }}></div>
       </div>
 
-      {/* Progress Bar */}
-      <div className="relative z-10 w-full bg-[#1F4D3D]/50 backdrop-blur-sm border-b border-white/10">
+      {/* Progress Bar - Fixed at top */}
+      <div className="fixed top-0 left-0 right-0 z-50 w-full bg-[#1F4D3D]/90 backdrop-blur-md border-b border-white/10 shadow-lg">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-medium text-emerald-100">Survey Progress</span>
@@ -1465,13 +1471,13 @@ export default function SurveyPage() {
             />
           </div>
           <p className="text-xs text-emerald-200 mt-2 font-medium">
-            Question {getCurrentSectionNumber()} of {getTotalSections()}
+            Section {getCurrentSectionNumber()} of {getTotalSections()}
           </p>
         </div>
       </div>
 
-      {/* Main Content */}
-      <main className="relative z-10 container mx-auto px-6 py-12">
+      {/* Main Content - Added top padding for fixed header */}
+      <main className="relative z-10 container mx-auto px-6 py-12 pt-32">
         <div className="max-w-3xl mx-auto">
           <div className="bg-emerald-50/90 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-emerald-200/50 transition-all duration-300">
             {renderSection()}
