@@ -12,110 +12,154 @@ export default function SurveyWelcome() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-[#1F4D3D] via-[#2D6A4F] to-[#1F4D3D] relative overflow-hidden">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+          backgroundSize: '40px 40px'
+        }}></div>
+      </div>
+
       {/* Skip Link for Accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg focus:ring-4 focus:ring-blue-400"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-emerald-500 focus:text-white focus:rounded-lg focus:ring-4 focus:ring-emerald-300"
       >
         Skip to main content
       </a>
 
-      {/* Header */}
-      <header className="container mx-auto px-6 py-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Help Us Understand B2B Credit Risk Management
-          </h1>
-        </div>
-      </header>
+      <main id="main-content" className="relative z-10">
+        {/* Hero Section */}
+        <section className="container mx-auto px-6 py-16 md:py-24">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Animated entrance */}
+            <div className="animate-fade-in">
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                Help Shape the Future<br />
+                <span className="text-emerald-300">of B2B Credit Risk</span>
+              </h1>
 
-      <main id="main-content">
-        {/* Introduction Section */}
-        <section className="container mx-auto px-6 py-8">
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-slate-800 rounded-2xl p-8 md:p-10 shadow-2xl border border-slate-700 mb-8">
-              <p className="text-lg text-slate-300 leading-relaxed mb-6">
-                Most B2B companies face payment defaults that cost billions in bad debt annually.
-                We're researching how businesses protect themselves from this risk—and where current
-                solutions fall short.
+              <p className="text-xl md:text-2xl text-emerald-100 mb-8 leading-relaxed max-w-3xl mx-auto">
+                Join 500+ credit professionals sharing insights to transform how businesses
+                protect themselves from payment defaults.
               </p>
 
-              <div className="bg-slate-900 rounded-lg p-6 mb-6">
-                <h2 className="text-xl font-semibold text-white mb-4">Your contribution (5 minutes):</h2>
-                <ul className="space-y-3 text-slate-300">
-                  <li className="flex items-start">
-                    <span className="text-blue-400 mr-3">⏱️</span>
-                    <span><strong>Quick:</strong> 16-20 questions based on your responses</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-400 mr-3">🔒</span>
-                    <span><strong>Anonymous & confidential</strong></span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-400 mr-3">📊</span>
-                    <span><strong>Option to receive</strong> personalized insights at the end</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="border-t border-slate-700 pt-6">
-                <h2 className="text-xl font-semibold text-white mb-4">What you can receive:</h2>
-                <div className="space-y-4">
-                  <div className="flex items-start">
-                    <span className="text-green-400 mr-3 mt-1">✓</span>
-                    <div>
-                      <h3 className="font-semibold text-white">Personalized Benchmark Report</h3>
-                      <p className="text-slate-400 text-sm">
-                        See how your credit practices compare to peers in your industry and size
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="text-green-400 mr-3 mt-1">✓</span>
-                    <div>
-                      <h3 className="font-semibold text-white">Early Access to Research</h3>
-                      <p className="text-slate-400 text-sm">
-                        Full findings before public release
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="text-green-400 mr-3 mt-1">✓</span>
-                    <div>
-                      <h3 className="font-semibold text-white">Free Expert Consultation</h3>
-                      <p className="text-slate-400 text-sm">
-                        Optional 15-min session to discuss your specific situation (no sales pitch)
-                      </p>
-                    </div>
-                  </div>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                <div className="flex items-center text-emerald-100">
+                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                  </svg>
+                  <span className="font-medium">Just 5 minutes</span>
+                </div>
+                <div className="flex items-center text-emerald-100">
+                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="font-medium">100% Anonymous</span>
+                </div>
+                <div className="flex items-center text-emerald-100">
+                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                    <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="font-medium">Get Personalized Insights</span>
                 </div>
               </div>
-            </div>
 
-            {/* Start Button */}
-            <div className="text-center">
+              {/* CTA Button */}
               <button
                 onClick={handleStart}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-12 rounded-lg transition duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-slate-800 text-lg"
+                className="group relative inline-flex items-center justify-center px-12 py-5 text-xl font-bold text-[#1F4D3D] bg-white rounded-full overflow-hidden shadow-2xl transition-all duration-300 hover:shadow-emerald-500/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/50"
               >
-                START SURVEY
+                <span className="relative z-10 flex items-center">
+                  Start Survey
+                  <svg className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-100 to-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
               </button>
-              <p className="text-sm text-slate-400 mt-4">
-                Takes approximately 5 minutes to complete
+
+              <p className="text-emerald-200 text-sm mt-4 font-medium">
+                Press <kbd className="px-2 py-1 bg-white/10 rounded">Enter ↵</kbd> or click to begin
               </p>
             </div>
           </div>
         </section>
+
+        {/* Value Proposition Cards */}
+        <section className="container mx-auto px-6 pb-16">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold text-white text-center mb-10">What You'll Receive</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Card 1 */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105">
+                <div className="w-12 h-12 bg-emerald-400 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-[#1F4D3D]" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Benchmark Report</h3>
+                <p className="text-emerald-100">
+                  See how your practices compare to industry peers
+                </p>
+              </div>
+
+              {/* Card 2 */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105">
+                <div className="w-12 h-12 bg-emerald-400 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-[#1F4D3D]" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
+                    <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Research Report</h3>
+                <p className="text-emerald-100">
+                  Early access to full findings before public release
+                </p>
+              </div>
+
+              {/* Card 3 */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105">
+                <div className="w-12 h-12 bg-emerald-400 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-[#1F4D3D]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Expert Consultation</h3>
+                <p className="text-emerald-100">
+                  Free 15-min session to discuss your challenges
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="container mx-auto px-6 py-8 border-t border-white/10">
+          <div className="text-center text-emerald-200">
+            <p className="mb-2 font-medium">© 2025 Rivio. All rights reserved.</p>
+            <p className="text-sm text-emerald-300">Your responses are anonymous and confidential.</p>
+          </div>
+        </footer>
       </main>
 
-      {/* Footer */}
-      <footer className="container mx-auto px-6 py-12 border-t border-slate-700 mt-12">
-        <div className="text-center text-slate-400">
-          <p className="mb-2">© 2025 Rivio. All rights reserved.</p>
-          <p className="text-sm">Your responses are anonymous and confidential.</p>
-        </div>
-      </footer>
+      <style jsx>{`
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.8s ease-out;
+        }
+      `}</style>
     </div>
   )
 }
