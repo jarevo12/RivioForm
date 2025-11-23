@@ -55,7 +55,7 @@ export default function SurveyWelcome() {
               </h1>
 
               <p className="text-xl md:text-2xl text-emerald-100 mb-8 leading-relaxed max-w-3xl mx-auto">
-                Join 500+ credit professionals sharing insights to transform how businesses
+                Share your insights to transform how businesses
                 protect themselves from payment defaults.
               </p>
 

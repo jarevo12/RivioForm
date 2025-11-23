@@ -195,6 +195,7 @@ type SurveyData = {
   email: string
   contactName: string
   companyName: string
+  wantsStayInTouch: boolean
   wantsBenchmarkReport: boolean
   wantsResearchReport: boolean
   wantsConsultation: boolean
@@ -242,6 +243,7 @@ export default function SurveyPage() {
     email: '',
     contactName: '',
     companyName: '',
+    wantsStayInTouch: false,
     wantsBenchmarkReport: false,
     wantsResearchReport: false,
     wantsConsultation: false,
@@ -524,7 +526,7 @@ export default function SurveyPage() {
               </p>
               <div className="inline-block bg-emerald-50 rounded-full px-6 py-3 mt-4">
                 <p className="text-lg text-emerald-800 font-semibold">
-                  You've joined <span className="text-emerald-600 font-bold">500+ credit professionals</span>
+                  <span className="text-emerald-600 font-bold">Your insights matter</span>
                 </p>
               </div>
             </div>
@@ -743,7 +745,7 @@ export default function SurveyPage() {
       case 'bad-debt-details':
         return (
           <div className="space-y-10">
-            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-white/40">
               <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
                 <span className="bg-emerald-100 px-2 py-1 rounded">Question 1 of 3</span>
               </p>
@@ -782,32 +784,32 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-white/40">
               <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
                 <span className="bg-emerald-100 px-2 py-1 rounded">Question 2 of 3</span>
               </p>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-8 leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 sm:mb-8 leading-tight">
                 How significantly did bad debt impact your business?
               </h2>
-              <div className="flex justify-between items-start gap-2 sm:gap-4 mb-4">
+              <div className="flex justify-between items-start gap-1 sm:gap-3 md:gap-4 mb-4 px-1">
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <div key={rating} className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => setFormData({ ...formData, q6_bad_debt_impact: rating })}
-                      className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full font-bold text-lg sm:text-xl md:text-2xl transition-all duration-200 ${
+                      className={`w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full font-bold text-base sm:text-xl md:text-2xl transition-all duration-200 ${
                         formData.q6_bad_debt_impact === rating
-                          ? 'bg-emerald-600 text-white shadow-lg scale-110 ring-4 ring-emerald-300'
+                          ? 'bg-emerald-600 text-white shadow-lg scale-105 sm:scale-110 ring-2 sm:ring-4 ring-emerald-300'
                           : 'bg-white/60 backdrop-blur-sm text-[#1F4D3D] hover:bg-white/80 border-2 border-white/50 hover:border-emerald-400 shadow-sm'
                       }`}
                     >
                       {rating}
                     </button>
-                    <div className="h-8 mt-3">
+                    <div className="h-8 mt-2 sm:mt-3">
                       {rating === 1 && (
-                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium">Minor inconvenience</p>
+                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium leading-tight">Minor inconvenience</p>
                       )}
                       {rating === 5 && (
-                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium">Severe impact</p>
+                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium leading-tight">Severe impact</p>
                       )}
                     </div>
                   </div>
@@ -815,7 +817,7 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-white/40">
               <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
                 <span className="bg-emerald-100 px-2 py-1 rounded">Question 3 of 3</span>
               </p>
@@ -901,7 +903,7 @@ export default function SurveyPage() {
       case 'current-practices':
         return (
           <div className="space-y-10">
-            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-white/40">
               <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
                 <span className="bg-emerald-100 px-2 py-1 rounded">Question 1 of 3</span>
               </p>
@@ -939,7 +941,7 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-white/40">
               <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
                 <span className="bg-emerald-100 px-2 py-1 rounded">Question 2 of 3</span>
               </p>
@@ -975,7 +977,7 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-white/40">
               <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
                 <span className="bg-emerald-100 px-2 py-1 rounded">Question 3 of 3</span>
               </p>
@@ -1179,19 +1181,19 @@ export default function SurveyPage() {
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-8 leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 sm:mb-8 leading-tight">
                 How satisfied are you with your TCI provider overall?
               </h2>
-              <div className="flex justify-center gap-2 sm:gap-4 mb-4">
+              <div className="flex justify-center gap-1 sm:gap-3 md:gap-4 mb-4 px-2">
                 {[1, 2, 3, 4, 5].map((rating) => {
                   const isSelected = formData.q15_tci_satisfaction && rating <= formData.q15_tci_satisfaction
                   return (
                     <div key={rating} className="flex flex-col items-center">
                       <button
                         onClick={() => setFormData({ ...formData, q15_tci_satisfaction: rating })}
-                        className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 transition-all duration-200 p-1 ${
+                        className={`w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 transition-all duration-200 p-1 ${
                           isSelected
-                            ? 'scale-110'
+                            ? 'scale-105 sm:scale-110'
                             : 'opacity-60 hover:opacity-100 hover:scale-105'
                         }`}
                       >
@@ -1222,6 +1224,7 @@ export default function SurveyPage() {
                   { value: 'slow-approval', label: 'Slow approval for credit limits' },
                   { value: 'complex-claims', label: 'Complex claims process' },
                   { value: 'coverage-gaps', label: 'Coverage gaps (certain customers/markets excluded)' },
+                  { value: 'coverage-removed', label: 'Coverage removed at insurer\'s discretion' },
                   { value: 'administrative-burden', label: 'Administrative burden/paperwork' },
                   { value: 'poor-communication', label: 'Poor communication or transparency' },
                   { value: 'difficult-integration', label: 'Difficult to integrate with our systems' },
@@ -1267,7 +1270,7 @@ export default function SurveyPage() {
                 🎉 Almost done! Final questions
               </p>
             </div>
-            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-white/40">
               <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
                 <span className="bg-emerald-100 px-2 py-1 rounded">Question 1 of 4</span>
               </p>
@@ -1303,7 +1306,7 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-white/40">
               <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
                 <span className="bg-emerald-100 px-2 py-1 rounded">Question 2 of 4</span>
               </p>
@@ -1340,7 +1343,7 @@ export default function SurveyPage() {
               )}
             </div>
 
-            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-white/40">
               <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
                 <span className="bg-emerald-100 px-2 py-1 rounded">Question 3 of 4</span>
               </p>
@@ -1353,6 +1356,12 @@ export default function SurveyPage() {
                 options={[
                   { value: 'united-states', label: 'United States' },
                   { value: 'canada', label: 'Canada' },
+                  { value: 'mexico', label: 'Mexico' },
+                  { value: 'brazil', label: 'Brazil' },
+                  { value: 'argentina', label: 'Argentina' },
+                  { value: 'chile', label: 'Chile' },
+                  { value: 'colombia', label: 'Colombia' },
+                  { value: 'peru', label: 'Peru' },
                   { value: 'united-kingdom', label: 'United Kingdom' },
                   { value: 'germany', label: 'Germany' },
                   { value: 'france', label: 'France' },
@@ -1361,11 +1370,42 @@ export default function SurveyPage() {
                   { value: 'spain', label: 'Spain' },
                   { value: 'italy', label: 'Italy' },
                   { value: 'switzerland', label: 'Switzerland' },
+                  { value: 'sweden', label: 'Sweden' },
+                  { value: 'norway', label: 'Norway' },
+                  { value: 'denmark', label: 'Denmark' },
+                  { value: 'finland', label: 'Finland' },
+                  { value: 'poland', label: 'Poland' },
+                  { value: 'austria', label: 'Austria' },
+                  { value: 'ireland', label: 'Ireland' },
+                  { value: 'portugal', label: 'Portugal' },
+                  { value: 'czech-republic', label: 'Czech Republic' },
+                  { value: 'greece', label: 'Greece' },
+                  { value: 'romania', label: 'Romania' },
+                  { value: 'hungary', label: 'Hungary' },
                   { value: 'australia', label: 'Australia' },
+                  { value: 'new-zealand', label: 'New Zealand' },
                   { value: 'china', label: 'China' },
                   { value: 'india', label: 'India' },
                   { value: 'japan', label: 'Japan' },
                   { value: 'singapore', label: 'Singapore' },
+                  { value: 'south-korea', label: 'South Korea' },
+                  { value: 'hong-kong', label: 'Hong Kong' },
+                  { value: 'taiwan', label: 'Taiwan' },
+                  { value: 'thailand', label: 'Thailand' },
+                  { value: 'malaysia', label: 'Malaysia' },
+                  { value: 'indonesia', label: 'Indonesia' },
+                  { value: 'vietnam', label: 'Vietnam' },
+                  { value: 'philippines', label: 'Philippines' },
+                  { value: 'uae', label: 'United Arab Emirates' },
+                  { value: 'saudi-arabia', label: 'Saudi Arabia' },
+                  { value: 'israel', label: 'Israel' },
+                  { value: 'turkey', label: 'Turkey' },
+                  { value: 'south-africa', label: 'South Africa' },
+                  { value: 'egypt', label: 'Egypt' },
+                  { value: 'nigeria', label: 'Nigeria' },
+                  { value: 'kenya', label: 'Kenya' },
+                  { value: 'russia', label: 'Russia' },
+                  { value: 'ukraine', label: 'Ukraine' },
                   { value: 'other', label: 'Other' },
                 ]}
                 placeholder="Type to search countries..."
@@ -1381,7 +1421,7 @@ export default function SurveyPage() {
               )}
             </div>
 
-            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-white/40">
               <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
                 <span className="bg-emerald-100 px-2 py-1 rounded">Question 4 of 4</span>
               </p>
@@ -1426,11 +1466,37 @@ export default function SurveyPage() {
                 Thank You! Your Insights Will Help Shape Better Credit Risk Solutions.
               </h2>
               <p className="text-xl text-gray-700 mb-6">
-                Your contribution joins <strong className="text-emerald-600">500+ credit professionals</strong> who have shared their experiences.
+                Your contribution will help shape the future of credit risk management.
               </p>
             </div>
 
             <div className="bg-emerald-50 rounded-2xl p-6 md:p-8 border-2 border-emerald-200">
+              {/* Stay in Touch Section */}
+              <div className="mb-8">
+                <label
+                  className={`flex items-start p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 ${
+                    formData.wantsStayInTouch
+                      ? 'bg-emerald-600 border-emerald-700 shadow-md'
+                      : 'bg-white hover:bg-emerald-50 hover:border-emerald-300 border-gray-200'
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={formData.wantsStayInTouch}
+                    onChange={(e) => setFormData({ ...formData, wantsStayInTouch: e.target.checked })}
+                    className={`w-6 h-6 rounded focus:ring-emerald-300 focus:ring-2 mt-1 ${
+                      formData.wantsStayInTouch ? 'text-white accent-white' : 'text-emerald-600'
+                    }`}
+                  />
+                  <div className="ml-4">
+                    <div className={`font-bold text-lg ${formData.wantsStayInTouch ? 'text-white' : 'text-gray-900'}`}>Stay in Touch</div>
+                    <div className={`mt-1 ${formData.wantsStayInTouch ? 'text-emerald-50' : 'text-gray-600'}`}>
+                      Add your email if you would like to learn more about best practices in the credit management space
+                    </div>
+                  </div>
+                </label>
+              </div>
+
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
                 Choose What You'd Like to Receive:
               </h3>
@@ -1506,11 +1572,11 @@ export default function SurveyPage() {
                 </label>
               </div>
 
-              {(formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) && (
+              {(formData.wantsStayInTouch || formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) && (
                 <div className="space-y-4 pt-6 border-t-2 border-emerald-200">
                   <div>
                     <label className="block text-base font-semibold text-gray-900 mb-2">
-                      Email Address {(formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) && <span className="text-red-500">*</span>}
+                      Email Address {(formData.wantsStayInTouch || formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) && <span className="text-red-500">*</span>}
                     </label>
                     <input
                       type="email"
@@ -1549,32 +1615,51 @@ export default function SurveyPage() {
                   </div>
 
                   {formData.wantsConsultation && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t-2 border-emerald-200">
-                      <div>
-                        <label className="block text-base font-semibold text-gray-900 mb-2">
-                          Phone (Optional)
-                        </label>
-                        <input
-                          type="tel"
-                          placeholder="+1 (555) 123-4567"
-                          value={formData.consultationPhone}
-                          onChange={(e) => setFormData({ ...formData, consultationPhone: e.target.value })}
-                          className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                        />
+                    <>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t-2 border-emerald-200">
+                        <div>
+                          <label className="block text-base font-semibold text-gray-900 mb-2">
+                            Phone (Optional)
+                          </label>
+                          <input
+                            type="tel"
+                            placeholder="+1 (555) 123-4567"
+                            value={formData.consultationPhone}
+                            onChange={(e) => setFormData({ ...formData, consultationPhone: e.target.value })}
+                            className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-base font-semibold text-gray-900 mb-2">
+                            Best Time to Contact (Optional)
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="e.g., Weekday mornings"
+                            value={formData.consultationBestTime}
+                            onChange={(e) => setFormData({ ...formData, consultationBestTime: e.target.value })}
+                            className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-base font-semibold text-gray-900 mb-2">
-                          Best Time to Contact (Optional)
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="e.g., Weekday mornings"
-                          value={formData.consultationBestTime}
-                          onChange={(e) => setFormData({ ...formData, consultationBestTime: e.target.value })}
-                          className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                        />
+
+                      <div className="pt-4">
+                        <div className="text-center">
+                          <p className="text-sm text-gray-600 mb-3">Or schedule directly:</p>
+                          <a
+                            href="https://calendly.com/javiersg/30min"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl transition-colors duration-200 shadow-md hover:shadow-lg"
+                          >
+                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Schedule Meeting on Calendly
+                          </a>
+                        </div>
                       </div>
-                    </div>
+                    </>
                   )}
                 </div>
               )}
@@ -1645,7 +1730,7 @@ export default function SurveyPage() {
           formData.q20_international_sales_percentage
         )
       case 'email-capture':
-        if (formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) {
+        if (formData.wantsStayInTouch || formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) {
           return formData.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
         }
         return true
