@@ -624,7 +624,6 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div>
-              <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 What credit payment terms do you typically offer?
               </h2>
@@ -668,7 +667,7 @@ export default function SurveyPage() {
                 { value: 'no-never', label: 'No, never' },
                 { value: 'prefer-not-say', label: 'Prefer not to say' },
               ].map((option) => (
-                <label key={option.value} className="flex items-center p-4 bg-slate-900 rounded-lg cursor-pointer hover:bg-slate-800 transition">
+                <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
                   <input
                     type="radio"
                     name="q4"
@@ -677,7 +676,7 @@ export default function SurveyPage() {
                     onChange={(e) => setFormData({ ...formData, q4_bad_debt_experience: e.target.value })}
                     className="w-5 h-5 text-blue-600"
                   />
-                  <span className="ml-3 text-white">{option.label}</span>
+                  <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
                 </label>
               ))}
             </div>
@@ -688,11 +687,10 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div>
-              <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
-              <h2 className="text-2xl font-semibold text-white mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 Approximately how much has your company lost to bad debt over the past 5 years?
               </h2>
-              <p className="text-sm text-slate-400 mb-4">
+              <p className="text-lg text-gray-600 mb-6">
                 Your response is anonymous and helps us understand the scale of impact across different businesses.
               </p>
               <div className="space-y-3">
@@ -723,16 +721,16 @@ export default function SurveyPage() {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 How significantly did bad debt impact your business?
               </h2>
-              <p className="text-sm text-slate-400 mb-4">1 = Minor inconvenience → 5 = Severe impact (threatened viability)</p>
+              <p className="text-lg text-gray-600 mb-6">1 = Minor inconvenience → 5 = Severe impact (threatened viability)</p>
               <div className="flex justify-between gap-2">
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <button
                     key={rating}
                     onClick={() => setFormData({ ...formData, q6_bad_debt_impact: rating })}
-                    className={`flex-1 py-4 px-6 rounded-lg font-semibold transition ${
+                    className={`flex-1 py-4 px-6 rounded-xl font-semibold transition-all duration-200 ${
                       formData.q6_bad_debt_impact === rating
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
+                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg scale-105'
+                        : 'bg-gray-100 text-gray-700 hover:bg-emerald-50 hover:text-emerald-700'
                     }`}
                   >
                     {rating}
@@ -787,14 +785,14 @@ export default function SurveyPage() {
                 { value: 'deposits-advance-payments', label: 'Required deposits/advance payments' },
                 { value: 'other', label: 'Other' },
               ].map((option) => (
-                <label key={option.value} className="flex items-center p-4 bg-slate-900 rounded-lg cursor-pointer hover:bg-slate-800 transition">
+                <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
                   <input
                     type="checkbox"
                     checked={formData.q7a_changes_made?.includes(option.value)}
                     onChange={(e) => handleCheckboxChange('q7a_changes_made', option.value, e.target.checked)}
                     className="w-5 h-5 text-blue-600 rounded"
                   />
-                  <span className="ml-3 text-white">{option.label}</span>
+                  <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
                 </label>
               ))}
             </div>
@@ -804,7 +802,7 @@ export default function SurveyPage() {
                 placeholder="Please specify other changes"
                 value={formData.q7a_changes_other}
                 onChange={(e) => setFormData({ ...formData, q7a_changes_other: e.target.value })}
-                className="mt-3 w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="mt-3 w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               />
             )}
           </div>
@@ -814,11 +812,10 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div>
-              <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
-              <h2 className="text-2xl font-semibold text-white mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 How do you determine credit terms for new customers?
               </h2>
-              <p className="text-sm text-slate-400 mb-4">Select your top 3 methods</p>
+              <p className="text-lg text-gray-600 mb-6">Select your top 3 methods</p>
               <div className="space-y-3">
                 {[
                   { value: 'credit-bureau-reports', label: 'Credit bureau reports (Dun & Bradstreet, Experian, etc.)' },
@@ -841,16 +838,16 @@ export default function SurveyPage() {
                   </label>
                 ))}
               </div>
-              <p className="text-xs text-slate-500 mt-2">
+              <p className="text-sm text-gray-600 mt-2">
                 {formData.q8_credit_assessment_methods?.length || 0}/3 selected
               </p>
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold text-white mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 What tools do you use to track Accounts Receivable?
               </h2>
-              <p className="text-sm text-slate-400 mb-4">Select all that apply</p>
+              <p className="text-lg text-gray-600 mb-6">Select all that apply</p>
               <div className="space-y-3">
                 {[
                   { value: 'erp-system', label: 'ERP system (SAP, Oracle, NetSuite, etc.)' },
@@ -873,10 +870,10 @@ export default function SurveyPage() {
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold text-white mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 Which of these credit risk mechanisms does your company currently use?
               </h2>
-              <p className="text-sm text-slate-400 mb-4">Select all that apply. Don't worry if you haven't heard of some—just skip those.</p>
+              <p className="text-lg text-gray-600 mb-6">Select all that apply. Don't worry if you haven't heard of some—just skip those.</p>
               <div className="space-y-3">
                 {[
                   { value: 'trade-credit-insurance', label: 'Trade Credit Insurance' },
@@ -915,7 +912,6 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div>
-              <p className="text-sm text-slate-400 mb-6">Progress: Section {getCurrentSectionNumber()} of {getTotalSections()}</p>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 How long have you used trade credit insurance?
               </h2>
@@ -978,7 +974,7 @@ export default function SurveyPage() {
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold text-white mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 Who is your TCI provider?
               </h2>
               <p className="text-lg text-gray-600 mb-6">Select all that apply</p>
@@ -1015,10 +1011,10 @@ export default function SurveyPage() {
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold text-white mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 How often do you interact with your insurer?
               </h2>
-              <p className="text-sm text-slate-400 mb-4">
+              <p className="text-lg text-gray-600 mb-6">
                 Including coverage for new customer, credit limit increase/decrease, monthly/annual reporting, claim submission, policy renewal
               </p>
               <div className="space-y-3">
@@ -1048,16 +1044,16 @@ export default function SurveyPage() {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 How satisfied are you with your TCI provider overall?
               </h2>
-              <p className="text-sm text-slate-400 mb-4">Very dissatisfied → Very satisfied</p>
+              <p className="text-lg text-gray-600 mb-6">Very dissatisfied → Very satisfied</p>
               <div className="flex justify-between gap-2">
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <button
                     key={rating}
                     onClick={() => setFormData({ ...formData, q15_tci_satisfaction: rating })}
-                    className={`flex-1 py-4 px-6 rounded-lg font-semibold transition ${
+                    className={`flex-1 py-4 px-6 rounded-xl font-semibold transition-all duration-200 ${
                       formData.q15_tci_satisfaction === rating
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
+                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg scale-105'
+                        : 'bg-gray-100 text-gray-700 hover:bg-emerald-50 hover:text-emerald-700'
                     }`}
                   >
                     {rating}
@@ -1067,10 +1063,10 @@ export default function SurveyPage() {
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold text-white mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 What are your biggest challenges with trade credit insurance?
               </h2>
-              <p className="text-sm text-slate-400 mb-4">Select up to 3</p>
+              <p className="text-lg text-gray-600 mb-6">Select up to 3</p>
               <div className="space-y-3">
                 {[
                   { value: 'high-premiums', label: 'High premiums/cost' },
@@ -1094,7 +1090,7 @@ export default function SurveyPage() {
                   </label>
                 ))}
               </div>
-              <p className="text-xs text-slate-500 mt-2">
+              <p className="text-sm text-gray-600 mt-2">
                 {formData.q16_tci_challenges?.length || 0}/3 selected
               </p>
               {formData.q16_tci_challenges?.includes('other') && (
@@ -1247,60 +1243,60 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-semibold text-white mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 Thank You! Your Insights Will Help Shape Better Credit Risk Solutions.
               </h2>
-              <p className="text-slate-300 mb-6">
-                Your contribution joins <strong>500+ credit professionals</strong> who have shared their experiences.
+              <p className="text-xl text-gray-700 mb-6">
+                Your contribution joins <strong className="text-emerald-600">500+ credit professionals</strong> who have shared their experiences.
               </p>
             </div>
 
-            <div className="bg-slate-900 rounded-xl p-6">
-              <h3 className="text-xl font-semibold text-white mb-4">
+            <div className="bg-emerald-50 rounded-2xl p-6 md:p-8 border-2 border-emerald-200">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">
                 Choose What You'd Like to Receive:
               </h3>
 
               <div className="space-y-4 mb-6">
-                <label className="flex items-start p-4 bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-700 transition">
+                <label className="flex items-start p-5 bg-white rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-gray-200 transition-all duration-200">
                   <input
                     type="checkbox"
                     checked={formData.wantsBenchmarkReport}
                     onChange={(e) => setFormData({ ...formData, wantsBenchmarkReport: e.target.checked })}
-                    className="w-5 h-5 text-blue-600 rounded mt-1"
+                    className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2 mt-1"
                   />
-                  <div className="ml-3">
-                    <div className="font-semibold text-white">Personalized Benchmark Report</div>
-                    <div className="text-sm text-slate-400">
+                  <div className="ml-4">
+                    <div className="font-bold text-gray-900 text-lg">Personalized Benchmark Report</div>
+                    <div className="text-gray-600 mt-1">
                       See how YOUR company compares to peers in your specific industry and size category
                     </div>
                   </div>
                 </label>
 
-                <label className="flex items-start p-4 bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-700 transition">
+                <label className="flex items-start p-5 bg-white rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-gray-200 transition-all duration-200">
                   <input
                     type="checkbox"
                     checked={formData.wantsResearchReport}
                     onChange={(e) => setFormData({ ...formData, wantsResearchReport: e.target.checked })}
-                    className="w-5 h-5 text-blue-600 rounded mt-1"
+                    className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2 mt-1"
                   />
-                  <div className="ml-3">
-                    <div className="font-semibold text-white">Full Research Report</div>
-                    <div className="text-sm text-slate-400">
+                  <div className="ml-4">
+                    <div className="font-bold text-gray-900 text-lg">Full Research Report</div>
+                    <div className="text-gray-600 mt-1">
                       Complete findings from all respondents, early access before public release
                     </div>
                   </div>
                 </label>
 
-                <label className="flex items-start p-4 bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-700 transition">
+                <label className="flex items-start p-5 bg-white rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-gray-200 transition-all duration-200">
                   <input
                     type="checkbox"
                     checked={formData.wantsConsultation}
                     onChange={(e) => setFormData({ ...formData, wantsConsultation: e.target.checked })}
-                    className="w-5 h-5 text-blue-600 rounded mt-1"
+                    className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2 mt-1"
                   />
-                  <div className="ml-3">
-                    <div className="font-semibold text-white">Free Expert Consultation</div>
-                    <div className="text-sm text-slate-400">
+                  <div className="ml-4">
+                    <div className="font-bold text-gray-900 text-lg">Free Expert Consultation</div>
+                    <div className="text-gray-600 mt-1">
                       15-minute session with our research team to discuss your specific credit risk challenges
                     </div>
                   </div>
@@ -1308,23 +1304,23 @@ export default function SurveyPage() {
               </div>
 
               {(formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) && (
-                <div className="space-y-4">
+                <div className="space-y-4 pt-6 border-t-2 border-emerald-200">
                   <div>
-                    <label className="block text-sm font-medium text-white mb-2">
-                      Email Address {(formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) && <span className="text-red-400">*</span>}
+                    <label className="block text-base font-semibold text-gray-900 mb-2">
+                      Email Address {(formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) && <span className="text-red-500">*</span>}
                     </label>
                     <input
                       type="email"
                       placeholder="your.email@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-white mb-2">
+                      <label className="block text-base font-semibold text-gray-900 mb-2">
                         Name (Optional)
                       </label>
                       <input
@@ -1332,11 +1328,11 @@ export default function SurveyPage() {
                         placeholder="John Doe"
                         value={formData.contactName}
                         onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                        className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-white mb-2">
+                      <label className="block text-base font-semibold text-gray-900 mb-2">
                         Company Name (Optional)
                       </label>
                       <input
@@ -1344,15 +1340,15 @@ export default function SurveyPage() {
                         placeholder="Your Company Ltd."
                         value={formData.companyName}
                         onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                        className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                       />
                     </div>
                   </div>
 
                   {formData.wantsConsultation && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-700">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t-2 border-emerald-200">
                       <div>
-                        <label className="block text-sm font-medium text-white mb-2">
+                        <label className="block text-base font-semibold text-gray-900 mb-2">
                           Phone (Optional)
                         </label>
                         <input
@@ -1360,11 +1356,11 @@ export default function SurveyPage() {
                           placeholder="+1 (555) 123-4567"
                           value={formData.consultationPhone}
                           onChange={(e) => setFormData({ ...formData, consultationPhone: e.target.value })}
-                          className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                          className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-white mb-2">
+                        <label className="block text-base font-semibold text-gray-900 mb-2">
                           Best Time to Contact (Optional)
                         </label>
                         <input
@@ -1372,7 +1368,7 @@ export default function SurveyPage() {
                           placeholder="e.g., Weekday mornings"
                           value={formData.consultationBestTime}
                           onChange={(e) => setFormData({ ...formData, consultationBestTime: e.target.value })}
-                          className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                          className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                         />
                       </div>
                     </div>
