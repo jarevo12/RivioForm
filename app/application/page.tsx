@@ -356,8 +356,10 @@ export default function SurveyPage() {
     // Move to next section
     if (currentIndex < sections.length - 1) {
       setCurrentSectionId(sections[currentIndex + 1])
-      // Scroll to top of page smoothly
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      // Scroll to top of page smoothly after state update
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }, 0)
     }
   }
 
@@ -367,8 +369,10 @@ export default function SurveyPage() {
 
     if (currentIndex > 0) {
       setCurrentSectionId(sections[currentIndex - 1])
-      // Scroll to top of page smoothly
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      // Scroll to top of page smoothly after state update
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }, 0)
     }
   }
 
@@ -576,7 +580,7 @@ export default function SurveyPage() {
                     onClick={() => setFormData({ ...formData, q1_b2b_percentage: option.value })}
                     className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                       formData.q1_b2b_percentage === option.value
-                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
@@ -603,7 +607,7 @@ export default function SurveyPage() {
                     onClick={() => setFormData({ ...formData, q2_role: option.value })}
                     className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                       formData.q2_role === option.value
-                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
@@ -645,7 +649,7 @@ export default function SurveyPage() {
                     onClick={() => setFormData({ ...formData, q3_payment_terms: option.value })}
                     className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                       formData.q3_payment_terms === option.value
-                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
@@ -675,7 +679,7 @@ export default function SurveyPage() {
                   onClick={() => setFormData({ ...formData, q4_bad_debt_experience: option.value })}
                   className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                     formData.q4_bad_debt_experience === option.value
-                      ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                      ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
                       : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                   }`}
                 >
@@ -710,7 +714,7 @@ export default function SurveyPage() {
                     onClick={() => setFormData({ ...formData, q5_bad_debt_amount: option.value })}
                     className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                       formData.q5_bad_debt_amount === option.value
-                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
@@ -757,7 +761,7 @@ export default function SurveyPage() {
                     onClick={() => setFormData({ ...formData, q7_changed_approach: option.value })}
                     className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                       formData.q7_changed_approach === option.value
-                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
@@ -930,7 +934,7 @@ export default function SurveyPage() {
                     onClick={() => setFormData({ ...formData, q11_tci_duration: option.value })}
                     className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                       formData.q11_tci_duration === option.value
-                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
@@ -957,7 +961,7 @@ export default function SurveyPage() {
                     onClick={() => setFormData({ ...formData, q12_tci_coverage: option.value })}
                     className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                       formData.q12_tci_coverage === option.value
-                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
@@ -1033,7 +1037,7 @@ export default function SurveyPage() {
                     onClick={() => setFormData({ ...formData, q14_tci_interaction_frequency: option.value })}
                     className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                       formData.q14_tci_interaction_frequency === option.value
-                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
@@ -1131,7 +1135,7 @@ export default function SurveyPage() {
                     onClick={() => setFormData({ ...formData, q17_annual_revenue: option.value })}
                     className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                       formData.q17_annual_revenue === option.value
-                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
@@ -1230,7 +1234,7 @@ export default function SurveyPage() {
                     onClick={() => setFormData({ ...formData, q20_international_sales_percentage: option.value })}
                     className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                       formData.q20_international_sales_percentage === option.value
-                        ? 'bg-white/70 border-white/70 backdrop-blur-md'
+                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
