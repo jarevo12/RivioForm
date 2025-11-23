@@ -872,7 +872,7 @@ export default function SurveyPage() {
                   key={option.value}
                   className={`flex items-center p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                     formData.q7a_changes_made?.includes(option.value)
-                      ? 'bg-emerald-100 border-emerald-600 shadow-md'
+                      ? 'bg-emerald-600 border-emerald-700 shadow-md'
                       : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                   }`}
                 >
@@ -880,9 +880,9 @@ export default function SurveyPage() {
                     type="checkbox"
                     checked={formData.q7a_changes_made?.includes(option.value)}
                     onChange={(e) => handleCheckboxChange('q7a_changes_made', option.value, e.target.checked)}
-                    className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
+                    className="w-6 h-6 text-white accent-white rounded focus:ring-emerald-300 focus:ring-2"
                   />
-                  <span className={`ml-4 text-lg font-medium ${formData.q7a_changes_made?.includes(option.value) ? 'text-emerald-900' : 'text-[#1F4D3D]'}`}>{option.label}</span>
+                  <span className={`ml-4 text-lg font-medium ${formData.q7a_changes_made?.includes(option.value) ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                 </label>
               ))}
             </div>
@@ -919,15 +919,22 @@ export default function SurveyPage() {
                   { value: 'industry-standard-terms', label: 'Industry standard terms' },
                   { value: 'no-formal-assessment', label: "We don't conduct formal assessments" },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
+                  <label
+                    key={option.value}
+                    className={`flex items-center p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q8_credit_assessment_methods?.includes(option.value)
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
                     <input
                       type="checkbox"
                       checked={formData.q8_credit_assessment_methods?.includes(option.value)}
                       onChange={(e) => handleCheckboxChange('q8_credit_assessment_methods', option.value, e.target.checked)}
                       disabled={!formData.q8_credit_assessment_methods?.includes(option.value) && (formData.q8_credit_assessment_methods?.length || 0) >= 3}
-                      className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
+                      className="w-6 h-6 text-white accent-white rounded focus:ring-emerald-300 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    <span className={`ml-4 text-lg font-medium ${formData.q8_credit_assessment_methods?.includes(option.value) ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -959,14 +966,21 @@ export default function SurveyPage() {
                   { value: 'spreadsheets', label: 'Spreadsheets (Excel/Google Sheets)' },
                   { value: 'no-specific-tools', label: "We don't use specific tools" },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
+                  <label
+                    key={option.value}
+                    className={`flex items-center p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q9_ar_tracking_tools?.includes(option.value)
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
                     <input
                       type="checkbox"
                       checked={formData.q9_ar_tracking_tools?.includes(option.value)}
                       onChange={(e) => handleCheckboxChange('q9_ar_tracking_tools', option.value, e.target.checked)}
-                      className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
+                      className="w-6 h-6 text-white accent-white rounded focus:ring-emerald-300 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    <span className={`ml-4 text-lg font-medium ${formData.q9_ar_tracking_tools?.includes(option.value) ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -990,14 +1004,21 @@ export default function SurveyPage() {
                   { value: 'none', label: "We don't use any formal mechanisms" },
                   { value: 'other', label: 'Other' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
+                  <label
+                    key={option.value}
+                    className={`flex items-center p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q10_risk_mechanisms?.includes(option.value)
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
                     <input
                       type="checkbox"
                       checked={formData.q10_risk_mechanisms?.includes(option.value)}
                       onChange={(e) => handleCheckboxChange('q10_risk_mechanisms', option.value, e.target.checked)}
-                      className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
+                      className="w-6 h-6 text-white accent-white rounded focus:ring-emerald-300 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    <span className={`ml-4 text-lg font-medium ${formData.q10_risk_mechanisms?.includes(option.value) ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -1104,14 +1125,21 @@ export default function SurveyPage() {
                   { value: 'other', label: 'Other' },
                   { value: 'prefer-not-say', label: 'Prefer not to say' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
+                  <label
+                    key={option.value}
+                    className={`flex items-center p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q13_tci_provider?.includes(option.value)
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
                     <input
                       type="checkbox"
                       checked={formData.q13_tci_provider?.includes(option.value)}
                       onChange={(e) => handleCheckboxChange('q13_tci_provider', option.value, e.target.checked)}
-                      className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
+                      className="w-6 h-6 text-white accent-white rounded focus:ring-emerald-300 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    <span className={`ml-4 text-lg font-medium ${formData.q13_tci_provider?.includes(option.value) ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -1210,15 +1238,22 @@ export default function SurveyPage() {
                   { value: 'difficult-integration', label: 'Difficult to integrate with our systems' },
                   { value: 'other', label: 'Other' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
+                  <label
+                    key={option.value}
+                    className={`flex items-center p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q16_tci_challenges?.includes(option.value)
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
                     <input
                       type="checkbox"
                       checked={formData.q16_tci_challenges?.includes(option.value)}
                       onChange={(e) => handleCheckboxChange('q16_tci_challenges', option.value, e.target.checked)}
                       disabled={!formData.q16_tci_challenges?.includes(option.value) && (formData.q16_tci_challenges?.length || 0) >= 3}
-                      className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
+                      className="w-6 h-6 text-white accent-white rounded focus:ring-emerald-300 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    <span className={`ml-4 text-lg font-medium ${formData.q16_tci_challenges?.includes(option.value) ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -1422,46 +1457,70 @@ export default function SurveyPage() {
               </h3>
 
               <div className="space-y-4 mb-6">
-                <label className="flex items-start p-5 bg-white rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-gray-200 transition-all duration-200">
+                <label
+                  className={`flex items-start p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 ${
+                    formData.wantsBenchmarkReport
+                      ? 'bg-emerald-600 border-emerald-700 shadow-md'
+                      : 'bg-white hover:bg-emerald-50 hover:border-emerald-300 border-gray-200'
+                  }`}
+                >
                   <input
                     type="checkbox"
                     checked={formData.wantsBenchmarkReport}
                     onChange={(e) => setFormData({ ...formData, wantsBenchmarkReport: e.target.checked })}
-                    className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2 mt-1"
+                    className={`w-6 h-6 rounded focus:ring-emerald-300 focus:ring-2 mt-1 ${
+                      formData.wantsBenchmarkReport ? 'text-white accent-white' : 'text-emerald-600'
+                    }`}
                   />
                   <div className="ml-4">
-                    <div className="font-bold text-gray-900 text-lg">Personalized Benchmark Report</div>
-                    <div className="text-gray-600 mt-1">
+                    <div className={`font-bold text-lg ${formData.wantsBenchmarkReport ? 'text-white' : 'text-gray-900'}`}>Personalized Benchmark Report</div>
+                    <div className={`mt-1 ${formData.wantsBenchmarkReport ? 'text-emerald-50' : 'text-gray-600'}`}>
                       See how YOUR company compares to peers in your specific industry and size category
                     </div>
                   </div>
                 </label>
 
-                <label className="flex items-start p-5 bg-white rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-gray-200 transition-all duration-200">
+                <label
+                  className={`flex items-start p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 ${
+                    formData.wantsResearchReport
+                      ? 'bg-emerald-600 border-emerald-700 shadow-md'
+                      : 'bg-white hover:bg-emerald-50 hover:border-emerald-300 border-gray-200'
+                  }`}
+                >
                   <input
                     type="checkbox"
                     checked={formData.wantsResearchReport}
                     onChange={(e) => setFormData({ ...formData, wantsResearchReport: e.target.checked })}
-                    className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2 mt-1"
+                    className={`w-6 h-6 rounded focus:ring-emerald-300 focus:ring-2 mt-1 ${
+                      formData.wantsResearchReport ? 'text-white accent-white' : 'text-emerald-600'
+                    }`}
                   />
                   <div className="ml-4">
-                    <div className="font-bold text-gray-900 text-lg">Full Research Report</div>
-                    <div className="text-gray-600 mt-1">
+                    <div className={`font-bold text-lg ${formData.wantsResearchReport ? 'text-white' : 'text-gray-900'}`}>Full Research Report</div>
+                    <div className={`mt-1 ${formData.wantsResearchReport ? 'text-emerald-50' : 'text-gray-600'}`}>
                       Complete findings from all respondents, early access before public release
                     </div>
                   </div>
                 </label>
 
-                <label className="flex items-start p-5 bg-white rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-gray-200 transition-all duration-200">
+                <label
+                  className={`flex items-start p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 ${
+                    formData.wantsConsultation
+                      ? 'bg-emerald-600 border-emerald-700 shadow-md'
+                      : 'bg-white hover:bg-emerald-50 hover:border-emerald-300 border-gray-200'
+                  }`}
+                >
                   <input
                     type="checkbox"
                     checked={formData.wantsConsultation}
                     onChange={(e) => setFormData({ ...formData, wantsConsultation: e.target.checked })}
-                    className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2 mt-1"
+                    className={`w-6 h-6 rounded focus:ring-emerald-300 focus:ring-2 mt-1 ${
+                      formData.wantsConsultation ? 'text-white accent-white' : 'text-emerald-600'
+                    }`}
                   />
                   <div className="ml-4">
-                    <div className="font-bold text-gray-900 text-lg">Free Expert Consultation</div>
-                    <div className="text-gray-600 mt-1">
+                    <div className={`font-bold text-lg ${formData.wantsConsultation ? 'text-white' : 'text-gray-900'}`}>Free Expert Consultation</div>
+                    <div className={`mt-1 ${formData.wantsConsultation ? 'text-emerald-50' : 'text-gray-600'}`}>
                       15-minute session with our research team to discuss your specific credit risk challenges
                     </div>
                   </div>
