@@ -156,7 +156,12 @@ export default function SurveyWelcome() {
             <h2 className="text-3xl font-bold text-white text-center mb-10">Who's Behind This</h2>
             <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
               {/* Javier Serrano Card */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105">
+              <a
+                href="https://www.linkedin.com/in/javierserranogp/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105 cursor-pointer block"
+              >
                 <div className="flex items-center gap-4">
                   <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-emerald-400">
                     <Image
@@ -172,10 +177,15 @@ export default function SurveyWelcome() {
                     <p className="text-emerald-200 text-sm">MIT Sloan '27</p>
                   </div>
                 </div>
-              </div>
+              </a>
 
               {/* Sergio Sanchez Card */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105">
+              <a
+                href="https://www.linkedin.com/in/sergio-s%C3%A1nchez-g%C3%B3mez/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105 cursor-pointer block"
+              >
                 <div className="flex items-center gap-4">
                   <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-emerald-400">
                     <Image
@@ -191,7 +201,7 @@ export default function SurveyWelcome() {
                     <p className="text-emerald-200 text-sm">MIT Sloan '27</p>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </section>
@@ -199,7 +209,6 @@ export default function SurveyWelcome() {
         {/* Footer */}
         <footer className="container mx-auto px-6 py-8 border-t border-white/10">
           <div className="text-center text-emerald-200">
-            <p className="mb-2 font-medium">© 2025 Rivio. All rights reserved.</p>
             <p className="text-sm text-emerald-300">Your responses are anonymous and confidential.</p>
           </div>
         </footer>
