@@ -109,12 +109,12 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
         onFocus={handleInputFocus}
         onKeyDown={handleKeyDown}
         placeholder={placeholder || 'Type to search...'}
-        className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+        className="w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
         autoComplete="off"
       />
 
       {isOpen && (
-        <div className="absolute z-10 w-full mt-1 bg-white border-2 border-gray-200 rounded-xl shadow-xl max-h-60 overflow-y-auto">
+        <div className="absolute z-10 w-full mt-1 bg-white/95 backdrop-blur-md border-2 border-white/50 rounded-xl shadow-xl max-h-60 overflow-y-auto">
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
               <div
@@ -123,17 +123,17 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
                 onClick={() => handleSelect(option.value)}
                 className={`px-4 py-3 cursor-pointer transition ${
                   index === highlightedIndex
-                    ? 'bg-emerald-100 text-emerald-900 font-medium'
+                    ? 'bg-emerald-500 text-white font-medium'
                     : value === option.value
-                    ? 'bg-emerald-50 text-emerald-800'
-                    : 'text-gray-700 hover:bg-gray-100'
+                    ? 'bg-emerald-100 text-[#1F4D3D]'
+                    : 'text-[#1F4D3D] hover:bg-white/60'
                 }`}
               >
                 {option.label}
               </div>
             ))
           ) : (
-            <div className="px-4 py-3 text-gray-500">No matches found</div>
+            <div className="px-4 py-3 text-[#2D6A4F]">No matches found</div>
           )}
         </div>
       )}
@@ -557,7 +557,7 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1F4D3D] mb-8 leading-tight">
                 What percentage of your company's sales are B2B?
               </h2>
               <div className="space-y-3">
@@ -567,7 +567,7 @@ export default function SurveyPage() {
                   { value: '51-75', label: '51-75%' },
                   { value: '76-100', label: '76-100%' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="radio"
                       name="q1"
@@ -576,14 +576,14 @@ export default function SurveyPage() {
                       onChange={(e) => setFormData({ ...formData, q1_b2b_percentage: e.target.value })}
                       className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">What is your role?</h2>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1F4D3D] mb-8 leading-tight">What is your role?</h2>
               <div className="space-y-3">
                 {[
                   { value: 'cfo-finance-director', label: 'CFO / Finance Director' },
@@ -594,7 +594,7 @@ export default function SurveyPage() {
                   { value: 'coo', label: 'COO (involved in credit decisions)' },
                   { value: 'other', label: 'Other role' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="radio"
                       name="q2"
@@ -603,7 +603,7 @@ export default function SurveyPage() {
                       onChange={(e) => setFormData({ ...formData, q2_role: e.target.value })}
                       className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -613,7 +613,7 @@ export default function SurveyPage() {
                   placeholder="Please specify your role"
                   value={formData.q2_role_other}
                   onChange={(e) => setFormData({ ...formData, q2_role_other: e.target.value })}
-                  className="mt-3 w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="mt-3 w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
                 />
               )}
             </div>
@@ -624,7 +624,7 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 What credit payment terms do you typically offer?
               </h2>
               <div className="space-y-3">
@@ -636,7 +636,7 @@ export default function SurveyPage() {
                   { value: 'more-than-net-90', label: 'More than Net 90' },
                   { value: 'cash-payment-on-delivery', label: 'Mostly cash/payment on delivery' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="radio"
                       name="q3"
@@ -645,7 +645,7 @@ export default function SurveyPage() {
                       onChange={(e) => setFormData({ ...formData, q3_payment_terms: e.target.value })}
                       className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -687,10 +687,10 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 Approximately how much has your company lost to bad debt over the past 5 years?
               </h2>
-              <p className="text-lg text-gray-600 mb-6">
+              <p className="text-lg text-[#2D6A4F] mb-6">
                 Your response is anonymous and helps us understand the scale of impact across different businesses.
               </p>
               <div className="space-y-3">
@@ -702,7 +702,7 @@ export default function SurveyPage() {
                   { value: 'over-5m', label: 'Over $5 million' },
                   { value: 'prefer-not-say', label: 'Prefer not to say' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="radio"
                       name="q5"
@@ -711,17 +711,17 @@ export default function SurveyPage() {
                       onChange={(e) => setFormData({ ...formData, q5_bad_debt_amount: e.target.value })}
                       className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 How significantly did bad debt impact your business?
               </h2>
-              <p className="text-lg text-gray-600 mb-6">1 = Minor inconvenience → 5 = Severe impact (threatened viability)</p>
+              <p className="text-lg text-[#2D6A4F] mb-6">1 = Minor inconvenience → 5 = Severe impact (threatened viability)</p>
               <div className="flex justify-between gap-2">
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <button
@@ -730,7 +730,7 @@ export default function SurveyPage() {
                     className={`flex-1 py-4 px-6 rounded-xl font-semibold transition-all duration-200 ${
                       formData.q6_bad_debt_impact === rating
                         ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg scale-105'
-                        : 'bg-gray-100 text-gray-700 hover:bg-emerald-50 hover:text-emerald-700'
+                        : 'bg-white/40 backdrop-blur-sm text-[#1F4D3D] hover:bg-white/60 border-2 border-white/30 hover:border-white/50 shadow-sm'
                     }`}
                   >
                     {rating}
@@ -740,7 +740,7 @@ export default function SurveyPage() {
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 Did you change your credit risk management approach after these experiences?
               </h2>
               <div className="space-y-3">
@@ -749,7 +749,7 @@ export default function SurveyPage() {
                   { value: 'yes-minor', label: 'Yes, made minor adjustments' },
                   { value: 'no-same-approach', label: 'No, kept the same approach' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="radio"
                       name="q7"
@@ -758,7 +758,7 @@ export default function SurveyPage() {
                       onChange={(e) => setFormData({ ...formData, q7_changed_approach: e.target.value })}
                       className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -812,10 +812,10 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 How do you determine credit terms for new customers?
               </h2>
-              <p className="text-lg text-gray-600 mb-6">Select your top 3 methods</p>
+              <p className="text-lg text-[#2D6A4F] mb-6">Select your top 3 methods</p>
               <div className="space-y-3">
                 {[
                   { value: 'credit-bureau-reports', label: 'Credit bureau reports (Dun & Bradstreet, Experian, etc.)' },
@@ -826,7 +826,7 @@ export default function SurveyPage() {
                   { value: 'industry-standard-terms', label: 'Industry standard terms' },
                   { value: 'no-formal-assessment', label: "We don't conduct formal assessments" },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="checkbox"
                       checked={formData.q8_credit_assessment_methods?.includes(option.value)}
@@ -834,20 +834,20 @@ export default function SurveyPage() {
                       disabled={!formData.q8_credit_assessment_methods?.includes(option.value) && (formData.q8_credit_assessment_methods?.length || 0) >= 3}
                       className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
-              <p className="text-sm text-gray-600 mt-2">
+              <p className="text-sm text-[#2D6A4F] mt-2">
                 {formData.q8_credit_assessment_methods?.length || 0}/3 selected
               </p>
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 What tools do you use to track Accounts Receivable?
               </h2>
-              <p className="text-lg text-gray-600 mb-6">Select all that apply</p>
+              <p className="text-lg text-[#2D6A4F] mb-6">Select all that apply</p>
               <div className="space-y-3">
                 {[
                   { value: 'erp-system', label: 'ERP system (SAP, Oracle, NetSuite, etc.)' },
@@ -856,24 +856,24 @@ export default function SurveyPage() {
                   { value: 'spreadsheets', label: 'Spreadsheets (Excel/Google Sheets)' },
                   { value: 'no-specific-tools', label: "We don't use specific tools" },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="checkbox"
                       checked={formData.q9_ar_tracking_tools?.includes(option.value)}
                       onChange={(e) => handleCheckboxChange('q9_ar_tracking_tools', option.value, e.target.checked)}
                       className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 Which of these credit risk mechanisms does your company currently use?
               </h2>
-              <p className="text-lg text-gray-600 mb-6">Select all that apply. Don't worry if you haven't heard of some—just skip those.</p>
+              <p className="text-lg text-[#2D6A4F] mb-6">Select all that apply. Don't worry if you haven't heard of some—just skip those.</p>
               <div className="space-y-3">
                 {[
                   { value: 'trade-credit-insurance', label: 'Trade Credit Insurance' },
@@ -884,14 +884,14 @@ export default function SurveyPage() {
                   { value: 'none', label: "We don't use any formal mechanisms" },
                   { value: 'other', label: 'Other' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="checkbox"
                       checked={formData.q10_risk_mechanisms?.includes(option.value)}
                       onChange={(e) => handleCheckboxChange('q10_risk_mechanisms', option.value, e.target.checked)}
                       className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -901,7 +901,7 @@ export default function SurveyPage() {
                   placeholder="Please specify other mechanisms"
                   value={formData.q10_risk_mechanisms_other}
                   onChange={(e) => setFormData({ ...formData, q10_risk_mechanisms_other: e.target.value })}
-                  className="mt-3 w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="mt-3 w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
                 />
               )}
             </div>
@@ -912,7 +912,7 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 How long have you used trade credit insurance?
               </h2>
               <div className="space-y-3">
@@ -922,7 +922,7 @@ export default function SurveyPage() {
                   { value: '3-5-years', label: '3-5 years' },
                   { value: 'over-5-years', label: 'Over 5 years' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="radio"
                       name="q11"
@@ -931,14 +931,14 @@ export default function SurveyPage() {
                       onChange={(e) => setFormData({ ...formData, q11_tci_duration: e.target.value })}
                       className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 What portion of your AR do you insure?
               </h2>
               <div className="space-y-3">
@@ -949,7 +949,7 @@ export default function SurveyPage() {
                   { value: 'specific-segments', label: 'Specific segments (e.g., international only)' },
                   { value: 'other', label: 'Other' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="radio"
                       name="q12"
@@ -958,7 +958,7 @@ export default function SurveyPage() {
                       onChange={(e) => setFormData({ ...formData, q12_tci_coverage: e.target.value })}
                       className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -968,16 +968,16 @@ export default function SurveyPage() {
                   placeholder="Please specify coverage"
                   value={formData.q12_tci_coverage_other}
                   onChange={(e) => setFormData({ ...formData, q12_tci_coverage_other: e.target.value })}
-                  className="mt-3 w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="mt-3 w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
                 />
               )}
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 Who is your TCI provider?
               </h2>
-              <p className="text-lg text-gray-600 mb-6">Select all that apply</p>
+              <p className="text-lg text-[#2D6A4F] mb-6">Select all that apply</p>
               <div className="space-y-3">
                 {[
                   { value: 'allianz-trade', label: 'Allianz Trade (incl. Euler Hermes)' },
@@ -988,14 +988,14 @@ export default function SurveyPage() {
                   { value: 'other', label: 'Other' },
                   { value: 'prefer-not-say', label: 'Prefer not to say' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="checkbox"
                       checked={formData.q13_tci_provider?.includes(option.value)}
                       onChange={(e) => handleCheckboxChange('q13_tci_provider', option.value, e.target.checked)}
                       className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -1005,16 +1005,16 @@ export default function SurveyPage() {
                   placeholder="Please specify provider"
                   value={formData.q13_tci_provider_other}
                   onChange={(e) => setFormData({ ...formData, q13_tci_provider_other: e.target.value })}
-                  className="mt-3 w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="mt-3 w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
                 />
               )}
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 How often do you interact with your insurer?
               </h2>
-              <p className="text-lg text-gray-600 mb-6">
+              <p className="text-lg text-[#2D6A4F] mb-6">
                 Including coverage for new customer, credit limit increase/decrease, monthly/annual reporting, claim submission, policy renewal
               </p>
               <div className="space-y-3">
@@ -1025,7 +1025,7 @@ export default function SurveyPage() {
                   { value: 'only-when-issues', label: 'Only when issues arise' },
                   { value: 'rarely-annual-only', label: 'Rarely (annual renewal only)' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="radio"
                       name="q14"
@@ -1034,17 +1034,17 @@ export default function SurveyPage() {
                       onChange={(e) => setFormData({ ...formData, q14_tci_interaction_frequency: e.target.value })}
                       className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 How satisfied are you with your TCI provider overall?
               </h2>
-              <p className="text-lg text-gray-600 mb-6">Very dissatisfied → Very satisfied</p>
+              <p className="text-lg text-[#2D6A4F] mb-6">Very dissatisfied → Very satisfied</p>
               <div className="flex justify-between gap-2">
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <button
@@ -1053,7 +1053,7 @@ export default function SurveyPage() {
                     className={`flex-1 py-4 px-6 rounded-xl font-semibold transition-all duration-200 ${
                       formData.q15_tci_satisfaction === rating
                         ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg scale-105'
-                        : 'bg-gray-100 text-gray-700 hover:bg-emerald-50 hover:text-emerald-700'
+                        : 'bg-white/40 backdrop-blur-sm text-[#1F4D3D] hover:bg-white/60 border-2 border-white/30 hover:border-white/50 shadow-sm'
                     }`}
                   >
                     {rating}
@@ -1063,10 +1063,10 @@ export default function SurveyPage() {
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 What are your biggest challenges with trade credit insurance?
               </h2>
-              <p className="text-lg text-gray-600 mb-6">Select up to 3</p>
+              <p className="text-lg text-[#2D6A4F] mb-6">Select up to 3</p>
               <div className="space-y-3">
                 {[
                   { value: 'high-premiums', label: 'High premiums/cost' },
@@ -1078,7 +1078,7 @@ export default function SurveyPage() {
                   { value: 'difficult-integration', label: 'Difficult to integrate with our systems' },
                   { value: 'other', label: 'Other' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="checkbox"
                       checked={formData.q16_tci_challenges?.includes(option.value)}
@@ -1086,11 +1086,11 @@ export default function SurveyPage() {
                       disabled={!formData.q16_tci_challenges?.includes(option.value) && (formData.q16_tci_challenges?.length || 0) >= 3}
                       className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
-              <p className="text-sm text-gray-600 mt-2">
+              <p className="text-sm text-[#2D6A4F] mt-2">
                 {formData.q16_tci_challenges?.length || 0}/3 selected
               </p>
               {formData.q16_tci_challenges?.includes('other') && (
@@ -1099,7 +1099,7 @@ export default function SurveyPage() {
                   placeholder="Please specify other challenges"
                   value={formData.q16_tci_challenges_other}
                   onChange={(e) => setFormData({ ...formData, q16_tci_challenges_other: e.target.value })}
-                  className="mt-3 w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="mt-3 w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
                 />
               )}
             </div>
@@ -1111,7 +1111,7 @@ export default function SurveyPage() {
           <div className="space-y-8">
             <div>
               <p className="text-sm text-slate-400 mb-6">Progress: Almost done! Final questions</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 What is your company's approximate annual revenue?
               </h2>
               <div className="space-y-3">
@@ -1123,7 +1123,7 @@ export default function SurveyPage() {
                   { value: 'over-500m', label: 'Over $500 million' },
                   { value: 'prefer-not-say', label: 'Prefer not to say' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="radio"
                       name="q17"
@@ -1132,14 +1132,14 @@ export default function SurveyPage() {
                       onChange={(e) => setFormData({ ...formData, q17_annual_revenue: e.target.value })}
                       className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 What is your company's primary industry?
               </h2>
               <SearchableSelect
@@ -1167,13 +1167,13 @@ export default function SurveyPage() {
                   placeholder="Please specify your industry"
                   value={formData.q18_primary_industry_other || ''}
                   onChange={(e) => setFormData({ ...formData, q18_primary_industry_other: e.target.value })}
-                  className="mt-3 w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="mt-3 w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
                 />
               )}
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 Where is your company headquartered?
               </h2>
               <SearchableSelect
@@ -1205,13 +1205,13 @@ export default function SurveyPage() {
                   placeholder="Please specify your country"
                   value={formData.q19_company_headquarters_other || ''}
                   onChange={(e) => setFormData({ ...formData, q19_company_headquarters_other: e.target.value })}
-                  className="mt-3 w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="mt-3 w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
                 />
               )}
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 What percentage of your B2B sales are international?
               </h2>
               <div className="space-y-3">
@@ -1222,7 +1222,7 @@ export default function SurveyPage() {
                   { value: '50-75', label: '50-75%' },
                   { value: '75-100', label: '75-100%' },
                 ].map((option) => (
-                  <label key={option.value} className="flex items-center p-5 bg-gray-50 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 border-2 border-transparent transition-all duration-200">
+                  <label key={option.value} className="flex items-center p-5 bg-white/40 backdrop-blur-sm rounded-xl cursor-pointer hover:bg-white/60 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-sm">
                     <input
                       type="radio"
                       name="q20"
@@ -1231,7 +1231,7 @@ export default function SurveyPage() {
                       onChange={(e) => setFormData({ ...formData, q20_international_sales_percentage: e.target.value })}
                       className="w-6 h-6 text-emerald-600 focus:ring-emerald-500 focus:ring-2"
                     />
-                    <span className="ml-4 text-lg font-medium text-gray-800">{option.label}</span>
+                    <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -1466,15 +1466,15 @@ export default function SurveyPage() {
       {/* Main Content */}
       <main className="relative z-10 container mx-auto px-6 py-12">
         <div className="max-w-3xl mx-auto">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-white/20 transition-all duration-300">
+          <div className="bg-emerald-50/90 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-emerald-200/50 transition-all duration-300">
             {renderSection()}
 
             {/* Navigation Buttons */}
-            <div className="flex gap-4 mt-8 pt-8 border-t border-gray-200">
+            <div className="flex gap-4 mt-8 pt-8 border-t border-emerald-200">
               {getCurrentSectionNumber() > 1 && (
                 <button
                   onClick={handleBack}
-                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-4 px-6 rounded-xl transition duration-200 shadow-md hover:shadow-lg"
+                  className="flex-1 bg-white/40 hover:bg-white/60 text-[#1F4D3D] font-semibold py-4 px-6 rounded-xl transition duration-200 shadow-md hover:shadow-lg border-2 border-white/30 hover:border-white/50 backdrop-blur-sm"
                 >
                   ← Back
                 </button>
