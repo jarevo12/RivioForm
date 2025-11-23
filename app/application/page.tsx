@@ -1591,7 +1591,12 @@ export default function SurveyPage() {
   const canProceed = () => {
     switch (currentSectionId) {
       case 'qualification':
-        return formData.q1_b2b_percentage && formData.q2_role
+        return (
+          formData.q1_b2b_percentage &&
+          formData.q2_role &&
+          // If "other" is selected, require text input
+          (formData.q2_role !== 'other' || (formData.q2_role_other && formData.q2_role_other.trim() !== ''))
+        )
       case 'payment-terms':
         return formData.q3_payment_terms && formData.q3_payment_terms !== ''
       case 'bad-debt-question':
@@ -1599,27 +1604,44 @@ export default function SurveyPage() {
       case 'bad-debt-details':
         return formData.q5_bad_debt_amount && (formData.q6_bad_debt_impact ?? 0) > 0 && formData.q7_changed_approach
       case 'bad-debt-changes':
-        return formData.q7a_changes_made && formData.q7a_changes_made.length > 0
+        return (
+          formData.q7a_changes_made &&
+          formData.q7a_changes_made.length > 0 &&
+          // If "other" is selected, require text input
+          (!formData.q7a_changes_made.includes('other') || (formData.q7a_changes_other && formData.q7a_changes_other.trim() !== ''))
+        )
       case 'current-practices':
         return (
           formData.q8_credit_assessment_methods && formData.q8_credit_assessment_methods.length > 0 &&
           formData.q9_ar_tracking_tools && formData.q9_ar_tracking_tools.length > 0 &&
-          formData.q10_risk_mechanisms && formData.q10_risk_mechanisms.length > 0
+          formData.q10_risk_mechanisms && formData.q10_risk_mechanisms.length > 0 &&
+          // If "other" is selected in Q10, require text input
+          (!formData.q10_risk_mechanisms.includes('other') || (formData.q10_risk_mechanisms_other && formData.q10_risk_mechanisms_other.trim() !== ''))
         )
       case 'tci-questions':
         return (
           formData.q11_tci_duration &&
           formData.q12_tci_coverage &&
+          // If "other" is selected in Q12, require text input
+          (formData.q12_tci_coverage !== 'other' || (formData.q12_tci_coverage_other && formData.q12_tci_coverage_other.trim() !== '')) &&
           formData.q13_tci_provider && formData.q13_tci_provider.length > 0 &&
+          // If "other" is selected in Q13, require text input
+          (!formData.q13_tci_provider.includes('other') || (formData.q13_tci_provider_other && formData.q13_tci_provider_other.trim() !== '')) &&
           formData.q14_tci_interaction_frequency &&
           (formData.q15_tci_satisfaction ?? 0) > 0 &&
-          formData.q16_tci_challenges && formData.q16_tci_challenges.length > 0
+          formData.q16_tci_challenges && formData.q16_tci_challenges.length > 0 &&
+          // If "other" is selected in Q16, require text input
+          (!formData.q16_tci_challenges.includes('other') || (formData.q16_tci_challenges_other && formData.q16_tci_challenges_other.trim() !== ''))
         )
       case 'company-profile':
         return (
           formData.q17_annual_revenue &&
           formData.q18_primary_industry &&
+          // If "other" is selected in Q18, require text input
+          (formData.q18_primary_industry !== 'other' || (formData.q18_primary_industry_other && formData.q18_primary_industry_other.trim() !== '')) &&
           formData.q19_company_headquarters &&
+          // If "other" is selected in Q19, require text input
+          (formData.q19_company_headquarters !== 'other' || (formData.q19_company_headquarters_other && formData.q19_company_headquarters_other.trim() !== '')) &&
           formData.q20_international_sales_percentage
         )
       case 'email-capture':
