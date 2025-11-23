@@ -565,6 +565,9 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div>
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 1 of 2</span>
+              </p>
               <h2 className="text-4xl md:text-5xl font-bold text-[#1F4D3D] mb-8 leading-tight">
                 What percentage of your company's sales are B2B?
               </h2>
@@ -578,19 +581,27 @@ export default function SurveyPage() {
                   <div
                     key={option.value}
                     onClick={() => setFormData({ ...formData, q1_b2b_percentage: option.value })}
-                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm flex items-center gap-3 ${
                       formData.q1_b2b_percentage === option.value
-                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
-                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    {formData.q1_b2b_percentage === option.value && (
+                      <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    <span className={`text-lg font-medium ${formData.q1_b2b_percentage === option.value ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div>
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 2 of 2</span>
+              </p>
               <h2 className="text-4xl md:text-5xl font-bold text-[#1F4D3D] mb-8 leading-tight">What is your role?</h2>
               <div className="space-y-3">
                 {[
@@ -605,13 +616,18 @@ export default function SurveyPage() {
                   <div
                     key={option.value}
                     onClick={() => setFormData({ ...formData, q2_role: option.value })}
-                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm flex items-center gap-3 ${
                       formData.q2_role === option.value
-                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
-                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    {formData.q2_role === option.value && (
+                      <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    <span className={`text-lg font-medium ${formData.q2_role === option.value ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </div>
                 ))}
               </div>
@@ -647,13 +663,18 @@ export default function SurveyPage() {
                   <div
                     key={option.value}
                     onClick={() => setFormData({ ...formData, q3_payment_terms: option.value })}
-                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm flex items-center gap-3 ${
                       formData.q3_payment_terms === option.value
-                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
-                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    {formData.q3_payment_terms === option.value && (
+                      <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    <span className={`text-lg font-medium ${formData.q3_payment_terms === option.value ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </div>
                 ))}
               </div>
@@ -677,13 +698,18 @@ export default function SurveyPage() {
                 <div
                   key={option.value}
                   onClick={() => setFormData({ ...formData, q4_bad_debt_experience: option.value })}
-                  className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                  className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm flex items-center gap-3 ${
                     formData.q4_bad_debt_experience === option.value
-                      ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                      ? 'bg-emerald-600 border-emerald-700 shadow-md'
                       : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                   }`}
                 >
-                  <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  {formData.q4_bad_debt_experience === option.value && (
+                    <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                  <span className={`text-lg font-medium ${formData.q4_bad_debt_experience === option.value ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                 </div>
               ))}
             </div>
@@ -692,8 +718,11 @@ export default function SurveyPage() {
 
       case 'bad-debt-details':
         return (
-          <div className="space-y-8">
-            <div>
+          <div className="space-y-10">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 1 of 3</span>
+              </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 Approximately how much has your company lost to bad debt over the past 5 years?
               </h2>
@@ -712,19 +741,27 @@ export default function SurveyPage() {
                   <div
                     key={option.value}
                     onClick={() => setFormData({ ...formData, q5_bad_debt_amount: option.value })}
-                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm flex items-center gap-3 ${
                       formData.q5_bad_debt_amount === option.value
-                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
-                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    {formData.q5_bad_debt_amount === option.value && (
+                      <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    <span className={`text-lg font-medium ${formData.q5_bad_debt_amount === option.value ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div>
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 2 of 3</span>
+              </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-8 leading-tight">
                 How significantly did bad debt impact your business?
               </h2>
@@ -733,7 +770,7 @@ export default function SurveyPage() {
                   <div key={rating} className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => setFormData({ ...formData, q6_bad_debt_impact: rating })}
-                      className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full font-bold text-lg sm:text-xl transition-all duration-200 ${
+                      className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full font-bold text-lg sm:text-xl md:text-2xl transition-all duration-200 ${
                         formData.q6_bad_debt_impact === rating
                           ? 'bg-emerald-600 text-white shadow-lg scale-110 ring-4 ring-emerald-300'
                           : 'bg-white/60 backdrop-blur-sm text-[#1F4D3D] hover:bg-white/80 border-2 border-white/50 hover:border-emerald-400 shadow-sm'
@@ -754,7 +791,10 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            <div>
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 3 of 3</span>
+              </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 Did you change your credit risk management approach after these experiences?
               </h2>
@@ -767,13 +807,18 @@ export default function SurveyPage() {
                   <div
                     key={option.value}
                     onClick={() => setFormData({ ...formData, q7_changed_approach: option.value })}
-                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm flex items-center gap-3 ${
                       formData.q7_changed_approach === option.value
-                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
-                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    {formData.q7_changed_approach === option.value && (
+                      <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    <span className={`text-lg font-medium ${formData.q7_changed_approach === option.value ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </div>
                 ))}
               </div>
@@ -803,7 +848,7 @@ export default function SurveyPage() {
                   key={option.value}
                   className={`flex items-center p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
                     formData.q7a_changes_made?.includes(option.value)
-                      ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                      ? 'bg-emerald-100 border-emerald-600 shadow-md'
                       : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                   }`}
                 >
@@ -813,7 +858,7 @@ export default function SurveyPage() {
                     onChange={(e) => handleCheckboxChange('q7a_changes_made', option.value, e.target.checked)}
                     className="w-6 h-6 text-emerald-600 rounded focus:ring-emerald-500 focus:ring-2"
                   />
-                  <span className="ml-4 text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                  <span className={`ml-4 text-lg font-medium ${formData.q7a_changes_made?.includes(option.value) ? 'text-emerald-900' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                 </label>
               ))}
             </div>
@@ -831,8 +876,11 @@ export default function SurveyPage() {
 
       case 'current-practices':
         return (
-          <div className="space-y-8">
-            <div>
+          <div className="space-y-10">
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 1 of 3</span>
+              </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 How do you determine credit terms for new customers?
               </h2>
@@ -859,12 +907,22 @@ export default function SurveyPage() {
                   </label>
                 ))}
               </div>
-              <p className="text-sm text-[#2D6A4F] mt-2">
-                {formData.q8_credit_assessment_methods?.length || 0}/3 selected
-              </p>
+              <div className="flex items-center justify-between mt-3">
+                <p className="text-sm text-[#2D6A4F] font-medium">
+                  {formData.q8_credit_assessment_methods?.length || 0}/3 selected
+                </p>
+                {(formData.q8_credit_assessment_methods?.length || 0) < 3 && (
+                  <p className="text-sm text-amber-700 bg-amber-50 px-3 py-1 rounded-full">
+                    Please select {3 - (formData.q8_credit_assessment_methods?.length || 0)} more
+                  </p>
+                )}
+              </div>
             </div>
 
-            <div>
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 2 of 3</span>
+              </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 What tools do you use to track Accounts Receivable?
               </h2>
@@ -890,7 +948,10 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            <div>
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 3 of 3</span>
+              </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 Which of these credit risk mechanisms does your company currently use?
               </h2>
@@ -946,13 +1007,18 @@ export default function SurveyPage() {
                   <div
                     key={option.value}
                     onClick={() => setFormData({ ...formData, q11_tci_duration: option.value })}
-                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm flex items-center gap-3 ${
                       formData.q11_tci_duration === option.value
-                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
-                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    {formData.q11_tci_duration === option.value && (
+                      <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    <span className={`text-lg font-medium ${formData.q11_tci_duration === option.value ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </div>
                 ))}
               </div>
@@ -973,13 +1039,18 @@ export default function SurveyPage() {
                   <div
                     key={option.value}
                     onClick={() => setFormData({ ...formData, q12_tci_coverage: option.value })}
-                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm flex items-center gap-3 ${
                       formData.q12_tci_coverage === option.value
-                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
-                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    {formData.q12_tci_coverage === option.value && (
+                      <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    <span className={`text-lg font-medium ${formData.q12_tci_coverage === option.value ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </div>
                 ))}
               </div>
@@ -1049,13 +1120,18 @@ export default function SurveyPage() {
                   <div
                     key={option.value}
                     onClick={() => setFormData({ ...formData, q14_tci_interaction_frequency: option.value })}
-                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm flex items-center gap-3 ${
                       formData.q14_tci_interaction_frequency === option.value
-                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
-                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    {formData.q14_tci_interaction_frequency === option.value && (
+                      <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    <span className={`text-lg font-medium ${formData.q14_tci_interaction_frequency === option.value ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </div>
                 ))}
               </div>
@@ -1072,7 +1148,7 @@ export default function SurveyPage() {
                     <div key={rating} className="flex flex-col items-center">
                       <button
                         onClick={() => setFormData({ ...formData, q15_tci_satisfaction: rating })}
-                        className={`w-12 h-12 sm:w-16 sm:h-16 transition-all duration-200 ${
+                        className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 transition-all duration-200 p-1 ${
                           isSelected
                             ? 'scale-110'
                             : 'opacity-60 hover:opacity-100 hover:scale-105'
@@ -1122,9 +1198,16 @@ export default function SurveyPage() {
                   </label>
                 ))}
               </div>
-              <p className="text-sm text-[#2D6A4F] mt-2">
-                {formData.q16_tci_challenges?.length || 0}/3 selected
-              </p>
+              <div className="flex items-center justify-between mt-3">
+                <p className="text-sm text-[#2D6A4F] font-medium">
+                  {formData.q16_tci_challenges?.length || 0}/3 selected
+                </p>
+                {(formData.q16_tci_challenges?.length || 0) < 3 && (
+                  <p className="text-sm text-amber-700 bg-amber-50 px-3 py-1 rounded-full">
+                    Please select {3 - (formData.q16_tci_challenges?.length || 0)} more
+                  </p>
+                )}
+              </div>
               {formData.q16_tci_challenges?.includes('other') && (
                 <input
                   type="text"
@@ -1140,9 +1223,16 @@ export default function SurveyPage() {
 
       case 'company-profile':
         return (
-          <div className="space-y-8">
-            <div>
-              <p className="text-sm text-slate-400 mb-6">Progress: Almost done! Final questions</p>
+          <div className="space-y-10">
+            <div className="text-center mb-4">
+              <p className="text-lg text-emerald-700 font-semibold bg-emerald-100 inline-block px-4 py-2 rounded-full">
+                🎉 Almost done! Final questions
+              </p>
+            </div>
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 1 of 4</span>
+              </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 What is your company's approximate annual revenue?
               </h2>
@@ -1158,19 +1248,27 @@ export default function SurveyPage() {
                   <div
                     key={option.value}
                     onClick={() => setFormData({ ...formData, q17_annual_revenue: option.value })}
-                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm flex items-center gap-3 ${
                       formData.q17_annual_revenue === option.value
-                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
-                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    {formData.q17_annual_revenue === option.value && (
+                      <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    <span className={`text-lg font-medium ${formData.q17_annual_revenue === option.value ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div>
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 2 of 4</span>
+              </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 What is your company's primary industry?
               </h2>
@@ -1204,7 +1302,10 @@ export default function SurveyPage() {
               )}
             </div>
 
-            <div>
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 3 of 4</span>
+              </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 Where is your company headquartered?
               </h2>
@@ -1242,7 +1343,10 @@ export default function SurveyPage() {
               )}
             </div>
 
-            <div>
+            <div className="bg-white/40 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/40">
+              <p className="text-sm text-emerald-700 mb-3 font-medium flex items-center gap-2">
+                <span className="bg-emerald-100 px-2 py-1 rounded">Question 4 of 4</span>
+              </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
                 What percentage of your B2B sales are international?
               </h2>
@@ -1257,13 +1361,18 @@ export default function SurveyPage() {
                   <div
                     key={option.value}
                     onClick={() => setFormData({ ...formData, q20_international_sales_percentage: option.value })}
-                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                    className={`p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm flex items-center gap-3 ${
                       formData.q20_international_sales_percentage === option.value
-                        ? 'bg-emerald-600/40 border-emerald-600/60 backdrop-blur-md'
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
                         : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
                     }`}
                   >
-                    <span className="text-lg font-medium text-[#1F4D3D]">{option.label}</span>
+                    {formData.q20_international_sales_percentage === option.value && (
+                      <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    <span className={`text-lg font-medium ${formData.q20_international_sales_percentage === option.value ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
                   </div>
                 ))}
               </div>
@@ -1502,47 +1611,61 @@ export default function SurveyPage() {
             {renderSection()}
 
             {/* Navigation Buttons */}
-            <div className="flex gap-4 mt-8 pt-8 border-t border-emerald-200">
-              {getCurrentSectionNumber() > 1 && (
-                <button
-                  onClick={handleBack}
-                  className="flex-1 bg-white/40 hover:bg-white/60 text-[#1F4D3D] font-semibold py-4 px-6 rounded-xl transition duration-200 shadow-md hover:shadow-lg border-2 border-white/30 hover:border-white/50 backdrop-blur-sm"
-                >
-                  ← Back
-                </button>
+            <div className="flex flex-col gap-4 mt-8 pt-8 border-t border-emerald-200">
+              {!canProceed() && (
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+                  <p className="text-sm text-amber-800 font-medium">
+                    {currentSectionId === 'email-capture' && (formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation)
+                      ? '📧 Please provide your email address to continue'
+                      : '👆 Please complete all required fields above to continue'}
+                  </p>
+                </div>
               )}
-              {isLastSection() ? (
-                <button
-                  onClick={handleSubmit}
-                  disabled={!canProceed() || isSubmitting}
-                  className={`flex-1 font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg ${
-                    canProceed() && !isSubmitting
-                      ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white hover:shadow-xl hover:scale-105'
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  }`}
-                >
-                  {isSubmitting ? 'Submitting...' : 'Submit Survey ✓'}
-                </button>
-              ) : (
-                <button
-                  onClick={handleNext}
-                  disabled={!canProceed()}
-                  className={`flex-1 font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg group ${
-                    canProceed()
-                      ? 'bg-gradient-to-r from-[#2D6A4F] to-[#1F4D3D] hover:from-[#1F4D3D] hover:to-[#2D6A4F] text-white hover:shadow-xl hover:scale-105'
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  }`}
-                >
-                  <span className="flex items-center justify-center">
-                    Next
-                    {canProceed() && (
-                      <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    )}
-                  </span>
-                </button>
-              )}
+              <div className="flex gap-4">
+                {getCurrentSectionNumber() > 1 && (
+                  <button
+                    onClick={handleBack}
+                    className="flex-1 bg-white/40 hover:bg-white/60 text-[#1F4D3D] font-semibold py-4 px-6 rounded-xl transition duration-200 shadow-md hover:shadow-lg border-2 border-white/30 hover:border-white/50 backdrop-blur-sm"
+                  >
+                    ← Back
+                  </button>
+                )}
+                {isLastSection() ? (
+                  <button
+                    onClick={handleSubmit}
+                    disabled={!canProceed() || isSubmitting}
+                    className={`flex-1 font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg ${
+                      canProceed() && !isSubmitting
+                        ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white hover:shadow-xl hover:scale-105'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    }`}
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Submit Survey ✓'}
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleNext}
+                    disabled={!canProceed()}
+                    className={`flex-1 font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg group relative ${
+                      canProceed()
+                        ? 'bg-gradient-to-r from-[#2D6A4F] to-[#1F4D3D] hover:from-[#1F4D3D] hover:to-[#2D6A4F] text-white hover:shadow-xl hover:scale-105'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    }`}
+                  >
+                    <span className="flex items-center justify-center">
+                      Next
+                      {canProceed() && (
+                        <>
+                          <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                          <span className="ml-2 text-xs opacity-70 hidden sm:inline">or press Enter ↵</span>
+                        </>
+                      )}
+                    </span>
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
