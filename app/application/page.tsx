@@ -728,7 +728,7 @@ export default function SurveyPage() {
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-8 leading-tight">
                 How significantly did bad debt impact your business?
               </h2>
-              <div className="flex justify-between items-end gap-2 sm:gap-4 mb-4">
+              <div className="flex justify-between items-start gap-2 sm:gap-4 mb-4">
                 {[1, 2, 3, 4, 5].map((rating) => (
                   <div key={rating} className="flex flex-col items-center flex-1">
                     <button
@@ -741,12 +741,14 @@ export default function SurveyPage() {
                     >
                       {rating}
                     </button>
-                    {rating === 1 && (
-                      <p className="text-xs sm:text-sm text-[#2D6A4F] mt-3 text-center font-medium">Minor inconvenience</p>
-                    )}
-                    {rating === 5 && (
-                      <p className="text-xs sm:text-sm text-[#2D6A4F] mt-3 text-center font-medium">Severe impact</p>
-                    )}
+                    <div className="h-8 mt-3">
+                      {rating === 1 && (
+                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium">Minor inconvenience</p>
+                      )}
+                      {rating === 5 && (
+                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium">Severe impact</p>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1064,28 +1066,31 @@ export default function SurveyPage() {
                 How satisfied are you with your TCI provider overall?
               </h2>
               <div className="flex justify-center gap-2 sm:gap-4 mb-4">
-                {[1, 2, 3, 4, 5].map((rating) => (
-                  <div key={rating} className="flex flex-col items-center">
-                    <button
-                      onClick={() => setFormData({ ...formData, q15_tci_satisfaction: rating })}
-                      className={`w-12 h-12 sm:w-16 sm:h-16 transition-all duration-200 ${
-                        formData.q15_tci_satisfaction === rating
-                          ? 'scale-110'
-                          : 'opacity-60 hover:opacity-100 hover:scale-105'
-                      }`}
-                    >
-                      <svg viewBox="0 0 24 24" className="w-full h-full">
-                        <path
-                          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                          fill={formData.q15_tci_satisfaction === rating ? '#059669' : 'none'}
-                          stroke={formData.q15_tci_satisfaction === rating ? '#059669' : '#2D6A4F'}
-                          strokeWidth="1.5"
-                        />
-                      </svg>
-                    </button>
-                    <p className="text-sm sm:text-base text-[#2D6A4F] mt-2 font-medium">{rating}</p>
-                  </div>
-                ))}
+                {[1, 2, 3, 4, 5].map((rating) => {
+                  const isSelected = formData.q15_tci_satisfaction && rating <= formData.q15_tci_satisfaction
+                  return (
+                    <div key={rating} className="flex flex-col items-center">
+                      <button
+                        onClick={() => setFormData({ ...formData, q15_tci_satisfaction: rating })}
+                        className={`w-12 h-12 sm:w-16 sm:h-16 transition-all duration-200 ${
+                          isSelected
+                            ? 'scale-110'
+                            : 'opacity-60 hover:opacity-100 hover:scale-105'
+                        }`}
+                      >
+                        <svg viewBox="0 0 24 24" className="w-full h-full">
+                          <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                            fill={isSelected ? '#059669' : 'none'}
+                            stroke={isSelected ? '#059669' : '#2D6A4F'}
+                            strokeWidth="1.5"
+                          />
+                        </svg>
+                      </button>
+                      <p className="text-sm sm:text-base text-[#2D6A4F] mt-2 font-medium">{rating}</p>
+                    </div>
+                  )
+                })}
               </div>
             </div>
 
