@@ -1521,7 +1521,7 @@ export default function SurveyPage() {
         return (
           <div className="space-y-8">
             <div className="text-center mb-8">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1F4D3D] mb-4">
                 Thank You! Your Insights Will Help Shape Better Credit Risk Solutions.
               </h2>
               <p className="text-xl text-gray-700 mb-6">
@@ -1543,20 +1543,20 @@ export default function SurveyPage() {
                     type="checkbox"
                     checked={formData.wantsStayInTouch}
                     onChange={(e) => setFormData({ ...formData, wantsStayInTouch: e.target.checked })}
-                    className={`w-6 h-6 rounded focus:ring-emerald-300 focus:ring-2 mt-1 ${
+                    className={`w-6 h-6 flex-shrink-0 rounded focus:ring-emerald-300 focus:ring-2 mt-1 ${
                       formData.wantsStayInTouch ? 'text-white accent-white' : 'text-emerald-600'
                     }`}
                   />
                   <div className="ml-4">
-                    <div className={`font-bold text-lg ${formData.wantsStayInTouch ? 'text-white' : 'text-gray-900'}`}>Get Access to the Survey Report</div>
+                    <div className={`font-bold text-lg ${formData.wantsStayInTouch ? 'text-white' : 'text-[#1F4D3D]'}`}>Get Access to the Survey Report</div>
                     <div className={`mt-1 ${formData.wantsStayInTouch ? 'text-emerald-50' : 'text-gray-600'}`}>
-                      We all hate answering surveys that we don't get to see the result. Provide your email if you would like to receive the results of our survey research so you can see where you stand vs the rest of participants
+                      Nobody likes answering surveys without seeing the results. Share your email if you'd like to receive the findings of this research*.
                     </div>
                   </div>
                 </label>
               </div>
 
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+              <h3 className="text-2xl font-bold text-[#1F4D3D] mb-6">
                 We'd love to hear more about the credit management challenges you're facing
               </h3>
 
@@ -1572,12 +1572,12 @@ export default function SurveyPage() {
                     type="checkbox"
                     checked={formData.wantsConsultation}
                     onChange={(e) => setFormData({ ...formData, wantsConsultation: e.target.checked })}
-                    className={`w-6 h-6 rounded focus:ring-emerald-300 focus:ring-2 mt-1 ${
+                    className={`w-6 h-6 flex-shrink-0 rounded focus:ring-emerald-300 focus:ring-2 mt-1 ${
                       formData.wantsConsultation ? 'text-white accent-white' : 'text-emerald-600'
                     }`}
                   />
                   <div className="ml-4">
-                    <div className={`font-bold text-lg ${formData.wantsConsultation ? 'text-white' : 'text-gray-900'}`}>Challenge Mapping Session</div>
+                    <div className={`font-bold text-lg ${formData.wantsConsultation ? 'text-white' : 'text-[#1F4D3D]'}`}>Challenge Mapping Session</div>
                     <div className={`mt-1 ${formData.wantsConsultation ? 'text-emerald-50' : 'text-gray-600'}`}>
                       15-minute conversation to discuss your biggest challenges in managing the risks that come with selling on credit
                     </div>
@@ -1588,7 +1588,7 @@ export default function SurveyPage() {
               {(formData.wantsStayInTouch || formData.wantsConsultation) && (
                 <div className="space-y-4 pt-6 border-t-2 border-emerald-200">
                   <div>
-                    <label className="block text-base font-semibold text-gray-900 mb-2">
+                    <label className="block text-base font-semibold text-[#1F4D3D] mb-2">
                       Email Address {(formData.wantsStayInTouch || formData.wantsConsultation) && <span className="text-red-500">*</span>}
                     </label>
                     <input
@@ -1602,7 +1602,7 @@ export default function SurveyPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-base font-semibold text-gray-900 mb-2">
+                      <label className="block text-base font-semibold text-[#1F4D3D] mb-2">
                         Name {(formData.wantsStayInTouch || formData.wantsConsultation) ? <span className="text-red-500">*</span> : '(Optional)'}
                       </label>
                       <input
@@ -1614,7 +1614,7 @@ export default function SurveyPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-base font-semibold text-gray-900 mb-2">
+                      <label className="block text-base font-semibold text-[#1F4D3D] mb-2">
                         Company Name {(formData.wantsStayInTouch || formData.wantsConsultation) ? <span className="text-red-500">*</span> : '(Optional)'}
                       </label>
                       <input
@@ -1631,7 +1631,7 @@ export default function SurveyPage() {
                     <>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t-2 border-emerald-200">
                         <div>
-                          <label className="block text-base font-semibold text-gray-900 mb-2">
+                          <label className="block text-base font-semibold text-[#1F4D3D] mb-2">
                             Phone (Optional)
                           </label>
                           <input
@@ -1643,7 +1643,7 @@ export default function SurveyPage() {
                           />
                         </div>
                         <div>
-                          <label className="block text-base font-semibold text-gray-900 mb-2">
+                          <label className="block text-base font-semibold text-[#1F4D3D] mb-2">
                             Best Time to Contact (Optional)
                           </label>
                           <input
@@ -1676,6 +1676,13 @@ export default function SurveyPage() {
                   )}
                 </div>
               )}
+
+              {/* Confidentiality Disclaimer */}
+              <div className="mt-8 p-4 bg-white/40 backdrop-blur-sm rounded-xl border border-emerald-200">
+                <p className="text-xs text-[#2D6A4F] leading-relaxed">
+                  *Findings will be shared once a sufficient number of responses have been collected and analyzed. Your individual answers will remain fully confidential, and only aggregated data will be reported.
+                </p>
+              </div>
             </div>
           </div>
         )
