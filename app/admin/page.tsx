@@ -12,20 +12,46 @@ interface SurveyResponse {
   companyName?: string
   q1_b2b_percentage: string
   q2_role?: string
+  q2_role_other?: string
   q3_payment_terms?: string
   q4_bad_debt_experience?: string
   q5_bad_debt_amount?: string
   q6_bad_debt_impact?: number
+  q7_changed_approach?: string
+  q7a_changes_made?: string[]
+  q7a_changes_other?: string
+  q8_credit_assessment_methods?: string[]
+  q9_ar_tracking_tools?: string[]
+  q10_risk_mechanisms?: string[]
+  q10_risk_mechanisms_other?: string
+  q10a_tci_non_usage_reasons?: string[]
+  q10a_tci_non_usage_reasons_other?: string
+  q11_tci_duration?: string
+  q12_tci_coverage?: string
+  q12_tci_coverage_other?: string
+  q13_tci_provider?: string[]
+  q13_tci_provider_other?: string
+  q14_tci_interaction_frequency?: string
+  q15_tci_satisfaction?: number
+  q16_tci_challenges?: string[]
+  q16_tci_challenges_other?: string
   q17_annual_revenue?: string
   q18_primary_industry?: string
+  q18_primary_industry_other?: string
   q19_company_headquarters?: string
+  q19_company_headquarters_other?: string
+  q20_international_sales_percentage?: string
   screenedOut: boolean
   usesTCI: boolean
   surveyPath?: string
   totalQuestions?: number
   completionTime?: number
   wantsStayInTouch: boolean
+  wantsBenchmarkReport?: boolean
+  wantsResearchReport?: boolean
   wantsConsultation: boolean
+  consultationPhone?: string
+  consultationBestTime?: string
   createdAt: string
   submittedAt: string
 }
@@ -43,6 +69,8 @@ interface Stats {
     count: number
   }>
   tciUsers: number
+  surveyReportRequests: number
+  challengeMappingRequests: number
   avgCompletionTime: number
   emailCaptureRate: string
 }
@@ -59,6 +87,8 @@ export default function AdminDashboard() {
   const [currentTime, setCurrentTime] = useState<string>('')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [adminUsername, setAdminUsername] = useState('')
+  const [selectedResponse, setSelectedResponse] = useState<SurveyResponse | null>(null)
+  const [showDetailModal, setShowDetailModal] = useState(false)
 
   // Authentication check
   useEffect(() => {
@@ -227,7 +257,7 @@ export default function AdminDashboard() {
       <main className="container mx-auto px-6 py-8">
         {/* Stats Cards */}
         {stats && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
             <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -251,10 +281,30 @@ export default function AdminDashboard() {
             <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
               <div className="flex items-center justify-between">
                 <div>
+                  <p className="text-slate-400 text-sm">Survey Report</p>
+                  <p className="text-3xl font-bold text-cyan-400 mt-2">{stats.surveyReportRequests || 0}</p>
+                </div>
+                <Mail className="w-12 h-12 text-cyan-400" />
+              </div>
+            </div>
+
+            <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-slate-400 text-sm">Mapping Sessions</p>
+                  <p className="text-3xl font-bold text-orange-400 mt-2">{stats.challengeMappingRequests || 0}</p>
+                </div>
+                <Calendar className="w-12 h-12 text-orange-400" />
+              </div>
+            </div>
+
+            <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+              <div className="flex items-center justify-between">
+                <div>
                   <p className="text-slate-400 text-sm">TCI Users</p>
                   <p className="text-3xl font-bold text-purple-400 mt-2">{stats.tciUsers}</p>
                 </div>
-                <Calendar className="w-12 h-12 text-purple-400" />
+                <Users className="w-12 h-12 text-purple-400" />
               </div>
             </div>
 
@@ -333,14 +383,19 @@ export default function AdminDashboard() {
                     <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Industry</th>
                     <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Revenue</th>
                     <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Bad Debt</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Uses TCI</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Survey Report</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Mapping Session</th>
                     <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Survey Path</th>
                     <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Submitted</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-700">
                   {responses.map((response) => (
-                    <tr key={response._id} className="hover:bg-slate-700/50 transition">
+                    <tr
+                      key={response._id}
+                      onClick={() => { setSelectedResponse(response); setShowDetailModal(true); }}
+                      className="hover:bg-slate-700/50 transition cursor-pointer"
+                    >
                       <td className="px-6 py-4">
                         <div className="text-sm font-medium text-white">{response.contactName || 'N/A'}</div>
                         {response.email && (
@@ -365,11 +420,18 @@ export default function AdminDashboard() {
                       <td className="px-6 py-4 text-sm text-slate-300">
                         {formatFieldValue(response.q4_bad_debt_experience)}
                       </td>
-                      <td className="px-6 py-4 text-sm">
-                        {response.usesTCI ? (
-                          <span className="text-green-400 font-medium">Yes</span>
+                      <td className="px-6 py-4 text-sm text-center">
+                        {response.wantsStayInTouch ? (
+                          <span className="text-cyan-400 font-medium">✓</span>
                         ) : (
-                          <span className="text-slate-500">No</span>
+                          <span className="text-slate-600">-</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-center">
+                        {response.wantsConsultation ? (
+                          <span className="text-orange-400 font-medium">✓</span>
+                        ) : (
+                          <span className="text-slate-600">-</span>
                         )}
                       </td>
                       <td className="px-6 py-4">
@@ -415,6 +477,341 @@ export default function AdminDashboard() {
             </div>
           )}
         </div>
+
+        {/* Detailed Response Modal */}
+        {showDetailModal && selectedResponse && (
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 overflow-y-auto">
+            <div className="min-h-screen px-4 py-8 flex items-center justify-center">
+              <div className="bg-slate-800 border border-slate-700 rounded-xl max-w-5xl w-full shadow-2xl">
+                {/* Modal Header */}
+                <div className="bg-slate-900 border-b border-slate-700 px-8 py-6 flex items-center justify-between rounded-t-xl">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white">Survey Response Details</h2>
+                    <p className="text-slate-400 mt-1">
+                      {selectedResponse.contactName || 'Anonymous'} • {selectedResponse.companyName || 'N/A'}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => { setShowDetailModal(false); setSelectedResponse(null); }}
+                    className="text-slate-400 hover:text-white transition p-2 hover:bg-slate-700 rounded-lg"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Modal Content */}
+                <div className="p-8 max-h-[70vh] overflow-y-auto">
+                  {/* Contact Information */}
+                  <div className="mb-8">
+                    <h3 className="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">Contact Information</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-slate-400">Name</p>
+                        <p className="text-white font-medium">{selectedResponse.contactName || 'N/A'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-slate-400">Email</p>
+                        <p className="text-white font-medium">{selectedResponse.email || 'N/A'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-slate-400">Company</p>
+                        <p className="text-white font-medium">{selectedResponse.companyName || 'N/A'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-slate-400">Survey Path</p>
+                        <p className="text-white font-medium">{formatFieldValue(selectedResponse.surveyPath)}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Qualification Questions */}
+                  <div className="mb-8">
+                    <h3 className="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">Qualification</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-sm text-slate-400">Q1: B2B Sales Percentage</p>
+                        <p className="text-white">{formatFieldValue(selectedResponse.q1_b2b_percentage)}</p>
+                      </div>
+                      {!selectedResponse.screenedOut && (
+                        <div>
+                          <p className="text-sm text-slate-400">Q2: Role</p>
+                          <p className="text-white">{formatFieldValue(selectedResponse.q2_role)}</p>
+                          {selectedResponse.q2_role_other && (
+                            <p className="text-slate-300 text-sm mt-1">Other: {selectedResponse.q2_role_other}</p>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Credit Management */}
+                  {!selectedResponse.screenedOut && (
+                    <div className="mb-8">
+                      <h3 className="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">Credit Management</h3>
+                      <div className="space-y-4">
+                        <div>
+                          <p className="text-sm text-slate-400">Q3: Payment Terms</p>
+                          <p className="text-white">{formatFieldValue(selectedResponse.q3_payment_terms)}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-slate-400">Q4: Bad Debt Experience</p>
+                          <p className="text-white">{formatFieldValue(selectedResponse.q4_bad_debt_experience)}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Bad Debt Section - Conditional */}
+                  {(selectedResponse.q4_bad_debt_experience === 'yes-multiple' || selectedResponse.q4_bad_debt_experience === 'yes-once-or-twice') && (
+                    <div className="mb-8">
+                      <h3 className="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">Bad Debt Details</h3>
+                      <div className="space-y-4">
+                        {selectedResponse.q5_bad_debt_amount && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q5: Bad Debt Amount</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q5_bad_debt_amount)}</p>
+                          </div>
+                        )}
+                        {selectedResponse.q6_bad_debt_impact && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q6: Bad Debt Impact (1-5)</p>
+                            <p className="text-white">{selectedResponse.q6_bad_debt_impact}</p>
+                          </div>
+                        )}
+                        {selectedResponse.q7_changed_approach && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q7: Changed Credit Approach</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q7_changed_approach)}</p>
+                          </div>
+                        )}
+                        {selectedResponse.q7a_changes_made && selectedResponse.q7a_changes_made.length > 0 && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q7a: Changes Made</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q7a_changes_made)}</p>
+                            {selectedResponse.q7a_changes_other && (
+                              <p className="text-slate-300 text-sm mt-1">Other: {selectedResponse.q7a_changes_other}</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Current Practices */}
+                  {!selectedResponse.screenedOut && (
+                    <div className="mb-8">
+                      <h3 className="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">Current Practices</h3>
+                      <div className="space-y-4">
+                        {selectedResponse.q8_credit_assessment_methods && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q8: Credit Assessment Methods</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q8_credit_assessment_methods)}</p>
+                          </div>
+                        )}
+                        {selectedResponse.q9_ar_tracking_tools && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q9: AR Tracking Tools</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q9_ar_tracking_tools)}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Risk Mitigation */}
+                  {!selectedResponse.screenedOut && (
+                    <div className="mb-8">
+                      <h3 className="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">Risk Mitigation</h3>
+                      <div className="space-y-4">
+                        {selectedResponse.q10_risk_mechanisms && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q10: Risk Mechanisms</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q10_risk_mechanisms)}</p>
+                            {selectedResponse.q10_risk_mechanisms_other && (
+                              <p className="text-slate-300 text-sm mt-1">Other: {selectedResponse.q10_risk_mechanisms_other}</p>
+                            )}
+                          </div>
+                        )}
+                        {selectedResponse.q10a_tci_non_usage_reasons && selectedResponse.q10a_tci_non_usage_reasons.length > 0 && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q10a: TCI Non-Usage Reasons</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q10a_tci_non_usage_reasons)}</p>
+                            {selectedResponse.q10a_tci_non_usage_reasons_other && (
+                              <p className="text-slate-300 text-sm mt-1">Other: {selectedResponse.q10a_tci_non_usage_reasons_other}</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* TCI Deep Dive - Conditional */}
+                  {selectedResponse.usesTCI && (
+                    <div className="mb-8">
+                      <h3 className="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">TCI Deep Dive</h3>
+                      <div className="space-y-4">
+                        {selectedResponse.q11_tci_duration && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q11: TCI Duration</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q11_tci_duration)}</p>
+                          </div>
+                        )}
+                        {selectedResponse.q12_tci_coverage && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q12: TCI Coverage</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q12_tci_coverage)}</p>
+                            {selectedResponse.q12_tci_coverage_other && (
+                              <p className="text-slate-300 text-sm mt-1">Other: {selectedResponse.q12_tci_coverage_other}</p>
+                            )}
+                          </div>
+                        )}
+                        {selectedResponse.q13_tci_provider && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q13: TCI Provider</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q13_tci_provider)}</p>
+                            {selectedResponse.q13_tci_provider_other && (
+                              <p className="text-slate-300 text-sm mt-1">Other: {selectedResponse.q13_tci_provider_other}</p>
+                            )}
+                          </div>
+                        )}
+                        {selectedResponse.q14_tci_interaction_frequency && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q14: TCI Interaction Frequency</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q14_tci_interaction_frequency)}</p>
+                          </div>
+                        )}
+                        {selectedResponse.q15_tci_satisfaction && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q15: TCI Satisfaction (1-5)</p>
+                            <p className="text-white">{selectedResponse.q15_tci_satisfaction}</p>
+                          </div>
+                        )}
+                        {selectedResponse.q16_tci_challenges && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q16: TCI Challenges</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q16_tci_challenges)}</p>
+                            {selectedResponse.q16_tci_challenges_other && (
+                              <p className="text-slate-300 text-sm mt-1">Other: {selectedResponse.q16_tci_challenges_other}</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Company Profile */}
+                  {!selectedResponse.screenedOut && (
+                    <div className="mb-8">
+                      <h3 className="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">Company Profile</h3>
+                      <div className="space-y-4">
+                        {selectedResponse.q17_annual_revenue && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q17: Annual Revenue</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q17_annual_revenue)}</p>
+                          </div>
+                        )}
+                        {selectedResponse.q18_primary_industry && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q18: Primary Industry</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q18_primary_industry)}</p>
+                            {selectedResponse.q18_primary_industry_other && (
+                              <p className="text-slate-300 text-sm mt-1">Other: {selectedResponse.q18_primary_industry_other}</p>
+                            )}
+                          </div>
+                        )}
+                        {selectedResponse.q19_company_headquarters && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q19: Company Headquarters</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q19_company_headquarters)}</p>
+                            {selectedResponse.q19_company_headquarters_other && (
+                              <p className="text-slate-300 text-sm mt-1">Other: {selectedResponse.q19_company_headquarters_other}</p>
+                            )}
+                          </div>
+                        )}
+                        {selectedResponse.q20_international_sales_percentage && (
+                          <div>
+                            <p className="text-sm text-slate-400">Q20: International Sales %</p>
+                            <p className="text-white">{formatFieldValue(selectedResponse.q20_international_sales_percentage)}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Deliverables */}
+                  <div className="mb-8">
+                    <h3 className="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">Requested Deliverables</h3>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                        <span className="text-slate-300">Survey Report</span>
+                        {selectedResponse.wantsStayInTouch ? (
+                          <span className="text-cyan-400 font-medium">✓ Yes</span>
+                        ) : (
+                          <span className="text-slate-500">No</span>
+                        )}
+                      </div>
+                      <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                        <span className="text-slate-300">Challenge Mapping Session</span>
+                        {selectedResponse.wantsConsultation ? (
+                          <span className="text-orange-400 font-medium">✓ Yes</span>
+                        ) : (
+                          <span className="text-slate-500">No</span>
+                        )}
+                      </div>
+                      {selectedResponse.wantsConsultation && selectedResponse.consultationPhone && (
+                        <div className="p-3 bg-slate-700/50 rounded-lg">
+                          <p className="text-sm text-slate-400">Phone</p>
+                          <p className="text-white">{selectedResponse.consultationPhone}</p>
+                        </div>
+                      )}
+                      {selectedResponse.wantsConsultation && selectedResponse.consultationBestTime && (
+                        <div className="p-3 bg-slate-700/50 rounded-lg">
+                          <p className="text-sm text-slate-400">Best Time to Contact</p>
+                          <p className="text-white">{selectedResponse.consultationBestTime}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Metadata */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-4 border-b border-slate-700 pb-2">Survey Metadata</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-slate-400">Submitted At</p>
+                        <p className="text-white">{formatDate(selectedResponse.submittedAt)}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-slate-400">Completion Time</p>
+                        <p className="text-white">{formatCompletionTime(selectedResponse.completionTime)}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-slate-400">Total Questions</p>
+                        <p className="text-white">{selectedResponse.totalQuestions || 'N/A'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-slate-400">Response ID</p>
+                        <p className="text-white text-xs font-mono">{selectedResponse._id}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Modal Footer */}
+                <div className="bg-slate-900 border-t border-slate-700 px-8 py-4 rounded-b-xl flex justify-end">
+                  <button
+                    onClick={() => { setShowDetailModal(false); setSelectedResponse(null); }}
+                    className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   )
