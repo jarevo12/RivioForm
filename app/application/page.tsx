@@ -797,12 +797,12 @@ export default function SurveyPage() {
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 sm:mb-8 leading-tight">
                 How significantly did bad debt impact your business?
               </h2>
-              <div className="flex justify-between items-start mb-4 max-w-xl mx-auto">
+              <div className="flex justify-between items-start mb-4 max-w-xl mx-auto gap-1 sm:gap-2">
                 {[1, 2, 3, 4, 5].map((rating) => (
-                  <div key={rating} className="flex flex-col items-center flex-1">
+                  <div key={rating} className="flex flex-col items-center flex-1 min-w-0">
                     <button
                       onClick={() => setFormData({ ...formData, q6_bad_debt_impact: rating })}
-                      className={`w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full font-bold text-base sm:text-xl md:text-2xl transition-all duration-200 ${
+                      className={`w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full font-bold text-base sm:text-xl md:text-2xl transition-all duration-200 flex-shrink-0 ${
                         formData.q6_bad_debt_impact === rating
                           ? 'bg-emerald-600 text-white shadow-lg scale-105 sm:scale-110 ring-2 sm:ring-4 ring-emerald-300'
                           : 'bg-white/60 backdrop-blur-sm text-[#1F4D3D] hover:bg-white/80 border-2 border-white/50 hover:border-emerald-400 shadow-sm'
@@ -810,12 +810,12 @@ export default function SurveyPage() {
                     >
                       {rating}
                     </button>
-                    <div className="h-16 sm:h-12 mt-2 sm:mt-3 flex items-start justify-center">
+                    <div className="h-auto sm:h-12 mt-2 sm:mt-3 flex items-start justify-center w-full px-0.5">
                       {rating === 1 && (
-                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium leading-tight">Minor<br className="sm:hidden" /> inconvenience</p>
+                        <p className="text-[10px] sm:text-sm text-[#2D6A4F] text-center font-medium leading-tight">Minor<br /> inconvenience</p>
                       )}
                       {rating === 5 && (
-                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium leading-tight">Threatened<br className="sm:hidden" /> business<br className="sm:hidden" /> viability</p>
+                        <p className="text-[10px] sm:text-sm text-[#2D6A4F] text-center font-medium leading-tight">Threatened<br /> business<br /> viability</p>
                       )}
                     </div>
                   </div>
