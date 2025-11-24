@@ -114,7 +114,7 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
       />
 
       {isOpen && (
-        <div className="absolute z-10 w-full mt-1 bg-white/95 backdrop-blur-md border-2 border-white/50 rounded-xl shadow-xl max-h-60 overflow-y-auto">
+        <div className="absolute z-50 w-full mt-1 bg-white/95 backdrop-blur-md border-2 border-white/50 rounded-xl shadow-xl max-h-48 overflow-y-auto">
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
               <div
@@ -150,6 +150,7 @@ type SectionId =
   | 'bad-debt-changes'
   | 'current-practices'
   | 'tci-questions'
+  | 'tci-non-usage'
   | 'company-profile'
   | 'email-capture'
 
@@ -174,6 +175,8 @@ type SurveyData = {
   // Risk Mitigation
   q10_risk_mechanisms: string[]
   q10_risk_mechanisms_other: string
+  // TCI Non-usage (conditional)
+  q10a_tci_non_usage_reasons: string[]
   // TCI Deep-dive (conditional)
   q11_tci_duration: string
   q12_tci_coverage: string
@@ -225,6 +228,7 @@ export default function SurveyPage() {
     q9_ar_tracking_tools: [],
     q10_risk_mechanisms: [],
     q10_risk_mechanisms_other: '',
+    q10a_tci_non_usage_reasons: [],
     q11_tci_duration: '',
     q12_tci_coverage: '',
     q12_tci_coverage_other: '',
@@ -310,9 +314,11 @@ export default function SurveyPage() {
 
     sections.push('current-practices')
 
-    // Add TCI section if applicable
+    // Add TCI section if applicable, otherwise add TCI non-usage section
     if (usesTCI()) {
       sections.push('tci-questions')
+    } else {
+      sections.push('tci-non-usage')
     }
 
     sections.push('company-profile', 'email-capture')
@@ -535,20 +541,12 @@ export default function SurveyPage() {
               <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">What Happens Next?</h3>
                 <div className="space-y-4">
-                  {formData.wantsBenchmarkReport && (
+                  {formData.wantsStayInTouch && (
                     <div className="flex items-start p-4 bg-emerald-50 rounded-xl">
                       <svg className="w-6 h-6 text-emerald-600 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                       </svg>
-                      <p className="text-gray-700"><span className="font-semibold">Benchmark Report:</span> Delivered within 2 weeks</p>
-                    </div>
-                  )}
-                  {formData.wantsResearchReport && (
-                    <div className="flex items-start p-4 bg-emerald-50 rounded-xl">
-                      <svg className="w-6 h-6 text-emerald-600 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
-                      </svg>
-                      <p className="text-gray-700"><span className="font-semibold">Full Research Report:</span> Arriving in ~6 weeks</p>
+                      <p className="text-gray-700"><span className="font-semibold">Survey Report:</span> Delivered within 4-6 weeks</p>
                     </div>
                   )}
                   {formData.wantsConsultation && (
@@ -804,12 +802,12 @@ export default function SurveyPage() {
                     >
                       {rating}
                     </button>
-                    <div className="h-8 mt-2 sm:mt-3">
+                    <div className="h-16 sm:h-12 mt-2 sm:mt-3">
                       {rating === 1 && (
-                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium leading-tight">Low impact</p>
+                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium leading-tight">Minor<br className="sm:hidden" /> inconvenience</p>
                       )}
                       {rating === 5 && (
-                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium leading-tight">Severe impact</p>
+                        <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium leading-tight">Threatened<br className="sm:hidden" /> business<br className="sm:hidden" /> viability</p>
                       )}
                     </div>
                   </div>
@@ -908,7 +906,7 @@ export default function SurveyPage() {
                 <span className="bg-emerald-100 px-2 py-1 rounded">Question 1 of 3</span>
               </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
-                How do you determine credit terms for new customers?
+                What information sources do you use to determine credit terms for customers?
               </h2>
               <p className="text-lg text-[#2D6A4F] mb-6">Select all that apply</p>
               <div className="space-y-3">
@@ -1262,6 +1260,43 @@ export default function SurveyPage() {
           </div>
         )
 
+      case 'tci-non-usage':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 leading-tight">
+                Why does your company not use Trade Credit Insurance?
+              </h2>
+              <p className="text-lg text-[#2D6A4F] mb-6">Select all that apply</p>
+              <div className="space-y-3">
+                {[
+                  { value: 'never-heard', label: 'I have never heard of this product' },
+                  { value: 'too-expensive', label: "It's too expensive" },
+                  { value: 'no-value', label: "I don't see the value" },
+                  { value: 'too-complex', label: "It's too complex" },
+                ].map((option) => (
+                  <label
+                    key={option.value}
+                    className={`flex items-center p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 shadow-sm ${
+                      formData.q10a_tci_non_usage_reasons?.includes(option.value)
+                        ? 'bg-emerald-600 border-emerald-700 shadow-md'
+                        : 'bg-white/40 backdrop-blur-sm border-white/30 hover:bg-white/60 hover:border-white/50'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.q10a_tci_non_usage_reasons?.includes(option.value)}
+                      onChange={(e) => handleCheckboxChange('q10a_tci_non_usage_reasons', option.value, e.target.checked)}
+                      className="w-6 h-6 text-white accent-white rounded focus:ring-emerald-300 focus:ring-2"
+                    />
+                    <span className={`ml-4 text-lg font-medium ${formData.q10a_tci_non_usage_reasons?.includes(option.value) ? 'text-white' : 'text-[#1F4D3D]'}`}>{option.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+
       case 'company-profile':
         return (
           <div className="space-y-10">
@@ -1471,7 +1506,7 @@ export default function SurveyPage() {
             </div>
 
             <div className="bg-emerald-50 rounded-2xl p-6 md:p-8 border-2 border-emerald-200">
-              {/* Stay in Touch Section */}
+              {/* Get access to survey report Section */}
               <div className="mb-8">
                 <label
                   className={`flex items-start p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 ${
@@ -1489,65 +1524,19 @@ export default function SurveyPage() {
                     }`}
                   />
                   <div className="ml-4">
-                    <div className={`font-bold text-lg ${formData.wantsStayInTouch ? 'text-white' : 'text-gray-900'}`}>Stay in Touch</div>
+                    <div className={`font-bold text-lg ${formData.wantsStayInTouch ? 'text-white' : 'text-gray-900'}`}>Get access to the survey report</div>
                     <div className={`mt-1 ${formData.wantsStayInTouch ? 'text-emerald-50' : 'text-gray-600'}`}>
-                      Add your email if you would like to learn more about best practices in the credit management space
+                      We all hate answering surveys that we don't get to see the result. Provide your email if you would like to receive the results of our survey research so you can see where you stand vs the rest of participants
                     </div>
                   </div>
                 </label>
               </div>
 
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Choose What You'd Like to Receive:
+                We would love to learn more from your company's challenges
               </h3>
 
               <div className="space-y-4 mb-6">
-                <label
-                  className={`flex items-start p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 ${
-                    formData.wantsBenchmarkReport
-                      ? 'bg-emerald-600 border-emerald-700 shadow-md'
-                      : 'bg-white hover:bg-emerald-50 hover:border-emerald-300 border-gray-200'
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={formData.wantsBenchmarkReport}
-                    onChange={(e) => setFormData({ ...formData, wantsBenchmarkReport: e.target.checked })}
-                    className={`w-6 h-6 rounded focus:ring-emerald-300 focus:ring-2 mt-1 ${
-                      formData.wantsBenchmarkReport ? 'text-white accent-white' : 'text-emerald-600'
-                    }`}
-                  />
-                  <div className="ml-4">
-                    <div className={`font-bold text-lg ${formData.wantsBenchmarkReport ? 'text-white' : 'text-gray-900'}`}>Personalized Benchmark Report</div>
-                    <div className={`mt-1 ${formData.wantsBenchmarkReport ? 'text-emerald-50' : 'text-gray-600'}`}>
-                      See how YOUR company compares to peers in your specific industry and size category
-                    </div>
-                  </div>
-                </label>
-
-                <label
-                  className={`flex items-start p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 ${
-                    formData.wantsResearchReport
-                      ? 'bg-emerald-600 border-emerald-700 shadow-md'
-                      : 'bg-white hover:bg-emerald-50 hover:border-emerald-300 border-gray-200'
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={formData.wantsResearchReport}
-                    onChange={(e) => setFormData({ ...formData, wantsResearchReport: e.target.checked })}
-                    className={`w-6 h-6 rounded focus:ring-emerald-300 focus:ring-2 mt-1 ${
-                      formData.wantsResearchReport ? 'text-white accent-white' : 'text-emerald-600'
-                    }`}
-                  />
-                  <div className="ml-4">
-                    <div className={`font-bold text-lg ${formData.wantsResearchReport ? 'text-white' : 'text-gray-900'}`}>Full Research Report</div>
-                    <div className={`mt-1 ${formData.wantsResearchReport ? 'text-emerald-50' : 'text-gray-600'}`}>
-                      Complete findings from all respondents, early access before public release
-                    </div>
-                  </div>
-                </label>
-
                 <label
                   className={`flex items-start p-5 rounded-xl cursor-pointer border-2 transition-all duration-200 ${
                     formData.wantsConsultation
@@ -1572,11 +1561,11 @@ export default function SurveyPage() {
                 </label>
               </div>
 
-              {(formData.wantsStayInTouch || formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) && (
+              {(formData.wantsStayInTouch || formData.wantsConsultation) && (
                 <div className="space-y-4 pt-6 border-t-2 border-emerald-200">
                   <div>
                     <label className="block text-base font-semibold text-gray-900 mb-2">
-                      Email Address {(formData.wantsStayInTouch || formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) && <span className="text-red-500">*</span>}
+                      Email Address {(formData.wantsStayInTouch || formData.wantsConsultation) && <span className="text-red-500">*</span>}
                     </label>
                     <input
                       type="email"
@@ -1718,6 +1707,10 @@ export default function SurveyPage() {
           // If "other" is selected in Q16, require text input
           (!formData.q16_tci_challenges.includes('other') || (formData.q16_tci_challenges_other && formData.q16_tci_challenges_other.trim() !== ''))
         )
+      case 'tci-non-usage':
+        return (
+          formData.q10a_tci_non_usage_reasons && formData.q10a_tci_non_usage_reasons.length > 0
+        )
       case 'company-profile':
         return (
           formData.q17_annual_revenue &&
@@ -1730,7 +1723,7 @@ export default function SurveyPage() {
           formData.q20_international_sales_percentage
         )
       case 'email-capture':
-        if (formData.wantsStayInTouch || formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation) {
+        if (formData.wantsStayInTouch || formData.wantsConsultation) {
           return formData.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
         }
         return true
@@ -1784,7 +1777,7 @@ export default function SurveyPage() {
               {!canProceed() && (
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
                   <p className="text-sm text-amber-800 font-medium">
-                    {currentSectionId === 'email-capture' && (formData.wantsBenchmarkReport || formData.wantsResearchReport || formData.wantsConsultation)
+                    {currentSectionId === 'email-capture' && formData.wantsConsultation
                       ? '📧 Please provide your email address to continue'
                       : '👆 Please complete all required fields above to continue'}
                   </p>

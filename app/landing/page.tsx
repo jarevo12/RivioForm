@@ -50,8 +50,8 @@ export default function SurveyWelcome() {
             {/* Animated entrance */}
             <div className="animate-fade-in">
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                Help Shape the Future<br />
-                <span className="text-emerald-300">of B2B Credit Risk</span>
+                Help Build a Future Where Businesses<br />
+                <span className="text-emerald-300">can confidently sell on terms</span>
               </h1>
 
               <p className="text-xl md:text-2xl text-emerald-100 mb-8 leading-relaxed max-w-3xl mx-auto">
@@ -77,7 +77,7 @@ export default function SurveyWelcome() {
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                     <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="font-medium">Get Personalized Insights</span>
+                  <span className="font-medium">Receive survey report</span>
                 </div>
               </div>
 
@@ -98,54 +98,6 @@ export default function SurveyWelcome() {
               <p className="text-emerald-200 text-sm mt-4 font-medium">
                 Press <kbd className="px-2 py-1 bg-white/10 rounded">Enter ↵</kbd> or click to begin
               </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Value Proposition Cards */}
-        <section className="container mx-auto px-6 pb-16">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-white text-center mb-10">What You'll Receive</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Card 1 */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105">
-                <div className="w-12 h-12 bg-emerald-400 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-[#1F4D3D]" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Benchmark Report</h3>
-                <p className="text-emerald-100">
-                  See how your practices compare to industry peers
-                </p>
-              </div>
-
-              {/* Card 2 */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105">
-                <div className="w-12 h-12 bg-emerald-400 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-[#1F4D3D]" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
-                    <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Research Report</h3>
-                <p className="text-emerald-100">
-                  Early access to full findings before public release
-                </p>
-              </div>
-
-              {/* Card 3 */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:transform hover:scale-105">
-                <div className="w-12 h-12 bg-emerald-400 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-[#1F4D3D]" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Expert Consultation</h3>
-                <p className="text-emerald-100">
-                  Free 15-min session to discuss your challenges
-                </p>
-              </div>
             </div>
           </div>
         </section>
