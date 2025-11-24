@@ -528,10 +528,7 @@ export default function SurveyPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h2 className="text-5xl font-bold text-gray-900 mb-6">Thank You!</h2>
-              <p className="text-2xl text-gray-700 mb-4 leading-relaxed">
-                Your insights will help shape better credit risk solutions.
-              </p>
+              <h2 className="text-5xl font-bold text-[#1F4D3D] mb-6">Thank You!</h2>
               <div className="inline-block bg-emerald-50 rounded-full px-6 py-3 mt-4">
                 <p className="text-lg text-emerald-800 font-semibold">
                   <span className="text-emerald-600 font-bold">Your insights matter</span>
@@ -541,14 +538,14 @@ export default function SurveyPage() {
 
             {formData.email && (
               <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">What Happens Next?</h3>
+                <h3 className="text-2xl font-bold text-[#1F4D3D] mb-6 text-center">What Happens Next?</h3>
                 <div className="space-y-4">
                   {formData.wantsStayInTouch && (
                     <div className="flex items-start p-4 bg-emerald-50 rounded-xl">
                       <svg className="w-6 h-6 text-emerald-600 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                       </svg>
-                      <p className="text-gray-700"><span className="font-semibold">Survey Report:</span> Delivered within 4-6 weeks</p>
+                      <p className="text-[#1F4D3D]"><span className="font-semibold">Survey Report:</span> We will share with you the results of the survey once sufficient number of responses have been collected and analyzed</p>
                     </div>
                   )}
                   {formData.wantsConsultation && (
@@ -556,13 +553,10 @@ export default function SurveyPage() {
                       <svg className="w-6 h-6 text-emerald-600 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
                       </svg>
-                      <p className="text-gray-700"><span className="font-semibold">Expert Consultation:</span> We'll contact you in the next few days</p>
+                      <p className="text-[#1F4D3D]"><span className="font-semibold">Challenge Mapping Session:</span> If you have not scheduled a session through Calendly, we will contact you in the next few days</p>
                     </div>
                   )}
                 </div>
-                <p className="text-center text-gray-600 mt-8 text-lg">
-                  Your voice matters. Thank you for helping make credit management better for everyone! 🙏
-                </p>
               </div>
             )}
           </div>
