@@ -1522,11 +1522,8 @@ export default function SurveyPage() {
           <div className="space-y-8">
             <div className="text-center mb-8">
               <h2 className="text-4xl md:text-5xl font-bold text-[#1F4D3D] mb-4">
-                Thank You! Your Insights Will Help Shape Better Credit Risk Solutions.
+                Thank You! Together, We're Creating Safer Ways for Businesses to Sell on Credit. 🤝
               </h2>
-              <p className="text-xl text-gray-700 mb-6">
-                Your contribution will help shape the future of credit risk management.
-              </p>
             </div>
 
             <div className="bg-emerald-50 rounded-2xl p-6 md:p-8 border-2 border-emerald-200">
@@ -1819,7 +1816,7 @@ export default function SurveyPage() {
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
                   <p className="text-sm text-amber-800 font-medium">
                     {currentSectionId === 'email-capture' && formData.wantsConsultation
-                      ? '📧 Please provide your email address to continue'
+                      ? '📧 Please provide your email address, Name and Company Name to continue'
                       : '👆 Please complete all required fields above to continue'}
                   </p>
                 </div>
