@@ -149,6 +149,16 @@ const surveyResponseSchema = new mongoose.Schema(
       trim: true,
       maxlength: [200, 'Risk mechanism description cannot exceed 200 characters'],
     },
+    q10a_tci_non_usage_reasons: {
+      type: [String],
+      enum: [
+        'never-heard',
+        'too-expensive',
+        'no-value',
+        'too-complex'
+      ],
+      // Only filled if TCI is NOT used (conditional question)
+    },
     usesTCI: {
       type: Boolean,
       default: false,
@@ -323,6 +333,10 @@ const surveyResponseSchema = new mongoose.Schema(
       type: String,
       trim: true,
       maxlength: [100, 'Company name cannot exceed 100 characters'],
+    },
+    wantsStayInTouch: {
+      type: Boolean,
+      default: false,
     },
     wantsBenchmarkReport: {
       type: Boolean,
