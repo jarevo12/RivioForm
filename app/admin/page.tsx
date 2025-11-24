@@ -5,41 +5,55 @@ import { useRouter } from 'next/navigation'
 import { Search, Users, Clock, CheckCircle, Mail, Calendar, LogOut } from 'lucide-react'
 import { API_ENDPOINTS } from '../config/api'
 
-interface Applicant {
+interface SurveyResponse {
   _id: string
-  email: string
-  firstName: string
-  lastName: string
-  fullName: string
-  organization: string
-  position: string
-  phone?: string
-  status: string
-  giftCardSent: boolean
-  ipAddress: string
-  userAgent: string
+  email?: string
+  contactName?: string
+  companyName?: string
+  q1_b2b_percentage: string
+  q2_role?: string
+  q3_payment_terms?: string
+  q4_bad_debt_experience?: string
+  q5_bad_debt_amount?: string
+  q6_bad_debt_impact?: number
+  q17_annual_revenue?: string
+  q18_primary_industry?: string
+  q19_company_headquarters?: string
+  screenedOut: boolean
+  usesTCI: boolean
+  surveyPath?: string
+  totalQuestions?: number
+  completionTime?: number
+  wantsStayInTouch: boolean
+  wantsConsultation: boolean
   createdAt: string
-  updatedAt: string
-  interviewScheduledAt?: string
-  interviewCompletedAt?: string
+  submittedAt: string
 }
 
 interface Stats {
   total: number
-  byStatus: Array<{
+  screenedOut: number
+  completed: number
+  byPath: Array<{
     _id: string
     count: number
   }>
-  giftCardsSent: number
+  byIndustry: Array<{
+    _id: string
+    count: number
+  }>
+  tciUsers: number
+  avgCompletionTime: number
+  emailCaptureRate: string
 }
 
 export default function AdminDashboard() {
   const router = useRouter()
-  const [applicants, setApplicants] = useState<Applicant[]>([])
+  const [responses, setResponses] = useState<SurveyResponse[]>([])
   const [stats, setStats] = useState<Stats | null>(null)
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
-  const [statusFilter, setStatusFilter] = useState('all')
+  const [pathFilter, setPathFilter] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [currentTime, setCurrentTime] = useState<string>('')
@@ -74,33 +88,33 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     fetchData()
-  }, [currentPage, statusFilter])
+  }, [currentPage, pathFilter])
 
   const fetchData = async () => {
     try {
       setLoading(true)
 
-      // Fetch applicants
+      // Fetch survey responses
       const params = new URLSearchParams({
         page: currentPage.toString(),
         limit: '10',
       })
-      if (statusFilter !== 'all') {
-        params.append('status', statusFilter)
+      if (pathFilter !== 'all') {
+        params.append('surveyPath', pathFilter)
       }
       if (searchTerm) {
         params.append('search', searchTerm)
       }
 
-      const [applicantsRes, statsRes] = await Promise.all([
-        fetch(`${API_ENDPOINTS.applicants}?${params}`),
-        fetch(API_ENDPOINTS.applicantStats)
+      const [responsesRes, statsRes] = await Promise.all([
+        fetch(`${API_ENDPOINTS.survey}?${params}`),
+        fetch(`${API_ENDPOINTS.survey}/stats`)
       ])
 
-      if (applicantsRes.ok) {
-        const applicantsData = await applicantsRes.json()
-        setApplicants(applicantsData.data)
-        setTotalPages(applicantsData.pagination.pages)
+      if (responsesRes.ok) {
+        const responsesData = await responsesRes.json()
+        setResponses(responsesData.data)
+        setTotalPages(responsesData.pagination.pages)
       }
 
       if (statsRes.ok) {
@@ -116,10 +130,10 @@ export default function AdminDashboard() {
     }
   }
 
-  const getStatusCount = (status: string): number => {
+  const getPathCount = (path: string): number => {
     if (!stats) return 0
-    const statusData = stats.byStatus.find(s => s._id === status)
-    return statusData ? statusData.count : 0
+    const pathData = stats.byPath.find(p => p._id === path)
+    return pathData ? pathData.count : 0
   }
 
   const handleSearch = (e: React.FormEvent) => {
@@ -144,14 +158,33 @@ export default function AdminDashboard() {
     })
   }
 
-  const getStatusBadge = (status: string) => {
+  const formatCompletionTime = (seconds?: number) => {
+    if (!seconds) return 'N/A'
+    const minutes = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${minutes}m ${secs}s`
+  }
+
+  const getPathBadge = (path?: string) => {
     const colors = {
-      pending: 'bg-yellow-900 text-yellow-200 border-yellow-700',
-      contacted: 'bg-blue-900 text-blue-200 border-blue-700',
-      scheduled: 'bg-purple-900 text-purple-200 border-purple-700',
-      completed: 'bg-green-900 text-green-200 border-green-700',
+      'no-bad-debt-no-tci': 'bg-blue-900 text-blue-200 border-blue-700',
+      'bad-debt-no-tci': 'bg-orange-900 text-orange-200 border-orange-700',
+      'no-bad-debt-with-tci': 'bg-purple-900 text-purple-200 border-purple-700',
+      'full-path': 'bg-green-900 text-green-200 border-green-700',
+      'screened-out': 'bg-red-900 text-red-200 border-red-700',
     }
-    return colors[status as keyof typeof colors] || colors.pending
+    return colors[path as keyof typeof colors] || 'bg-gray-900 text-gray-200 border-gray-700'
+  }
+
+  const formatFieldValue = (value: any) => {
+    if (value === undefined || value === null || value === '') return 'N/A'
+    if (typeof value === 'boolean') return value ? 'Yes' : 'No'
+    if (Array.isArray(value)) return value.join(', ')
+    if (typeof value === 'string') {
+      // Format enum values to be more readable
+      return value.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    }
+    return String(value)
   }
 
   // Don't render until authentication is checked
@@ -166,8 +199,8 @@ export default function AdminDashboard() {
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-white">Rivio Admin Dashboard</h1>
-              <p className="text-slate-400 mt-1">Manage applicants and track interviews</p>
+              <h1 className="text-3xl font-bold text-white">Survey Response Dashboard</h1>
+              <p className="text-slate-400 mt-1">Credit Risk Management Survey Results</p>
             </div>
             <div className="flex items-center gap-6">
               <div className="text-right">
@@ -198,7 +231,7 @@ export default function AdminDashboard() {
             <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-400 text-sm">Total Applicants</p>
+                  <p className="text-slate-400 text-sm">Total Responses</p>
                   <p className="text-3xl font-bold text-white mt-2">{stats.total}</p>
                 </div>
                 <Users className="w-12 h-12 text-blue-400" />
@@ -208,18 +241,18 @@ export default function AdminDashboard() {
             <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-400 text-sm">Pending</p>
-                  <p className="text-3xl font-bold text-yellow-400 mt-2">{getStatusCount('pending')}</p>
+                  <p className="text-slate-400 text-sm">Completed</p>
+                  <p className="text-3xl font-bold text-green-400 mt-2">{stats.completed}</p>
                 </div>
-                <Clock className="w-12 h-12 text-yellow-400" />
+                <CheckCircle className="w-12 h-12 text-green-400" />
               </div>
             </div>
 
             <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-400 text-sm">Scheduled</p>
-                  <p className="text-3xl font-bold text-purple-400 mt-2">{getStatusCount('scheduled')}</p>
+                  <p className="text-slate-400 text-sm">TCI Users</p>
+                  <p className="text-3xl font-bold text-purple-400 mt-2">{stats.tciUsers}</p>
                 </div>
                 <Calendar className="w-12 h-12 text-purple-400" />
               </div>
@@ -228,10 +261,10 @@ export default function AdminDashboard() {
             <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-400 text-sm">Completed</p>
-                  <p className="text-3xl font-bold text-green-400 mt-2">{getStatusCount('completed')}</p>
+                  <p className="text-slate-400 text-sm">Avg Time</p>
+                  <p className="text-3xl font-bold text-yellow-400 mt-2">{formatCompletionTime(Math.round(stats.avgCompletionTime))}</p>
                 </div>
-                <CheckCircle className="w-12 h-12 text-green-400" />
+                <Clock className="w-12 h-12 text-yellow-400" />
               </div>
             </div>
           </div>
@@ -245,7 +278,7 @@ export default function AdminDashboard() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="Search by name, email, or organization..."
+                  placeholder="Search by name, email, or company..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -260,83 +293,95 @@ export default function AdminDashboard() {
             </form>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Filter by Status</label>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Filter by Survey Path</label>
               <select
-                value={statusFilter}
-                onChange={(e) => { setStatusFilter(e.target.value); setCurrentPage(1); }}
+                value={pathFilter}
+                onChange={(e) => { setPathFilter(e.target.value); setCurrentPage(1); }}
                 className="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
-                <option value="all">All Status</option>
-                <option value="pending">Pending</option>
-                <option value="contacted">Contacted</option>
-                <option value="scheduled">Scheduled</option>
-                <option value="completed">Completed</option>
+                <option value="all">All Paths</option>
+                <option value="no-bad-debt-no-tci">No Bad Debt, No TCI</option>
+                <option value="bad-debt-no-tci">Bad Debt, No TCI</option>
+                <option value="no-bad-debt-with-tci">No Bad Debt, With TCI</option>
+                <option value="full-path">Full Path (Bad Debt + TCI)</option>
+                <option value="screened-out">Screened Out</option>
               </select>
             </div>
           </div>
         </div>
 
-        {/* Applicants Table */}
+        {/* Survey Responses Table */}
         <div className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
           <div className="overflow-x-auto">
             {loading ? (
               <div className="text-center py-12">
                 <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-                <p className="mt-4 text-slate-300">Loading applicants...</p>
+                <p className="mt-4 text-slate-300">Loading responses...</p>
               </div>
-            ) : applicants.length === 0 ? (
+            ) : responses.length === 0 ? (
               <div className="text-center py-12">
                 <Users className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-                <p className="text-slate-400 text-lg">No applicants found</p>
+                <p className="text-slate-400 text-lg">No responses found</p>
               </div>
             ) : (
               <table className="w-full">
                 <thead className="bg-slate-900 border-b border-slate-700">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Name</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Email</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Organization</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Position</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Status</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Applied</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Gift Card</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Contact</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Company</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Role</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Industry</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Revenue</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Bad Debt</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Uses TCI</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Survey Path</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Submitted</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-700">
-                  {applicants.map((applicant) => (
-                    <tr key={applicant._id} className="hover:bg-slate-700/50 transition">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-white">{applicant.fullName}</div>
-                        {applicant.phone && (
-                          <div className="text-sm text-slate-400">{applicant.phone}</div>
+                  {responses.map((response) => (
+                    <tr key={response._id} className="hover:bg-slate-700/50 transition">
+                      <td className="px-6 py-4">
+                        <div className="text-sm font-medium text-white">{response.contactName || 'N/A'}</div>
+                        {response.email && (
+                          <div className="flex items-center text-xs text-slate-400 mt-1">
+                            <Mail className="w-3 h-3 mr-1" />
+                            {response.email}
+                          </div>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center text-sm text-slate-300">
-                          <Mail className="w-4 h-4 mr-2 text-slate-500" />
-                          {applicant.email}
-                        </div>
+                      <td className="px-6 py-4 text-sm text-slate-300">
+                        {response.companyName || 'N/A'}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
-                        {applicant.organization}
+                      <td className="px-6 py-4 text-sm text-slate-300">
+                        {formatFieldValue(response.q2_role)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
-                        {applicant.position}
+                      <td className="px-6 py-4 text-sm text-slate-300">
+                        {formatFieldValue(response.q18_primary_industry)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full border ${getStatusBadge(applicant.status)}`}>
-                          {applicant.status.charAt(0).toUpperCase() + applicant.status.slice(1)}
+                      <td className="px-6 py-4 text-sm text-slate-300">
+                        {formatFieldValue(response.q17_annual_revenue)}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-slate-300">
+                        {formatFieldValue(response.q4_bad_debt_experience)}
+                      </td>
+                      <td className="px-6 py-4 text-sm">
+                        {response.usesTCI ? (
+                          <span className="text-green-400 font-medium">Yes</span>
+                        ) : (
+                          <span className="text-slate-500">No</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full border ${getPathBadge(response.surveyPath)}`}>
+                          {formatFieldValue(response.surveyPath)}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
-                        {formatDate(applicant.createdAt)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        {applicant.giftCardSent ? (
-                          <span className="text-green-400 font-medium">✓ Sent</span>
-                        ) : (
-                          <span className="text-slate-500">Not sent</span>
-                        )}
+                      <td className="px-6 py-4 text-sm text-slate-400">
+                        {formatDate(response.submittedAt)}
+                        <div className="text-xs text-slate-500 mt-1">
+                          {formatCompletionTime(response.completionTime)}
+                        </div>
                       </td>
                     </tr>
                   ))}
