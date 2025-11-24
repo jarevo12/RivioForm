@@ -155,9 +155,15 @@ const surveyResponseSchema = new mongoose.Schema(
         'never-heard',
         'too-expensive',
         'no-value',
-        'too-complex'
+        'too-complex',
+        'other'
       ],
       // Only filled if TCI is NOT used (conditional question)
+    },
+    q10a_tci_non_usage_reasons_other: {
+      type: String,
+      trim: true,
+      maxlength: [200, 'Reason description cannot exceed 200 characters'],
     },
     usesTCI: {
       type: Boolean,

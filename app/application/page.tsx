@@ -114,7 +114,7 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
       />
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white/95 backdrop-blur-md border-2 border-white/50 rounded-xl shadow-xl max-h-48 overflow-y-auto">
+        <div className="absolute z-50 w-full mt-1 bg-white/95 backdrop-blur-md border-2 border-white/50 rounded-xl shadow-xl max-h-60 overflow-y-auto">
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
               <div
@@ -177,6 +177,7 @@ type SurveyData = {
   q10_risk_mechanisms_other: string
   // TCI Non-usage (conditional)
   q10a_tci_non_usage_reasons: string[]
+  q10a_tci_non_usage_reasons_other: string
   // TCI Deep-dive (conditional)
   q11_tci_duration: string
   q12_tci_coverage: string
@@ -229,6 +230,7 @@ export default function SurveyPage() {
     q10_risk_mechanisms: [],
     q10_risk_mechanisms_other: '',
     q10a_tci_non_usage_reasons: [],
+    q10a_tci_non_usage_reasons_other: '',
     q11_tci_duration: '',
     q12_tci_coverage: '',
     q12_tci_coverage_other: '',
@@ -564,6 +566,18 @@ export default function SurveyPage() {
               </div>
             )}
           </div>
+
+          {/* Footer */}
+          <footer className="container mx-auto px-6 py-8 mt-8">
+            <div className="text-center">
+              <p className="text-sm text-emerald-200">
+                Any questions? Contact us at{' '}
+                <a href="mailto:javiersg@mit.edu" className="text-emerald-400 hover:text-emerald-300 font-medium">javiersg@mit.edu</a>
+                {' '}or{' '}
+                <a href="mailto:sergio51@mit.edu" className="text-emerald-400 hover:text-emerald-300 font-medium">sergio51@mit.edu</a>
+              </p>
+            </div>
+          </footer>
         </div>
 
         <style jsx>{`
@@ -789,9 +803,9 @@ export default function SurveyPage() {
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1F4D3D] mb-6 sm:mb-8 leading-tight">
                 How significantly did bad debt impact your business?
               </h2>
-              <div className="flex justify-center items-start gap-2 sm:gap-3 md:gap-4 mb-4">
+              <div className="flex justify-between items-start mb-4 max-w-xl mx-auto">
                 {[1, 2, 3, 4, 5].map((rating) => (
-                  <div key={rating} className="flex flex-col items-center">
+                  <div key={rating} className="flex flex-col items-center flex-1">
                     <button
                       onClick={() => setFormData({ ...formData, q6_bad_debt_impact: rating })}
                       className={`w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full font-bold text-base sm:text-xl md:text-2xl transition-all duration-200 ${
@@ -802,7 +816,7 @@ export default function SurveyPage() {
                     >
                       {rating}
                     </button>
-                    <div className="h-16 sm:h-12 mt-2 sm:mt-3">
+                    <div className="h-16 sm:h-12 mt-2 sm:mt-3 flex items-start justify-center">
                       {rating === 1 && (
                         <p className="text-xs sm:text-sm text-[#2D6A4F] text-center font-medium leading-tight">Minor<br className="sm:hidden" /> inconvenience</p>
                       )}
@@ -1274,6 +1288,7 @@ export default function SurveyPage() {
                   { value: 'too-expensive', label: "It's too expensive" },
                   { value: 'no-value', label: "I don't see the value" },
                   { value: 'too-complex', label: "It's too complex" },
+                  { value: 'other', label: 'Other' },
                 ].map((option) => (
                   <label
                     key={option.value}
@@ -1293,6 +1308,15 @@ export default function SurveyPage() {
                   </label>
                 ))}
               </div>
+              {formData.q10a_tci_non_usage_reasons?.includes('other') && (
+                <input
+                  type="text"
+                  placeholder="Please specify other reason"
+                  value={formData.q10a_tci_non_usage_reasons_other}
+                  onChange={(e) => setFormData({ ...formData, q10a_tci_non_usage_reasons_other: e.target.value })}
+                  className="mt-3 w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
+                />
+              )}
             </div>
           </div>
         )
@@ -1524,7 +1548,7 @@ export default function SurveyPage() {
                     }`}
                   />
                   <div className="ml-4">
-                    <div className={`font-bold text-lg ${formData.wantsStayInTouch ? 'text-white' : 'text-gray-900'}`}>Get access to the survey report</div>
+                    <div className={`font-bold text-lg ${formData.wantsStayInTouch ? 'text-white' : 'text-gray-900'}`}>Get Access to the Survey Report</div>
                     <div className={`mt-1 ${formData.wantsStayInTouch ? 'text-emerald-50' : 'text-gray-600'}`}>
                       We all hate answering surveys that we don't get to see the result. Provide your email if you would like to receive the results of our survey research so you can see where you stand vs the rest of participants
                     </div>
@@ -1533,7 +1557,7 @@ export default function SurveyPage() {
               </div>
 
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                We would love to learn more from your company's challenges
+                We'd love to hear more about the credit management challenges you're facing
               </h3>
 
               <div className="space-y-4 mb-6">
@@ -1553,9 +1577,9 @@ export default function SurveyPage() {
                     }`}
                   />
                   <div className="ml-4">
-                    <div className={`font-bold text-lg ${formData.wantsConsultation ? 'text-white' : 'text-gray-900'}`}>Free Expert Consultation</div>
+                    <div className={`font-bold text-lg ${formData.wantsConsultation ? 'text-white' : 'text-gray-900'}`}>Challenge Mapping Session</div>
                     <div className={`mt-1 ${formData.wantsConsultation ? 'text-emerald-50' : 'text-gray-600'}`}>
-                      15-minute session with our research team to discuss your specific credit risk challenges
+                      15-minute conversation to discuss your biggest challenges in managing the risks that come with selling on credit
                     </div>
                   </div>
                 </label>
@@ -1579,7 +1603,7 @@ export default function SurveyPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-base font-semibold text-gray-900 mb-2">
-                        Name (Optional)
+                        Name {(formData.wantsStayInTouch || formData.wantsConsultation) ? <span className="text-red-500">*</span> : '(Optional)'}
                       </label>
                       <input
                         type="text"
@@ -1591,7 +1615,7 @@ export default function SurveyPage() {
                     </div>
                     <div>
                       <label className="block text-base font-semibold text-gray-900 mb-2">
-                        Company Name (Optional)
+                        Company Name {(formData.wantsStayInTouch || formData.wantsConsultation) ? <span className="text-red-500">*</span> : '(Optional)'}
                       </label>
                       <input
                         type="text"
@@ -1709,7 +1733,10 @@ export default function SurveyPage() {
         )
       case 'tci-non-usage':
         return (
-          formData.q10a_tci_non_usage_reasons && formData.q10a_tci_non_usage_reasons.length > 0
+          formData.q10a_tci_non_usage_reasons &&
+          formData.q10a_tci_non_usage_reasons.length > 0 &&
+          // If "other" is selected, require text input
+          (!formData.q10a_tci_non_usage_reasons.includes('other') || (formData.q10a_tci_non_usage_reasons_other && formData.q10a_tci_non_usage_reasons_other.trim() !== ''))
         )
       case 'company-profile':
         return (
@@ -1724,7 +1751,14 @@ export default function SurveyPage() {
         )
       case 'email-capture':
         if (formData.wantsStayInTouch || formData.wantsConsultation) {
-          return formData.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+          return (
+            formData.email &&
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) &&
+            formData.contactName &&
+            formData.contactName.trim() !== '' &&
+            formData.companyName &&
+            formData.companyName.trim() !== ''
+          )
         }
         return true
       default:
@@ -1831,6 +1865,18 @@ export default function SurveyPage() {
             </div>
           </div>
         </div>
+
+        {/* Footer */}
+        <footer className="container mx-auto px-6 py-8 border-t border-white/10 mt-8">
+          <div className="text-center">
+            <p className="text-sm text-emerald-200">
+              Any questions? Contact us at{' '}
+              <a href="mailto:javiersg@mit.edu" className="text-emerald-400 hover:text-emerald-300 font-medium">javiersg@mit.edu</a>
+              {' '}or{' '}
+              <a href="mailto:sergio51@mit.edu" className="text-emerald-400 hover:text-emerald-300 font-medium">sergio51@mit.edu</a>
+            </p>
+          </div>
+        </footer>
       </main>
     </div>
   )

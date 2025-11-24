@@ -49,14 +49,13 @@ export default function SurveyWelcome() {
           <div className="max-w-4xl mx-auto text-center">
             {/* Animated entrance */}
             <div className="animate-fade-in">
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                Help Build a Future Where Businesses<br />
-                <span className="text-emerald-300">can confidently sell on terms</span>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                <span className="text-white">Help Build a Future Where Businesses</span><br />
+                <span className="text-emerald-300">Can Confidently Sell on Terms</span>
               </h1>
 
               <p className="text-xl md:text-2xl text-emerald-100 mb-8 leading-relaxed max-w-3xl mx-auto">
-                Share your insights to transform how businesses
-                protect themselves from payment defaults.
+                We're MIT graduate students who have seen how customer defaults can damage even the healthiest businesses. We're building a tool to help companies prevent credit-related losses, and your input will guide its design. Please take 5 minutes to support our work.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
@@ -127,6 +126,7 @@ export default function SurveyWelcome() {
                   <div>
                     <h3 className="text-xl font-bold text-white mb-1">Javier Serrano</h3>
                     <p className="text-emerald-200 text-sm">MIT Sloan '27</p>
+                    <p className="text-emerald-300 text-xs mt-1">Connect on LinkedIn</p>
                   </div>
                 </div>
               </a>
@@ -151,6 +151,7 @@ export default function SurveyWelcome() {
                   <div>
                     <h3 className="text-xl font-bold text-white mb-1">Sergio Sanchez</h3>
                     <p className="text-emerald-200 text-sm">MIT Sloan '27</p>
+                    <p className="text-emerald-300 text-xs mt-1">Connect on LinkedIn</p>
                   </div>
                 </div>
               </a>
@@ -160,8 +161,14 @@ export default function SurveyWelcome() {
 
         {/* Footer */}
         <footer className="container mx-auto px-6 py-8 border-t border-white/10">
-          <div className="text-center text-emerald-200">
+          <div className="text-center text-emerald-200 space-y-2">
             <p className="text-sm text-emerald-300">Your responses are anonymous and confidential.</p>
+            <p className="text-sm text-emerald-200">
+              Any questions? Contact us at{' '}
+              <a href="mailto:javiersg@mit.edu" className="text-emerald-400 hover:text-emerald-300 font-medium">javiersg@mit.edu</a>
+              {' '}or{' '}
+              <a href="mailto:sergio51@mit.edu" className="text-emerald-400 hover:text-emerald-300 font-medium">sergio51@mit.edu</a>
+            </p>
           </div>
         </footer>
       </main>
