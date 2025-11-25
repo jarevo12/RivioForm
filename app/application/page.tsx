@@ -100,7 +100,7 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
   }, [highlightedIndex, isOpen])
 
   return (
-    <div ref={wrapperRef} className={`relative ${className || ''}`}>
+    <div ref={wrapperRef} className={`relative ${isOpen ? 'z-50' : ''} ${className || ''}`} style={isOpen ? { position: 'relative', zIndex: 9999 } : {}}>
       <input
         ref={inputRef}
         type="text"
@@ -114,7 +114,7 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
       />
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white/95 backdrop-blur-md border-2 border-white/50 rounded-xl shadow-xl max-h-60 overflow-y-auto">
+        <div className="absolute w-full mt-1 bg-white/95 backdrop-blur-md border-2 border-white/50 rounded-xl shadow-xl max-h-60 overflow-y-auto" style={{ zIndex: 10000 }}>
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
               <div
