@@ -17,10 +17,8 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
   const [searchTerm, setSearchTerm] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [highlightedIndex, setHighlightedIndex] = useState(0)
-  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 })
   const wrapperRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Filter options based on search term
   const filteredOptions = options.filter(option =>
@@ -30,26 +28,12 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
   // Get display value
   const displayValue = options.find(opt => opt.value === value)?.label || ''
 
-  // Calculate dropdown position when opened
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      const rect = inputRef.current.getBoundingClientRect()
-      setDropdownPosition({
-        top: rect.bottom + window.scrollY + 4,
-        left: rect.left + window.scrollX,
-        width: rect.width
-      })
-    }
-  }, [isOpen])
-
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-          setIsOpen(false)
-          setSearchTerm('')
-        }
+        setIsOpen(false)
+        setSearchTerm('')
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -116,31 +100,21 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
   }, [highlightedIndex, isOpen])
 
   return (
-    <>
-      <div ref={wrapperRef} className={`relative ${className || ''}`}>
-        <input
-          ref={inputRef}
-          type="text"
-          value={isOpen ? searchTerm : displayValue}
-          onChange={handleInputChange}
-          onFocus={handleInputFocus}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder || 'Type to search...'}
-          className="w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
-          autoComplete="off"
-        />
-      </div>
+    <div ref={wrapperRef} className={`relative ${className || ''}`}>
+      <input
+        ref={inputRef}
+        type="text"
+        value={isOpen ? searchTerm : displayValue}
+        onChange={handleInputChange}
+        onFocus={handleInputFocus}
+        onKeyDown={handleKeyDown}
+        placeholder={placeholder || 'Type to search...'}
+        className="w-full px-4 py-3 bg-white/50 backdrop-blur-sm border-2 border-white/40 rounded-xl text-[#1F4D3D] placeholder-[#2D6A4F]/60 focus:outline-none focus:ring-2 focus:ring-white/60 focus:border-white/60 focus:bg-white/70"
+        autoComplete="off"
+      />
 
       {isOpen && (
-        <div
-          ref={dropdownRef}
-          className="fixed z-[9999] bg-white/95 backdrop-blur-md border-2 border-white/50 rounded-xl shadow-xl max-h-60 overflow-y-auto"
-          style={{
-            top: `${dropdownPosition.top}px`,
-            left: `${dropdownPosition.left}px`,
-            width: `${dropdownPosition.width}px`
-          }}
-        >
+        <div className="absolute z-50 w-full mt-1 bg-white/95 backdrop-blur-md border-2 border-white/50 rounded-xl shadow-xl max-h-60 overflow-y-auto">
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
               <div
@@ -163,7 +137,7 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
           )}
         </div>
       )}
-    </>
+    </div>
   )
 }
 
