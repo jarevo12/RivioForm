@@ -100,7 +100,7 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
   }, [highlightedIndex, isOpen])
 
   return (
-    <div ref={wrapperRef} className={`relative ${className || ''}`}>
+    <div ref={wrapperRef} className={`relative ${isOpen ? 'z-[9999]' : ''} ${className || ''}`}>
       <input
         ref={inputRef}
         type="text"
@@ -114,7 +114,7 @@ function SearchableSelect({ value, onChange, options, placeholder, className }: 
       />
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white/95 backdrop-blur-md border-2 border-white/50 rounded-xl shadow-xl max-h-60 overflow-y-auto">
+        <div className="absolute z-[9999] w-full mt-1 bg-white/95 backdrop-blur-md border-2 border-white/50 rounded-xl shadow-xl max-h-60 overflow-y-auto">
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
               <div
@@ -1317,7 +1317,7 @@ export default function SurveyPage() {
 
       case 'company-profile':
         return (
-          <div className="space-y-10">
+          <div className="space-y-10 overflow-visible">
             <div className="text-center mb-4">
               <p className="text-lg text-emerald-700 font-semibold bg-emerald-100 inline-block px-4 py-2 rounded-full">
                 🎉 Almost done! Final questions
